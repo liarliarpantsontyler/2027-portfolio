@@ -3,6 +3,7 @@
   --ink: #000;
   --muted: #6b6b6b;
   --line: #ececec;
+  --tile: #f5f5f5;
   --gap: 10px;
   --radius: 10px;
   --rail: 384px;
@@ -103,6 +104,14 @@ dd {
   flex-direction: column;
   padding: var(--gap) 0;
   gap: var(--gap);
+}
+
+.rail-name,
+.rail-intro,
+.rail-clock,
+.rail-lists {
+  background: var(--tile);
+  border-radius: var(--radius);
 }
 
 .rail-name {
@@ -225,7 +234,7 @@ dd {
   width: 100%;
   border-radius: var(--radius);
   overflow: hidden;
-  background: #f4f4f4;
+  background: var(--tile);
   color: inherit;
 }
 
@@ -679,7 +688,7 @@ dd {
 .portrait {
   border-radius: 12px;
   overflow: hidden;
-  background: #f4f4f4;
+  background: var(--tile);
 }
 
 .portrait img {
