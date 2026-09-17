@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.liarliarpantsontyler.com/sitemap.xml

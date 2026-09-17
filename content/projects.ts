@@ -1,0 +1,647 @@
+export type MetricStatus = "reported" | "scope";
+
+export type ProjectMetric = {
+  value: string;
+  label: string;
+  context: string;
+  status: MetricStatus;
+};
+
+export type MediaKind = "image" | "video" | "gif";
+
+export type ProjectImage = {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+  title: string;
+  caption: string;
+  treatment: "device" | "composition" | "edge" | "photo" | "overview" | "paper";
+  kind?: MediaKind;
+  poster?: string;
+  chapter?: string;
+  half?: boolean;
+};
+
+export type Project = {
+  slug: string;
+  company: string;
+  name: string;
+  shortName: string;
+  headline: string;
+  intro: string;
+  capabilities: string;
+  theme: string;
+  year: string;
+  outcomes: ProjectMetric[];
+  resultNote: string;
+  problem: string;
+  made: string;
+  role: string;
+  gallery: ProjectImage[];
+};
+
+export const projects: Project[] = [
+  {
+    slug: "oats-overnight-app",
+    company: "Oats Overnight",
+    name: "The customer app",
+    shortName: "Oats App",
+    headline: "Easier orders. More reasons to stay.",
+    intro:
+      "A subscription experience built to help customers help themselves — and give the business more room to grow.",
+    capabilities: "Customer experience · Ecommerce · Retention",
+    theme: "oats",
+    year: "2023–",
+    outcomes: [
+      {
+        value: "~$50k",
+        label: "additional monthly sales",
+        context: "Reported after the initial app redesign.",
+        status: "reported",
+      },
+      {
+        value: "~15%",
+        label: "fewer cancellations",
+        context: "The app contributed to the reduction.",
+        status: "reported",
+      },
+      {
+        value: "+50%",
+        label: "monthly logins",
+        context: "From 30,000 to 45,000 after the redesign.",
+        status: "reported",
+      },
+    ],
+    resultNote:
+      "Results reported in the original case study, across the broader product team’s work. Figures reflect the periods described there.",
+    problem:
+      "Simple subscription changes were becoming support tickets. Returning customers had to navigate a store built to win new customers just to swap flavors or adjust an order.",
+    made: "I rebuilt the experience around those everyday jobs: manage an order, choose flavors, and keep a subscription that fits. A shared design system helped engineering carry that clarity into new products, referrals, and loyalty.",
+    role: "Tyler led product design, research, and the Oaty design system, working with Oats Overnight’s engineering and business teams.",
+    gallery: [
+      {
+        src: "/work/oats-dashboard.webp",
+        width: 579,
+        height: 1092,
+        alt: "Oats Overnight flavor builder, ratings, dashboard, Protein Coffee, and referrals",
+        title: "One app. The whole customer relationship.",
+        caption: "Ordering, discovery, feedback, and referrals in one familiar experience.",
+        treatment: "overview",
+      },
+      {
+        src: "/work/oats-shop-cards.webp",
+        width: 2000,
+        height: 759,
+        alt: "Oats Overnight new flavor announcement, Protein Coffee offer, and shopping categories",
+        title: "A better place to buy again.",
+        caption: "New flavors and products sit alongside the next delivery.",
+        treatment: "edge",
+        chapter: "Make everyday ordering easier",
+      },
+      {
+        src: "/work/oats-flavor-builder.webp",
+        width: 579,
+        height: 1032,
+        alt: "Oats Overnight flavor selection, nutrition, reviews, and bundle quantities",
+        title: "Build the next box.",
+        caption: "Flavors, reviews, and quantities together.",
+        treatment: "device",
+        half: true,
+      },
+      {
+        src: "/work/oats-protein-coffee.webp",
+        width: 579,
+        height: 1032,
+        alt: "Protein Coffee ordering with quantities and free gifts",
+        title: "Make room for something new.",
+        caption: "The ordering system extends to Protein Coffee.",
+        treatment: "device",
+        half: true,
+      },
+      {
+        src: "/work/oats-loyalty.mp4",
+        width: 1920,
+        height: 1404,
+        alt: "Loyalty walkthrough showing the updated homepage, loyalty tab, and reward progression",
+        title: "Loyalty throughout the experience.",
+        caption:
+          "The updated home, rewards, and progression work together to encourage repeat visits and participation.",
+        treatment: "edge",
+        kind: "video",
+        poster: "/work/oats-loyalty-poster.webp",
+        chapter: "Build reasons to come back",
+      },
+      {
+        src: "/work/oats-survey.mp4",
+        width: 780,
+        height: 1698,
+        alt: "In-app flavor development survey walkthrough",
+        title: "Give customers a voice.",
+        caption: "A custom survey brings flavor feedback into the app.",
+        treatment: "device",
+        kind: "video",
+        poster: "/work/oats-survey-poster.webp",
+        half: true,
+      },
+      {
+        src: "/work/oats-referrals.webp",
+        width: 579,
+        height: 1032,
+        alt: "Referral sharing, reward progress, and referral activity",
+        title: "Turn enthusiasm into referrals.",
+        caption: "A simple invitation, with the next reward in view.",
+        treatment: "device",
+        half: true,
+      },
+      {
+        src: "/work/oats-ratings.mp4",
+        width: 1920,
+        height: 1080,
+        alt: "Ratings and notes interactions, including the later loyalty integration",
+        title: "From personal notes to rewarded feedback.",
+        caption: "The ratings tool evolved alongside the wider loyalty experience.",
+        treatment: "edge",
+        kind: "video",
+        poster: "/work/oats-ratings-poster.webp",
+      },
+      {
+        src: "/work/oats-design-system.webp",
+        width: 2048,
+        height: 985,
+        alt: "Oaty design system covering colors, type, components, and interface patterns",
+        title: "Oaty: a foundation for what comes next.",
+        caption:
+          "Shared components, tokens, and documentation kept design and engineering moving together.",
+        treatment: "paper",
+        chapter: "Give the product room to grow",
+      },
+    ],
+  },
+  {
+    slug: "flavor-ratings",
+    company: "Oats Overnight",
+    name: "Flavor Ratings",
+    shortName: "Ratings",
+    headline: "Customer favorites. Business insight.",
+    intro:
+      "A useful little habit became a direct connection between what customers love and what the business makes next.",
+    capabilities: "Customer insight · Product design · Loyalty",
+    theme: "ratings",
+    year: "2023–",
+    outcomes: [
+      {
+        value: "80%+",
+        label: "of purchases rated by habitual raters",
+        context: "An engaged customer cohort, not all customers.",
+        status: "reported",
+      },
+      {
+        value: "+58%",
+        label: "participation across two feedback tools",
+        context: "Ratings & Notes and the Flavor in Development survey, together.",
+        status: "reported",
+      },
+      {
+        value: "45+",
+        label: "flavors to keep track of",
+        context: "The range customers navigated at the start of the project.",
+        status: "scope",
+      },
+    ],
+    resultNote:
+      "The ratings cohort is described in the original project. The combined participation result is reported in the broader Oats app case study.",
+    problem:
+      "Customers were keeping flavor preferences in spreadsheets, notes, and community posts. Their effort helped them remember what to reorder, but the business couldn’t learn from it in one place.",
+    made: "I brought star ratings and autosaving notes into the app, with sorting that makes favorites easy to find. The experience expanded to more product categories and later connected feedback with loyalty rewards.",
+    role: "Tyler led research, concept, interaction design, and testing, collaborating with the Oats Overnight team to ship and evolve the feature.",
+    gallery: [
+      {
+        src: "/work/oats-ratings.mp4",
+        width: 1920,
+        height: 1080,
+        alt: "Flavor ratings, autosaving personal notes, and the later loyalty rewards integration",
+        title: "A small habit, thoughtfully connected.",
+        caption: "The original interaction walkthrough, from personal notes to loyalty rewards.",
+        treatment: "edge",
+        kind: "video",
+        poster: "/work/oats-ratings-poster.webp",
+      },
+      {
+        src: "/work/ratings-customer-research.webp",
+        width: 2048,
+        height: 1413,
+        alt: "Customer-created spreadsheets, lists, and notes for remembering favorite flavors",
+        title: "Start with what people already do.",
+        caption:
+          "Customers were already keeping their own flavor records. That behavior shaped the tool.",
+        treatment: "paper",
+        chapter: "Make feedback useful to the customer",
+      },
+      {
+        src: "/work/ratings-components.webp",
+        width: 2000,
+        height: 1138,
+        alt: "Rating controls, flavor badges, category switching, and sorting options",
+        title: "The details make it easy.",
+        caption: "Familiar stars, autosaving notes, and favorites-first sorting.",
+        treatment: "paper",
+      },
+      {
+        src: "/work/ratings-phone-photo.webp",
+        width: 1536,
+        height: 1024,
+        alt: "A customer holding a phone displaying flavor ratings and notes",
+        title: "Built for an everyday habit.",
+        caption: "Quick enough to use while a preference is still fresh.",
+        treatment: "photo",
+      },
+    ],
+  },
+  {
+    slug: "creativeos",
+    company: "Independent",
+    name: "creativeOS",
+    shortName: "creativeOS",
+    headline: "A cockpit for making brand work.",
+    intro:
+      "An AI-powered creative system I designed and built — brand intelligence, email creation, and collaborative product concepting in one place.",
+    capabilities: "AI · Founder · Solo build",
+    theme: "creativeos",
+    year: "2026",
+    outcomes: [
+      {
+        value: "1",
+        label: "creative cockpit, designed and built solo",
+        context: "Brand intelligence, email, and product concepting together.",
+        status: "scope",
+      },
+      {
+        value: "4",
+        label: "connected tools",
+        context: "AI Design Brain, Email Builder, Multiplayer, and concepting.",
+        status: "scope",
+      },
+      {
+        value: "2026",
+        label: "from first build to multiplayer",
+        context: "Shipped in sequence for an internal creative team.",
+        status: "scope",
+      },
+    ],
+    resultNote:
+      "creativeOS is an independent system I designed and engineered. The work is shown through the product itself.",
+    problem:
+      "Brand, email, and product concepting lived in separate tools. The team needed one place that already knew the brand — and could make, review, and iterate together.",
+    made: "I designed and built the cockpit: a brand-aware AI design brain, an email builder on a new design system, and multiplayer so the team can concept in the same room.",
+    role: "Tyler designed and built creativeOS independently, including the product architecture, interface, and the tools inside it.",
+    gallery: [
+      {
+        src: "/work/creativeos-portrait.mp4",
+        width: 1080,
+        height: 1440,
+        alt: "creativeOS interface in a vertical product walkthrough",
+        title: "The cockpit, in motion.",
+        caption: "Brand work, email, and concepting without leaving the system.",
+        treatment: "edge",
+        kind: "video",
+        poster: "/work/creativeos-portrait-poster.webp",
+      },
+      {
+        src: "/work/creativeos-wide.mp4",
+        width: 1600,
+        height: 956,
+        alt: "creativeOS workspace showing collaborative creative tools",
+        title: "Built for making, together.",
+        caption: "Multiplayer arrived after the first tools were already in use.",
+        treatment: "edge",
+        kind: "video",
+        poster: "/work/creativeos-wide-poster.webp",
+        chapter: "AI Design Brain · Email · Multiplayer",
+      },
+    ],
+  },
+  {
+    slug: "coco-ai",
+    company: "Teladoc Health",
+    name: "Coco AI",
+    shortName: "Coco AI",
+    headline: "Healthcare guidance, with bedside manner.",
+    intro:
+      "A virtual healthcare assistant designed to feel calm, present, and useful — helping people ask simple questions and take the next step.",
+    capabilities: "AI · Product design · Healthcare",
+    theme: "coco",
+    year: "2021",
+    outcomes: [
+      {
+        value: "1",
+        label: "living persona",
+        context: "A single assistant for voice and text.",
+        status: "scope",
+      },
+      {
+        value: "3",
+        label: "states with a job",
+        context: "Idle, listening, and thinking — each with its own motion.",
+        status: "scope",
+      },
+      {
+        value: "Next step",
+        label: "after every question",
+        context: "Suggested actions, not just answers.",
+        status: "scope",
+      },
+    ],
+    resultNote:
+      "To comply with a non-disclosure agreement, confidential information is omitted or obfuscated. The views here are Tyler’s and do not necessarily reflect those of Teladoc Health.",
+    problem:
+      "Healthcare is a lot to hold: treatment plans, appointments, medicine, messages. Patients needed a way to ask for help in plain language — without the product feeling cold or clever.",
+    made: "I designed Coco as a living persona: always slightly in motion, with a bedside manner shaped by research. Idle, listening, and thinking each have a job. Suggested actions turn a question into the next useful step.",
+    role: "Tyler designed the persona, interface, interactions, and prototypes, and partnered with research, engineering, and data on early builds.",
+    gallery: [
+      {
+        src: "/home/coco-orb.mp4",
+        width: 600,
+        height: 600,
+        alt: "Coco, a softly moving spherical healthcare assistant",
+        title: "Alive, and ready to help.",
+        caption: "Constant, subtle movement keeps Coco from feeling like a static icon.",
+        treatment: "composition",
+        kind: "video",
+        poster: "/home/coco-orb-poster.webp",
+      },
+      {
+        src: "/work/coco-hero.mp4",
+        width: 1440,
+        height: 1440,
+        alt: "Coco offering to help prepare for an upcoming doctor appointment",
+        title: "A considered first moment.",
+        caption: "Help arrives as a suggestion, not a command.",
+        treatment: "edge",
+        kind: "video",
+        poster: "/work/coco-hero-poster.webp",
+      },
+      {
+        src: "/work/coco-logo-from.webp",
+        width: 2048,
+        height: 348,
+        alt: "Teladoc Health logo mark used as the starting point for Coco",
+        title: "From the mark.",
+        caption: "Coco’s form comes from deconstructing the Teladoc logo.",
+        treatment: "paper",
+        chapter: "Who do I want taking care of me?",
+        half: true,
+      },
+      {
+        src: "/work/coco-logo-to.webp",
+        width: 2048,
+        height: 279,
+        alt: "Coco product mark derived from the Teladoc logo",
+        title: "To a persona.",
+        caption: "A product logo that can live in the interface, not just on a slide.",
+        treatment: "paper",
+        half: true,
+      },
+      {
+        src: "/work/coco-idle.webp",
+        width: 1608,
+        height: 808,
+        alt: "Coco idle state, gently hovering",
+        title: "Idle.",
+        caption: "A slow hover says Coco is attentive, not waiting to be woken up.",
+        treatment: "paper",
+        chapter: "How do I want to be taken care of?",
+      },
+      {
+        src: "/work/coco-tap.webp",
+        width: 1608,
+        height: 808,
+        alt: "Coco expanding toward the user when tapped",
+        title: "Listening.",
+        caption: "On tap, Coco expands slightly and begins to listen.",
+        treatment: "paper",
+        half: true,
+      },
+      {
+        src: "/work/coco-think.webp",
+        width: 1480,
+        height: 808,
+        alt: "Coco thinking state with a soft expanding glow",
+        title: "Thinking.",
+        caption: "The outer glow expands and contracts while a request is processed.",
+        treatment: "paper",
+        half: true,
+      },
+      {
+        src: "/work/coco-phone-1.webp",
+        width: 1311,
+        height: 2622,
+        alt: "Mobile conversation with Coco suggesting a helpful next action",
+        title: "Ask a simple question.",
+        caption: "“When is my next appointment?” should return a clear answer — and a next step.",
+        treatment: "device",
+        chapter: "Validating the useful parts",
+        half: true,
+      },
+      {
+        src: "/work/coco-phone-2.webp",
+        width: 1261,
+        height: 2522,
+        alt: "Coco highlighting dates and actions from a care conversation",
+        title: "Then offer the next action.",
+        caption: "Dates, locations, and instructions become something the patient can act on.",
+        treatment: "device",
+        half: true,
+      },
+      {
+        src: "/work/coco-voice.mp4",
+        width: 576,
+        height: 576,
+        alt: "Prototype of Coco reacting while speaking with a patient",
+        title: "Voice, not just type.",
+        caption: "An early prototype of Coco reacting while speaking.",
+        treatment: "composition",
+        kind: "video",
+        poster: "/work/coco-voice-poster.webp",
+      },
+    ],
+  },
+  {
+    slug: "teladoc-health",
+    company: "Teladoc Health",
+    name: "A more connected care experience",
+    shortName: "Teladoc",
+    headline: "One brand. A clearer path to care.",
+    intro:
+      "Turning a complex healthcare ecosystem into a more consistent experience, from choosing care to understanding the details.",
+    capabilities: "Brand experience · Product design · Design systems",
+    theme: "teladoc",
+    year: "2021",
+    outcomes: [
+      {
+        value: "1",
+        label: "shared product language",
+        context: "Connected care cards, icons, and interaction patterns.",
+        status: "scope",
+      },
+      {
+        value: "9 months",
+        label: "of focused product work",
+        context: "Project OneApp: brand expression, components, icons, and motion.",
+        status: "scope",
+      },
+      {
+        value: "AA / AAA",
+        label: "contrast on the icon system",
+        context: "Line weight and color tested for healthcare accessibility.",
+        status: "scope",
+      },
+    ],
+    resultNote:
+      "Project OneApp · Brand expression, product details, and reusable visual systems. Illustration exploration and sketches by Tyler; an independent illustrator produced the final artwork.",
+    problem:
+      "Multiple acquisitions had left Teladoc with disconnected product experiences. The new brand needed to work where trust is earned: helping people understand their options and take the next step.",
+    made: "I shaped the illustration direction, audited key components, explored launch and refresh motion, and built a consistent icon system for the new OneApp experience.",
+    role: "Tyler contributed product design and visual systems within Teladoc’s wider OneApp team. Illustration work included exploration and sketches; an independent illustrator created the production artwork.",
+    gallery: [
+      {
+        src: "/work/teladoc-app-overview.webp",
+        width: 2000,
+        height: 1350,
+        alt: "Five Teladoc product screens with a shared brand and care experience",
+        title: "A shared identity across care.",
+        caption: "Project OneApp brought fragmented experiences into one product language.",
+        treatment: "composition",
+      },
+      {
+        src: "/work/teladoc-illustration-exploration.webp",
+        width: 2048,
+        height: 1190,
+        alt: "A meditation concept explored through different illustration styles in the Teladoc interface",
+        title: "Find the right expression.",
+        caption: "One concept, explored across styles to compare warmth, tone, and clarity.",
+        treatment: "paper",
+        chapter: "01 / A more human illustration system",
+      },
+      {
+        src: "/work/teladoc-illustration-sketches.webp",
+        width: 2400,
+        height: 786,
+        alt: "Continuous-line illustration sketches exploring human connection and healthcare",
+        title: "Connection, drawn into the system.",
+        caption:
+          "Tyler’s exploratory sketches. An independent illustrator produced the final artwork.",
+        treatment: "paper",
+      },
+      {
+        src: "/work/teladoc-illustration-tone.webp",
+        width: 2048,
+        height: 1061,
+        alt: "Four kidney-care illustration studies moving from positive to serious emotional tone",
+        title: "A consistent style. A sensitive tone.",
+        caption:
+          "The visual language had to work for both everyday wellness and serious health concerns.",
+        treatment: "paper",
+      },
+      {
+        src: "/work/teladoc-allergy-cards.webp",
+        width: 2000,
+        height: 778,
+        alt: "Three allergy screens with distinct mild, severe, and lethal severity labels",
+        title: "Make severity clear at a glance.",
+        caption: "Reworked allergy cards pair explicit labels with stronger visual hierarchy.",
+        treatment: "edge",
+        chapter: "02 / Clearer details, better interactions",
+      },
+      {
+        src: "/work/teladoc-progress-explorations.webp",
+        width: 2400,
+        height: 1270,
+        alt: "Request-a-visit screens comparing progress indicator designs",
+        title: "Show where you are — and what’s next.",
+        caption: "Progress explorations addressed uncertainty in the request-a-visit flow.",
+        treatment: "paper",
+      },
+      {
+        src: "/work/teladoc-launch.mp4",
+        width: 374,
+        height: 812,
+        alt: "Teladoc app launch animation exploration",
+        title: "A considered first moment.",
+        caption: "An app-launch motion study.",
+        treatment: "device",
+        kind: "video",
+        poster: "/work/teladoc-launch-poster.webp",
+        half: true,
+      },
+      {
+        src: "/work/teladoc-refresh.mp4",
+        width: 632,
+        height: 1366,
+        alt: "Pull-to-refresh animation on the Teladoc health dashboard",
+        title: "Make updates feel responsive.",
+        caption: "Pull-to-refresh feedback for a dashboard of changing health data.",
+        treatment: "device",
+        kind: "video",
+        poster: "/work/teladoc-refresh-poster.webp",
+        half: true,
+      },
+      {
+        src: "/work/teladoc-care-icons.webp",
+        width: 1910,
+        height: 491,
+        alt: "Medical bag, stethoscope, mental health, and health trend icons",
+        title: "Recognizable, even in small spaces.",
+        caption: "A graphical icon family carries the brand into everyday product details.",
+        treatment: "paper",
+        chapter: "03 / A scalable visual language",
+      },
+      {
+        src: "/work/teladoc-icon-library.webp",
+        width: 1912,
+        height: 1168,
+        alt: "A 37-icon library for medical, health, and wellness services",
+        title: "A system with room to grow.",
+        caption: "A shared library for a broad range of care and wellness needs.",
+        treatment: "paper",
+      },
+      {
+        src: "/work/teladoc-icon-contrast.webp",
+        width: 1950,
+        height: 406,
+        alt: "Contrast checks for magenta and purple icon colors",
+        title: "Test the details.",
+        caption: "Contrast checks informed the icon colors and line treatments.",
+        treatment: "paper",
+      },
+      {
+        src: "/work/teladoc-brand-cards.webp",
+        width: 1895,
+        height: 548,
+        alt: "Three Primary360 service-card explorations",
+        title: "Bring the brand into the choice.",
+        caption: "Expressive service cards keep the offer and next action clear.",
+        treatment: "paper",
+      },
+      {
+        src: "/work/teladoc-care-layers.webp",
+        width: 2000,
+        height: 1840,
+        alt: "Layered Teladoc app screens showing the integrated care experience",
+        title: "The parts, working together.",
+        caption: "Illustration, icons, components, and motion connect the brand to the product.",
+        treatment: "composition",
+      },
+    ],
+  },
+];
+
+export function getProject(slug: string) {
+  return projects.find((project) => project.slug === slug);
+}
+
+export function getNextProject(slug: string) {
+  const index = projects.findIndex((project) => project.slug === slug);
+  if (index === -1) return projects[0];
+  return projects[(index + 1) % projects.length];
+}
