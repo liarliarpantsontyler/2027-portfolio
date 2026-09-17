@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { HomeTile } from "@/content/home";
 
 export function HomeMedia({ tile }: { tile: HomeTile }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [reduceMotion, setReduceMotion] = useState(false);
 
   useEffect(() => {
@@ -14,9 +15,24 @@ export function HomeMedia({ tile }: { tile: HomeTile }) {
     return () => media.removeEventListener("change", update);
   }, []);
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || reduceMotion || tile.kind !== "video") return;
+
+    const play = () => {
+      video.muted = true;
+      void video.play().catch(() => {});
+    };
+
+    play();
+    video.addEventListener("canplay", play);
+    return () => video.removeEventListener("canplay", play);
+  }, [reduceMotion, tile.kind, tile.src]);
+
   if (tile.kind === "video" && !reduceMotion) {
     return (
       <video
+        ref={videoRef}
         src={tile.src}
         poster={tile.poster}
         width={tile.width}
@@ -25,7 +41,8 @@ export function HomeMedia({ tile }: { tile: HomeTile }) {
         muted
         loop
         playsInline
-        preload="metadata"
+        preload="auto"
+        disablePictureInPicture
         aria-label={tile.alt}
       />
     );
@@ -37,7 +54,7 @@ export function HomeMedia({ tile }: { tile: HomeTile }) {
       width={tile.width}
       height={tile.height}
       alt={tile.alt}
-      loading={tile.column === "left" && tile.id === "coco-orb" ? "eager" : "lazy"}
+      loading={tile.id === "teladoc-screens" ? "eager" : "lazy"}
       decoding="async"
     />
   );

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { PageBar } from "@/components/page-bar";
-import { SiteFooter } from "@/components/site-footer";
+import { SiteFrame } from "@/components/site-frame";
 import { site } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -11,8 +10,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="page">
-      <PageBar />
+    <SiteFrame about>
       <main id="main" className="wrap about-layout">
         <div className="about-copy">
           <p className="kicker">Product · Growth · Brand · UX</p>
@@ -54,7 +52,6 @@ export default function AboutPage() {
           </div>
         </div>
       </main>
-      <SiteFooter />
-    </div>
+    </SiteFrame>
   );
 }
