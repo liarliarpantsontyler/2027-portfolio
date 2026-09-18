@@ -775,7 +775,7 @@ export const projects: Project[] = [
         poster: "/work/fun-01-poster.webp",
         loop: true,
         span: "quarter",
-        chapter: "Twelve loops.",
+        chapter: "Just for fun. Enjoy!",
       },
       ...([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const).map((n) => ({
         src: `/work/fun-${String(n).padStart(2, "0")}.mp4`,
