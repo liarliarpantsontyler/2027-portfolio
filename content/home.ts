@@ -70,4 +70,16 @@ export const homeTiles: HomeTile[] = [
     poster: "/home/creativeos-cover-poster.webp",
     column: "right",
   },
+  {
+    id: "just-for-fun",
+    src: "/home/fun-cover.mp4",
+    width: 1440,
+    height: 1440,
+    alt: "Hand-drawn animation loops",
+    href: "/work/just-for-fun/",
+    label: "Just for Fun",
+    kind: "video",
+    poster: "/home/fun-cover-poster.webp",
+    column: "right",
+  },
 ];

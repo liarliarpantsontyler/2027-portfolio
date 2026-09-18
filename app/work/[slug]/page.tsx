@@ -64,18 +64,24 @@ export default async function ProjectPage({
         </header>
         <ProjectResults project={project} />
         <ProjectGallery project={project} />
-        <section className="case-brief" aria-label="The story">
-          <div>
-            <p className="kicker">The problem</p>
-            <h2>What needed to change.</h2>
-            <p>{project.problem}</p>
-          </div>
-          <div>
-            <p className="kicker">The work</p>
-            <h2>What I made better.</h2>
-            <p>{project.made}</p>
-          </div>
-        </section>
+        {project.problem || project.made ? (
+          <section className="case-brief" aria-label="The story">
+            {project.problem ? (
+              <div>
+                <p className="kicker">The problem</p>
+                <h2>What needed to change.</h2>
+                <p>{project.problem}</p>
+              </div>
+            ) : null}
+            {project.made ? (
+              <div>
+                <p className="kicker">The work</p>
+                <h2>What I made better.</h2>
+                <p>{project.made}</p>
+              </div>
+            ) : null}
+          </section>
+        ) : null}
         <div className="case-credit">
           <div>
             <p className="kicker">Contribution</p>

@@ -21,6 +21,8 @@ export type ProjectImage = {
   poster?: string;
   chapter?: string;
   half?: boolean;
+  span?: "half" | "third" | "quarter";
+  loop?: boolean;
 };
 
 export type Project = {
@@ -33,10 +35,10 @@ export type Project = {
   capabilities: string;
   theme: string;
   year: string;
-  outcomes: ProjectMetric[];
-  resultNote: string;
-  problem: string;
-  made: string;
+  outcomes?: ProjectMetric[];
+  resultNote?: string;
+  problem?: string;
+  made?: string;
   role: string;
   gallery: ProjectImage[];
 };
@@ -75,9 +77,8 @@ export const projects: Project[] = [
     ],
     resultNote:
       "Results reported in the original case study, across the broader product team’s work. Figures reflect the periods described there.",
-    problem:
-      "Simple subscription changes were becoming support tickets. Returning customers had to navigate a store built to win new customers just to swap flavors or adjust an order.",
-    made: "I rebuilt the experience around those everyday jobs: manage an order, choose flavors, and keep a subscription that fits. A shared design system helped engineering carry that clarity into new products, referrals, and loyalty.",
+    problem: "Simple subscription changes were becoming support tickets.",
+    made: "I rebuilt the everyday jobs — manage an order, choose flavors, and keep a subscription that fits.",
     role: "Tyler led product design, research, and the Oaty design system, working with Oats Overnight’s engineering and business teams.",
     gallery: [
       {
@@ -90,14 +91,60 @@ export const projects: Project[] = [
         treatment: "overview",
       },
       {
+        src: "/work/oats-before-after.mp4",
+        width: 2388,
+        height: 2358,
+        alt: "Side-by-side of the first app release and the September 2023 rebuild",
+        title: "First release. Then the rebuild.",
+        caption: "The inherited app on the left. The rebuilt experience on the right.",
+        treatment: "edge",
+        kind: "video",
+        poster: "/work/oats-before-after-poster.webp",
+      },
+      {
+        src: "/work/oats-shop-motion.mp4",
+        width: 1942,
+        height: 1594,
+        alt: "New flavor, Protein Coffee, and shop opportunities in the rebuilt app",
+        title: "Room to buy again.",
+        caption: "New flavors and products sit next to the next delivery.",
+        treatment: "edge",
+        kind: "video",
+        poster: "/work/oats-shop-motion-poster.webp",
+        loop: true,
+        chapter: "Make everyday ordering easier",
+      },
+      {
         src: "/work/oats-shop-cards.webp",
         width: 2000,
         height: 759,
         alt: "Oats Overnight new flavor announcement, Protein Coffee offer, and shopping categories",
-        title: "A better place to buy again.",
-        caption: "New flavors and products sit alongside the next delivery.",
+        title: "The offers, in place.",
+        caption: "Announcement, new product, and shop — without leaving the portal.",
         treatment: "edge",
-        chapter: "Make everyday ordering easier",
+      },
+      {
+        src: "/work/oats-order-management.webp",
+        width: 1302,
+        height: 1074,
+        alt: "Skip, delay, and shipping actions on the subscription home",
+        title: "The three actions people actually need.",
+        caption: "Skip, delay, and ship — one tap away.",
+        treatment: "paper",
+        half: true,
+      },
+      {
+        src: "/work/oats-dashboard-loop.mp4",
+        width: 580,
+        height: 1094,
+        alt: "The rebuilt Oats Overnight home dashboard in motion",
+        title: "The home, in motion.",
+        caption: "Next order, shop, and loyalty in one place.",
+        treatment: "device",
+        kind: "video",
+        poster: "/work/oats-dashboard.webp",
+        loop: true,
+        half: true,
       },
       {
         src: "/work/oats-flavor-builder.webp",
@@ -115,7 +162,7 @@ export const projects: Project[] = [
         height: 1032,
         alt: "Protein Coffee ordering with quantities and free gifts",
         title: "Make room for something new.",
-        caption: "The ordering system extends to Protein Coffee.",
+        caption: "The same system, now for Protein Coffee.",
         treatment: "device",
         half: true,
       },
@@ -125,8 +172,7 @@ export const projects: Project[] = [
         height: 1404,
         alt: "Loyalty walkthrough showing the updated homepage, loyalty tab, and reward progression",
         title: "Loyalty throughout the experience.",
-        caption:
-          "The updated home, rewards, and progression work together to encourage repeat visits and participation.",
+        caption: "Home, rewards, and progression in one loop.",
         treatment: "edge",
         kind: "video",
         poster: "/work/oats-loyalty-poster.webp",
@@ -160,7 +206,7 @@ export const projects: Project[] = [
         height: 1080,
         alt: "Ratings and notes interactions, including the later loyalty integration",
         title: "From personal notes to rewarded feedback.",
-        caption: "The ratings tool evolved alongside the wider loyalty experience.",
+        caption: "Personal notes, then loyalty rewards.",
         treatment: "edge",
         kind: "video",
         poster: "/work/oats-ratings-poster.webp",
@@ -171,8 +217,7 @@ export const projects: Project[] = [
         height: 985,
         alt: "Oaty design system covering colors, type, components, and interface patterns",
         title: "Oaty: a foundation for what comes next.",
-        caption:
-          "Shared components, tokens, and documentation kept design and engineering moving together.",
+        caption: "Shared components, tokens, and docs for design and engineering.",
         treatment: "paper",
         chapter: "Give the product room to grow",
       },
@@ -211,40 +256,66 @@ export const projects: Project[] = [
     ],
     resultNote:
       "The ratings cohort is described in the original project. The combined participation result is reported in the broader Oats app case study.",
-    problem:
-      "Customers were keeping flavor preferences in spreadsheets, notes, and community posts. Their effort helped them remember what to reorder, but the business couldn’t learn from it in one place.",
-    made: "I brought star ratings and autosaving notes into the app, with sorting that makes favorites easy to find. The experience expanded to more product categories and later connected feedback with loyalty rewards.",
+    problem: "Customers already rated flavors — in spreadsheets, notes, and group posts. The business couldn’t see any of it.",
+    made: "Star ratings and autosaving notes in the app. Later, the same habit earned loyalty rewards.",
     role: "Tyler led research, concept, interaction design, and testing, collaborating with the Oats Overnight team to ship and evolve the feature.",
     gallery: [
-      {
-        src: "/work/oats-ratings.mp4",
-        width: 1920,
-        height: 1080,
-        alt: "Flavor ratings, autosaving personal notes, and the later loyalty rewards integration",
-        title: "A small habit, thoughtfully connected.",
-        caption: "The original interaction walkthrough, from personal notes to loyalty rewards.",
-        treatment: "edge",
-        kind: "video",
-        poster: "/work/oats-ratings-poster.webp",
-      },
       {
         src: "/work/ratings-customer-research.webp",
         width: 2048,
         height: 1413,
         alt: "Customer-created spreadsheets, lists, and notes for remembering favorite flavors",
         title: "Start with what people already do.",
-        caption:
-          "Customers were already keeping their own flavor records. That behavior shaped the tool.",
+        caption: "Homemade charts and notes shaped the tool.",
         treatment: "paper",
-        chapter: "Make feedback useful to the customer",
+      },
+      {
+        src: "/work/ratings-ui.mp4",
+        width: 798,
+        height: 1528,
+        alt: "Fast star-rating interaction on a flavor list",
+        title: "Rate.",
+        caption: "Playful, not a survey.",
+        treatment: "device",
+        kind: "video",
+        poster: "/work/ratings-ui-poster.webp",
+        loop: true,
+        span: "third",
+        chapter: "The habit",
+      },
+      {
+        src: "/work/ratings-notes.mp4",
+        width: 798,
+        height: 1528,
+        alt: "Autosaving personal notes on a flavor",
+        title: "Note.",
+        caption: "Prep tweaks, saved as you type.",
+        treatment: "device",
+        kind: "video",
+        poster: "/work/ratings-notes-poster.webp",
+        loop: true,
+        span: "third",
+      },
+      {
+        src: "/work/ratings-loyalty.mp4",
+        width: 798,
+        height: 1528,
+        alt: "Ratings earning loyalty points and rewards",
+        title: "Earn.",
+        caption: "Feedback that pays back.",
+        treatment: "device",
+        kind: "video",
+        poster: "/work/ratings-loyalty-poster.webp",
+        loop: true,
+        span: "third",
       },
       {
         src: "/work/ratings-components.webp",
         width: 2000,
         height: 1138,
         alt: "Rating controls, flavor badges, category switching, and sorting options",
-        title: "The details make it easy.",
-        caption: "Familiar stars, autosaving notes, and favorites-first sorting.",
+        title: "The details.",
+        caption: "Stars, notes, and favorites-first sorting.",
         treatment: "paper",
       },
       {
@@ -252,9 +323,20 @@ export const projects: Project[] = [
         width: 1536,
         height: 1024,
         alt: "A customer holding a phone displaying flavor ratings and notes",
-        title: "Built for an everyday habit.",
-        caption: "Quick enough to use while a preference is still fresh.",
+        title: "An everyday habit.",
+        caption: "Quick enough to use while the preference is still fresh.",
         treatment: "photo",
+      },
+      {
+        src: "/work/oats-ratings.mp4",
+        width: 1920,
+        height: 1080,
+        alt: "Flavor ratings, autosaving personal notes, and the later loyalty rewards integration",
+        title: "The whole loop.",
+        caption: "From personal notes to loyalty rewards.",
+        treatment: "edge",
+        kind: "video",
+        poster: "/work/oats-ratings-poster.webp",
       },
     ],
   },
@@ -369,6 +451,7 @@ export const projects: Project[] = [
         treatment: "composition",
         kind: "video",
         poster: "/home/coco-orb-poster.webp",
+        loop: true,
       },
       {
         src: "/work/coco-hero.mp4",
@@ -463,6 +546,7 @@ export const projects: Project[] = [
         treatment: "composition",
         kind: "video",
         poster: "/work/coco-voice-poster.webp",
+        loop: true,
       },
     ],
   },
@@ -544,14 +628,35 @@ export const projects: Project[] = [
         treatment: "paper",
       },
       {
+        src: "/work/teladoc-allergy-before.webp",
+        width: 2000,
+        height: 712,
+        alt: "Original allergy cards where severity reads the same at a glance",
+        title: "Before.",
+        caption: "Severity reads the same.",
+        treatment: "edge",
+        chapter: "02 / Clearer details, better interactions",
+      },
+      {
         src: "/work/teladoc-allergy-cards.webp",
         width: 2000,
         height: 778,
         alt: "Three allergy screens with distinct mild, severe, and lethal severity labels",
-        title: "Make severity clear at a glance.",
-        caption: "Reworked allergy cards pair explicit labels with stronger visual hierarchy.",
+        title: "After.",
+        caption: "Labels and hierarchy you can act on.",
         treatment: "edge",
-        chapter: "02 / Clearer details, better interactions",
+      },
+      {
+        src: "/work/teladoc-loaders.mp4",
+        width: 900,
+        height: 300,
+        alt: "Four loader motion studies for fetching health data",
+        title: "Waiting, with a pulse.",
+        caption: "Loader studies for every data fetch.",
+        treatment: "paper",
+        kind: "video",
+        poster: "/work/teladoc-loaders-poster.webp",
+        loop: true,
       },
       {
         src: "/work/teladoc-progress-explorations.webp",
@@ -573,6 +678,7 @@ export const projects: Project[] = [
         kind: "video",
         poster: "/work/teladoc-launch-poster.webp",
         half: true,
+        loop: true,
       },
       {
         src: "/work/teladoc-refresh.mp4",
@@ -585,6 +691,7 @@ export const projects: Project[] = [
         kind: "video",
         poster: "/work/teladoc-refresh-poster.webp",
         half: true,
+        loop: true,
       },
       {
         src: "/work/teladoc-care-icons.webp",
@@ -632,6 +739,47 @@ export const projects: Project[] = [
         caption: "Illustration, icons, components, and motion connect the brand to the product.",
         treatment: "composition",
       },
+    ],
+  },
+  {
+    slug: "just-for-fun",
+    company: "Independent",
+    name: "Hand-drawn animation",
+    shortName: "Just for Fun",
+    headline: "Drawings that move.",
+    intro: "I’m an illustrator by heart. These were made just for fun.",
+    capabilities: "Illustration · Animation",
+    theme: "fun",
+    year: "2018–",
+    role: "Tyler drew and animated each loop — vector, stop motion, and frame by frame.",
+    gallery: [
+      {
+        src: "/work/fun-01.mp4",
+        width: 720,
+        height: 720,
+        alt: "Hand-drawn animation loop",
+        title: "",
+        caption: "",
+        treatment: "composition",
+        kind: "video",
+        poster: "/work/fun-01-poster.webp",
+        loop: true,
+        span: "quarter",
+        chapter: "Twelve loops.",
+      },
+      ...([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const).map((n) => ({
+        src: `/work/fun-${String(n).padStart(2, "0")}.mp4`,
+        width: 720,
+        height: 720,
+        alt: "Hand-drawn animation loop",
+        title: "",
+        caption: "",
+        treatment: "composition" as const,
+        kind: "video" as const,
+        poster: `/work/fun-${String(n).padStart(2, "0")}-poster.webp`,
+        loop: true,
+        span: "quarter" as const,
+      })),
     ],
   },
 ];
