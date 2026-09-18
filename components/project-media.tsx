@@ -33,38 +33,43 @@ export function ProjectMedia({ item, first }: { item: ProjectImage; first: boole
   if (item.treatment === "overview") return <OatsOverview />;
 
   const looping = item.kind === "video" && item.loop && !reduceMotion;
+  const framed = item.treatment === "device" && item.kind === "video";
+
+  const video = looping ? (
+    <video
+      ref={videoRef}
+      src={item.src}
+      poster={item.poster}
+      width={item.width}
+      height={item.height}
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="auto"
+      disablePictureInPicture
+      aria-label={item.alt}
+    />
+  ) : (
+    <video
+      width={item.width}
+      height={item.height}
+      poster={item.poster}
+      controls
+      playsInline
+      preload="none"
+      aria-label={item.alt}
+    >
+      <source src={item.src} type="video/mp4" />
+    </video>
+  );
 
   return (
-    <div className={`story-media ${item.treatment}`}>
+    <div
+      className={`story-media ${item.treatment}${item.inset ? " inset" : ""}${item.wash ? " wash" : ""}`}
+    >
       {item.kind === "video" ? (
-        looping ? (
-          <video
-            ref={videoRef}
-            src={item.src}
-            poster={item.poster}
-            width={item.width}
-            height={item.height}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            disablePictureInPicture
-            aria-label={item.alt}
-          />
-        ) : (
-          <video
-            width={item.width}
-            height={item.height}
-            poster={item.poster}
-            controls
-            playsInline
-            preload="none"
-            aria-label={item.alt}
-          >
-            <source src={item.src} type="video/mp4" />
-          </video>
-        )
+        framed ? <div className="device-frame">{video}</div> : video
       ) : (
         <img
           src={item.src}

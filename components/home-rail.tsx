@@ -35,17 +35,24 @@ export function HomeRail({
         <Link href="/">{site.name}</Link>
       </div>
       <div className="rail-intro">
-        <p>
-          Product designer at <a href="https://www.oatsovernight.com">Oats Overnight</a> — I design
-          customer experiences, growth systems, and the tools that keep people coming back.
-          Originally from Texas, still based in Dallas–Fort Worth.
-        </p>
+        <div className="rail-bio">
+          <p>
+            Design Lead at <a href="https://www.oatsovernight.com">Oats Overnight</a>
+          </p>
+          <p>
+            I built the design team from scratch and kept it lean by using AI, better tools, and
+            smarter systems as the company grew.
+          </p>
+          <p>I lead product, growth, and retention design.</p>
+          <p>Designer for 13+ years. Manager for 5 of them.</p>
+          <p>Based in DFW.</p>
+        </div>
         <div className="rail-actions">
           <a href={site.links.email}>
-            Email me <span className="dot" aria-hidden="true" />
+            Email me <ArrowRight />
           </a>
           <Link href="/about/" aria-current={about ? "page" : undefined}>
-            About <span className="dot" aria-hidden="true" />
+            About <ArrowRight />
           </Link>
         </div>
       </div>

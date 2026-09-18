@@ -9,6 +9,9 @@ export type HomeTile = {
   kind?: "image" | "video" | "gif";
   poster?: string;
   column: "left" | "right";
+  column3?: 1 | 2 | 3;
+  wash?: boolean;
+  lined?: boolean;
 };
 
 export const homeTiles: HomeTile[] = [
@@ -21,6 +24,7 @@ export const homeTiles: HomeTile[] = [
     href: "/work/teladoc-health/",
     label: "Teladoc Health",
     column: "left",
+    column3: 1,
   },
   {
     id: "ratings-cover",
@@ -33,6 +37,8 @@ export const homeTiles: HomeTile[] = [
     kind: "video",
     poster: "/home/ratings-cover-poster.webp",
     column: "right",
+    column3: 2,
+    lined: true,
   },
   {
     id: "oats-cover",
@@ -45,6 +51,7 @@ export const homeTiles: HomeTile[] = [
     kind: "video",
     poster: "/home/oats-cover-poster.webp",
     column: "left",
+    column3: 1,
   },
   {
     id: "coco-orb",
@@ -57,6 +64,8 @@ export const homeTiles: HomeTile[] = [
     kind: "video",
     poster: "/home/coco-orb-poster.webp",
     column: "left",
+    column3: 3,
+    wash: true,
   },
   {
     id: "creativeos-cover",
@@ -69,6 +78,7 @@ export const homeTiles: HomeTile[] = [
     kind: "video",
     poster: "/home/creativeos-cover-poster.webp",
     column: "right",
+    column3: 2,
   },
   {
     id: "just-for-fun",
@@ -81,5 +91,6 @@ export const homeTiles: HomeTile[] = [
     kind: "video",
     poster: "/home/fun-cover-poster.webp",
     column: "right",
+    column3: 3,
   },
 ];

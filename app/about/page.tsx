@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { EmailMeLink } from "@/components/email-me-link";
 import { SiteFrame } from "@/components/site-frame";
 import { site } from "@/content/site";
 
@@ -17,6 +18,7 @@ export default function AboutPage() {
           <h1>13 years in, I’m still figuring it out.</h1>
           <p className="lead">{site.aboutLead}</p>
           <p className="body">{site.about}</p>
+          <EmailMeLink />
           <div className="about-meta">
             <div>
               <p className="kicker">Recognition</p>

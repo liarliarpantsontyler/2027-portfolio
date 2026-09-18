@@ -23,6 +23,8 @@ export type ProjectImage = {
   half?: boolean;
   span?: "half" | "third" | "quarter";
   loop?: boolean;
+  inset?: boolean;
+  wash?: boolean;
 };
 
 export type Project = {
@@ -626,6 +628,7 @@ export const projects: Project[] = [
         caption:
           "The visual language had to work for both everyday wellness and serious health concerns.",
         treatment: "paper",
+        inset: true,
       },
       {
         src: "/work/teladoc-allergy-before.webp",
@@ -645,6 +648,7 @@ export const projects: Project[] = [
         title: "After.",
         caption: "Labels and hierarchy you can act on.",
         treatment: "edge",
+        inset: true,
       },
       {
         src: "/work/teladoc-loaders.mp4",
@@ -701,6 +705,8 @@ export const projects: Project[] = [
         title: "Recognizable, even in small spaces.",
         caption: "A graphical icon family carries the brand into everyday product details.",
         treatment: "paper",
+        inset: true,
+        wash: true,
         chapter: "03 / A scalable visual language",
       },
       {
@@ -720,6 +726,8 @@ export const projects: Project[] = [
         title: "Test the details.",
         caption: "Contrast checks informed the icon colors and line treatments.",
         treatment: "paper",
+        inset: true,
+        wash: true,
       },
       {
         src: "/work/teladoc-brand-cards.webp",
@@ -729,6 +737,8 @@ export const projects: Project[] = [
         title: "Bring the brand into the choice.",
         caption: "Expressive service cards keep the offer and next action clear.",
         treatment: "paper",
+        inset: true,
+        wash: true,
       },
       {
         src: "/work/teladoc-care-layers.webp",
