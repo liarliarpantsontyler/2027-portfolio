@@ -5,6 +5,7 @@
   "description": "Tyler Hunter — personal portfolio",
   "scripts": {
     "dev": "next dev --port 3000",
+    "dev:clean": "rm -rf .next && next dev --port 3000",
     "build": "next build",
     "start": "npx --yes serve out"
   },

@@ -32,6 +32,28 @@ export function ProjectMedia({ item, first }: { item: ProjectImage; first: boole
 
   if (item.treatment === "overview") return <OatsOverview />;
 
+  if (item.placeholder) {
+    const ratio = `${item.width} / ${item.height}`;
+    return (
+      <div
+        className={`story-media ${item.treatment} placeholder${item.inset ? " inset" : ""}${item.wash ? " wash" : ""}`}
+        style={{ aspectRatio: ratio }}
+        role="img"
+        aria-label={item.alt}
+      >
+        <div className="story-placeholder-inner">
+          <p className="story-placeholder-kicker">Media placeholder</p>
+          {item.placeholderHint ? <p className="story-placeholder-hint">{item.placeholderHint}</p> : null}
+          {item.kind === "video" ? (
+            <p className="story-placeholder-type">Suggested: screen recording (.mp4)</p>
+          ) : (
+            <p className="story-placeholder-type">Suggested: screenshot (.webp)</p>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   const looping = item.kind === "video" && item.loop && !reduceMotion;
   const framed = item.treatment === "device" && item.kind === "video";
 

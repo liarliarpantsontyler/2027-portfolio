@@ -590,6 +590,66 @@ dd {
   --story-bg: #111;
 }
 
+.story-media.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  width: 100%;
+  border: 1px dashed color-mix(in srgb, var(--paper) 22%, transparent);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--story-bg) 92%, #fff) 25%, transparent 25%) -12px 0 / 24px 24px,
+    linear-gradient(225deg, color-mix(in srgb, var(--story-bg) 92%, #fff) 25%, transparent 25%) -12px 0 / 24px 24px,
+    var(--story-bg);
+}
+
+.project-story.creativeos .story-media.placeholder {
+  border-color: color-mix(in srgb, var(--paper) 28%, transparent);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.04) 25%, transparent 25%) -10px 0 / 20px 20px,
+    linear-gradient(225deg, rgba(255, 255, 255, 0.04) 25%, transparent 25%) -10px 0 / 20px 20px,
+    #161616;
+}
+
+.story-placeholder-inner {
+  max-width: 42ch;
+  padding: 28px 32px;
+  text-align: center;
+}
+
+.story-placeholder-kicker {
+  margin: 0 0 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--paper) 55%, var(--muted));
+}
+
+.project-story.creativeos .story-placeholder-kicker {
+  color: #8a8a8a;
+}
+
+.story-placeholder-hint {
+  margin: 0 0 12px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: -0.02em;
+  color: color-mix(in srgb, var(--paper) 88%, var(--muted));
+}
+
+.project-story.creativeos .story-placeholder-hint {
+  color: #d4d4d4;
+}
+
+.story-placeholder-type {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
 .project-story.fun {
   --story-bg: #fff3c4;
 }

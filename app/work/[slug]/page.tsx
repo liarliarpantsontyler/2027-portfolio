@@ -18,7 +18,10 @@ export async function generateMetadata({
   const project = getProject(slug);
   if (!project) return { title: "Project not found" };
 
-  const image = project.gallery.find((item) => item.kind !== "video")?.src || project.gallery[0]?.poster;
+  const image =
+    project.gallery.find((item) => item.kind !== "video" && !item.placeholder)?.src ||
+    project.gallery.find((item) => item.poster)?.poster ||
+    project.gallery[0]?.src;
 
   return {
     title: project.name,
