@@ -783,8 +783,8 @@ export const projects: Project[] = [
     gallery: [
       {
         src: "/work/teladoc-app-overview.webp",
-        width: 2000,
-        height: 1350,
+        width: 1024,
+        height: 684,
         alt: "Five Teladoc product screens with a shared brand and care experience",
         title: "A shared identity across care.",
         caption: "Project OneApp brought fragmented experiences into one product language.",
@@ -854,9 +854,9 @@ export const projects: Project[] = [
         loop: true,
       },
       {
-        src: "/work/teladoc-illustration-ui-flow.jpg",
-        width: 1024,
-        height: 273,
+        src: "/work/teladoc-illustration-ui-flow.png",
+        width: 6156,
+        height: 1646,
         alt: "Teladoc onboarding and success screens with spot illustrations in the refreshed OneApp UI",
         title: "Illustration in the new interface.",
         caption:
