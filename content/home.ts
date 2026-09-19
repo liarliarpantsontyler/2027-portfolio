@@ -18,8 +18,8 @@ export const homeTiles: HomeTile[] = [
   {
     id: "teladoc-screens",
     src: "/work/teladoc-app-overview.webp",
-    width: 2000,
-    height: 1350,
+    width: 867,
+    height: 1024,
     alt: "Five Teladoc product screens",
     href: "/work/teladoc-health/",
     label: "Teladoc Health",
