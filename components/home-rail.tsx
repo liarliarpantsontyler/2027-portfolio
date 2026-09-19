@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Clock } from "@/components/clock";
 import { site } from "@/content/site";
-import { projects } from "@/content/projects";
+import { publishedProjects } from "@/content/projects";
 
 function ArrowRight() {
   return (
@@ -61,7 +61,7 @@ export function HomeRail({
         <section className="rail-group" aria-labelledby="rail-work">
           <h2 id="rail-work">Work</h2>
           <ul>
-            {projects.map((project) => (
+            {publishedProjects().map((project) => (
               <li key={project.slug}>
                 <Link
                   href={`/work/${project.slug}/`}

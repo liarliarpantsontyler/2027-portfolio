@@ -27,6 +27,7 @@ export type ProjectImage = {
   wash?: boolean;
   placeholder?: boolean;
   placeholderHint?: string;
+  src2x?: string;
 };
 
 export type Project = {
@@ -45,6 +46,8 @@ export type Project = {
   made?: string;
   role: string;
   gallery: ProjectImage[];
+  /** Omit from nav, next-project chain, and static routes when true. */
+  hidden?: boolean;
 };
 
 export const projects: Project[] = [
@@ -594,6 +597,7 @@ export const projects: Project[] = [
   },
   {
     slug: "coco-ai",
+    hidden: true,
     company: "Teladoc Health",
     name: "Coco AI",
     shortName: "Coco AI",
@@ -850,13 +854,15 @@ export const projects: Project[] = [
         loop: true,
       },
       {
-        src: "/work/teladoc-progress-explorations.webp",
-        width: 2400,
-        height: 1270,
-        alt: "Request-a-visit screens comparing progress indicator designs",
-        title: "Show where you are — and what’s next.",
-        caption: "Progress explorations addressed uncertainty in the request-a-visit flow.",
+        src: "/work/teladoc-illustration-ui-flow.jpg",
+        width: 1024,
+        height: 273,
+        alt: "Teladoc onboarding and success screens with spot illustrations in the refreshed OneApp UI",
+        title: "Illustration in the new interface.",
+        caption:
+          "Developing how the spot-illustration system would live in product—from guided onboarding to confirmation moments in the refreshed UI.",
         treatment: "paper",
+        inset: true,
       },
       {
         src: "/work/teladoc-launch.mp4",
@@ -981,12 +987,19 @@ export const projects: Project[] = [
   },
 ];
 
+export function publishedProjects() {
+  return projects.filter((project) => !project.hidden);
+}
+
 export function getProject(slug: string) {
-  return projects.find((project) => project.slug === slug);
+  const project = projects.find((item) => item.slug === slug);
+  if (project?.hidden) return undefined;
+  return project;
 }
 
 export function getNextProject(slug: string) {
-  const index = projects.findIndex((project) => project.slug === slug);
-  if (index === -1) return projects[0];
-  return projects[(index + 1) % projects.length];
+  const visible = publishedProjects();
+  const index = visible.findIndex((project) => project.slug === slug);
+  if (index === -1) return visible[0];
+  return visible[(index + 1) % visible.length];
 }

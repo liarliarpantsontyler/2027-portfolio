@@ -5,6 +5,7 @@ import type { ProjectImage } from "@/content/projects";
 import { OatsOverview } from "@/components/oats-overview";
 
 export function ProjectMedia({ item, first }: { item: ProjectImage; first: boolean }) {
+  const mediaRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [reduceMotion, setReduceMotion] = useState(false);
 
@@ -18,17 +19,26 @@ export function ProjectMedia({ item, first }: { item: ProjectImage; first: boole
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || reduceMotion || item.kind !== "video" || !item.loop) return;
+    const root = mediaRef.current;
+    if (!video || !root || reduceMotion || item.kind !== "video") return;
 
-    const play = () => {
-      video.muted = true;
-      void video.play().catch(() => {});
-    };
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          void video.play().catch(() => {
+            video.muted = true;
+            void video.play().catch(() => {});
+          });
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.35 },
+    );
 
-    play();
-    video.addEventListener("canplay", play);
-    return () => video.removeEventListener("canplay", play);
-  }, [item.kind, item.loop, item.src, reduceMotion]);
+    observer.observe(root);
+    return () => observer.disconnect();
+  }, [item.kind, item.src, reduceMotion]);
 
   if (item.treatment === "overview") return <OatsOverview />;
 
@@ -56,6 +66,7 @@ export function ProjectMedia({ item, first }: { item: ProjectImage; first: boole
 
   const looping = item.kind === "video" && item.loop && !reduceMotion;
   const framed = item.treatment === "device" && item.kind === "video";
+  const deviceAspect = `${item.width} / ${item.height}`;
 
   const video = looping ? (
     <video
@@ -64,22 +75,23 @@ export function ProjectMedia({ item, first }: { item: ProjectImage; first: boole
       poster={item.poster}
       width={item.width}
       height={item.height}
-      autoPlay
       muted
       loop
       playsInline
-      preload="auto"
+      preload="metadata"
       disablePictureInPicture
       aria-label={item.alt}
     />
   ) : (
     <video
+      ref={videoRef}
       width={item.width}
       height={item.height}
       poster={item.poster}
       controls
+      muted
       playsInline
-      preload="none"
+      preload="metadata"
       aria-label={item.alt}
     >
       <source src={item.src} type="video/mp4" />
@@ -88,13 +100,23 @@ export function ProjectMedia({ item, first }: { item: ProjectImage; first: boole
 
   return (
     <div
+      ref={item.kind === "video" ? mediaRef : undefined}
       className={`story-media ${item.treatment}${item.inset ? " inset" : ""}${item.wash ? " wash" : ""}`}
     >
       {item.kind === "video" ? (
-        framed ? <div className="device-frame">{video}</div> : video
+        framed ? (
+          <div className="device-frame" style={{ aspectRatio: deviceAspect }}>
+            {video}
+          </div>
+        ) : (
+          video
+        )
       ) : (
         <img
           src={item.src}
+          srcSet={
+            item.src2x ? `${item.src} 1x, ${item.src2x} 2x` : undefined
+          }
           width={item.width}
           height={item.height}
           alt={item.alt}

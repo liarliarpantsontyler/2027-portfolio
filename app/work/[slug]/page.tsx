@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getNextProject, getProject, projects } from "@/content/projects";
+import { getNextProject, getProject, publishedProjects } from "@/content/projects";
 import { ProjectGallery } from "@/components/project-gallery";
 import { ProjectResults } from "@/components/project-results";
 
 export function generateStaticParams() {
-  return projects.map((project) => ({ slug: project.slug }));
+  return publishedProjects().map((project) => ({ slug: project.slug }));
 }
 
 export async function generateMetadata({

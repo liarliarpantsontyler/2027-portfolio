@@ -82,11 +82,11 @@ function splitTiles(count: 2 | 3) {
 }
 
 export function ProjectGrid() {
-  const [cols, setCols] = useState<2 | 3>(2);
+  const [cols, setCols] = useState<2 | 3>(3);
 
   useEffect(() => {
     const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (stored === "3") setCols(3);
+    if (stored === "2") setCols(2);
   }, []);
 
   const setLayout = (next: 2 | 3) => {
