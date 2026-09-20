@@ -93,15 +93,15 @@ dd {
 .home {
   display: grid;
   grid-template-columns: var(--rail) minmax(0, 1fr);
-  gap: var(--tile-gap);
-  padding: 0 var(--tile-gap) var(--gap);
+  gap: var(--gap);
+  padding: 0 var(--gap) var(--gap);
   min-height: 100svh;
 }
 
 .work-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--tile-gap);
+  gap: var(--gap);
   min-width: 0;
 }
 
@@ -265,8 +265,8 @@ dd {
 .work-column {
   display: flex;
   flex-direction: column;
-  gap: var(--tile-gap);
-  padding-top: var(--tile-gap);
+  gap: var(--gap);
+  padding-top: var(--gap);
   min-width: 0;
 }
 
@@ -538,11 +538,16 @@ body.mini-project-open {
 .mini-project-modal {
   --mini-project-width: min(960px, calc(100vw - 48px));
   --mini-project-height: min(880px, calc(100dvh - 48px));
+  position: fixed;
+  top: 50%;
+  /* Center over the work grid column, not the full viewport (rail sits left). */
+  left: calc((100vw + var(--rail) + var(--gap)) / 2);
   width: var(--mini-project-width);
   max-width: var(--mini-project-width);
   height: var(--mini-project-height);
   max-height: var(--mini-project-height);
-  margin: auto;
+  margin: 0;
+  transform: translate(-50%, -50%);
   padding: 0;
   overflow: hidden;
   color: var(--ink);
@@ -776,7 +781,10 @@ body.mini-project-open {
 @keyframes mini-project-in {
   from {
     opacity: 0;
-    transform: scale(0.985) translateY(8px);
+    transform: translate(-50%, calc(-50% + 8px)) scale(0.985);
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 
@@ -939,6 +947,15 @@ body.mini-project-open {
 .project-story.oats,
 .project-story.ratings {
   --story-bg: #83c052;
+}
+
+/* Recordings already include the phone UI — skip synthetic device chrome. */
+.project-story.ratings .story-media.device .device-frame {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: visible;
 }
 
 .project-story.coco {
@@ -1794,6 +1811,7 @@ body.mini-project-open {
   .mini-project-modal {
     --mini-project-width: calc(100vw - 16px);
     --mini-project-height: min(92dvh, calc(100dvh - 16px));
+    left: 50%;
     border-radius: 24px;
   }
 
