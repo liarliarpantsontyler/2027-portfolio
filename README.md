@@ -32,6 +32,48 @@ The build writes a static site to `out/`. Netlify publish directory is already s
 
 `content/site.ts` holds name, bio, experience, and links.
 
+## Add a mini project
+
+Mini projects appear as homepage tiles and open in the shared modal instead of getting a full case-study page.
+
+1. Add the cover and modal media to `public/work/` (or `public/home/` for a homepage-specific cover).
+2. Add one object to `homeTiles` in `content/home.ts` using `destination.type: "modal"`.
+3. Fill in a unique `slug`, short `title` and `description`, and one or more `media` items. Each item needs `src`, dimensions, and useful alt text; videos use `mediaKind: "video"` and may include a `poster`.
+4. Assign both `column` and `column3` so the tile has a deliberate position in either homepage layout.
+5. Run `npm run build` before publishing.
+
+The modal layout, close behavior, mobile presentation, and shareable `?project=slug` URL all come from the shared component. Do not create another modal component for an individual mini project.
+
+```ts
+{
+  id: "project-slug",
+  src: "/home/project-cover.webp",
+  width: 1200,
+  height: 900,
+  alt: "Description of the homepage cover",
+  label: "Project title",
+  column: "left",
+  column3: 1,
+  destination: {
+    type: "modal",
+    project: {
+      slug: "project-slug",
+      title: "Project title",
+      description: "A short explanation of the work.",
+      media: [
+        {
+          src: "/work/project-detail.webp",
+          width: 1600,
+          height: 1200,
+          alt: "Description of the project detail",
+          caption: "Optional caption",
+        },
+      ],
+    },
+  },
+}
+```
+
 ## Case study fields
 
 Each project uses the same shape: headline, intro, outcomes, problem, approach, role, and a gallery. Gallery items can be full-width or `half`, and use `treatment` values:

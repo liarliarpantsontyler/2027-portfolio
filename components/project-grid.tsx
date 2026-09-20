@@ -3,7 +3,13 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { HomeMedia } from "@/components/home-media";
-import { homeTiles, type HomeTile } from "@/content/home";
+import { MiniProjectModal } from "@/components/mini-project-modal";
+import {
+  homeTiles,
+  type HomeModalTile,
+  type HomeTile,
+  type MiniProject,
+} from "@/content/home";
 
 const STORAGE_KEY = "home-grid-cols";
 
@@ -32,7 +38,19 @@ function TileLabel({ name }: { name: string }) {
   );
 }
 
-function Tile({ tile, order }: { tile: HomeTile; order: number }) {
+function isModalTile(tile: HomeTile): tile is HomeModalTile {
+  return tile.destination.type === "modal";
+}
+
+function Tile({
+  tile,
+  order,
+  onOpen,
+}: {
+  tile: HomeTile;
+  order: number;
+  onOpen: (tile: HomeModalTile) => void;
+}) {
   const inner = (
     <>
       <span className={`work-tile-media${tile.wash ? " wash" : ""}${tile.lined ? " lined" : ""}`}>
@@ -44,16 +62,27 @@ function Tile({ tile, order }: { tile: HomeTile; order: number }) {
 
   const style = { ["--order" as string]: order };
 
-  if (!tile.href) {
+  if (isModalTile(tile)) {
     return (
-      <div className="work-tile" style={style}>
+      <button
+        className="work-tile"
+        type="button"
+        aria-label={tile.label || tile.alt}
+        style={style}
+        onClick={() => onOpen(tile)}
+      >
         {inner}
-      </div>
+      </button>
     );
   }
 
   return (
-    <Link className="work-tile" href={tile.href} aria-label={tile.label || tile.alt} style={style}>
+    <Link
+      className="work-tile"
+      href={tile.destination.href}
+      aria-label={tile.label || tile.alt}
+      style={style}
+    >
       {inner}
     </Link>
   );
@@ -83,6 +112,22 @@ function splitTiles(count: 2 | 3) {
 
 export function ProjectGrid() {
   const [cols, setCols] = useState<2 | 3>(3);
+  const [openProject, setOpenProject] = useState<MiniProject | null>(null);
+
+  useEffect(() => {
+    const syncProjectFromUrl = () => {
+      const slug = new URL(window.location.href).searchParams.get("project");
+      const tile = homeTiles.find(
+        (item): item is HomeModalTile =>
+          item.destination.type === "modal" && item.destination.project.slug === slug,
+      );
+      setOpenProject(tile?.destination.project || null);
+    };
+
+    syncProjectFromUrl();
+    window.addEventListener("popstate", syncProjectFromUrl);
+    return () => window.removeEventListener("popstate", syncProjectFromUrl);
+  }, []);
 
   useEffect(() => {
     const stored = window.localStorage.getItem(STORAGE_KEY);
@@ -92,6 +137,32 @@ export function ProjectGrid() {
   const setLayout = (next: 2 | 3) => {
     setCols(next);
     window.localStorage.setItem(STORAGE_KEY, String(next));
+  };
+
+  const openModal = (tile: HomeModalTile) => {
+    const project = tile.destination.project;
+    const url = new URL(window.location.href);
+    url.searchParams.set("project", project.slug);
+    window.history.pushState(
+      { ...window.history.state, miniProject: project.slug },
+      "",
+      url,
+    );
+    setOpenProject(project);
+  };
+
+  const closeModal = () => {
+    const state = window.history.state as { miniProject?: string } | null;
+    setOpenProject(null);
+
+    if (state?.miniProject) {
+      window.history.back();
+      return;
+    }
+
+    const url = new URL(window.location.href);
+    url.searchParams.delete("project");
+    window.history.replaceState(window.history.state, "", url);
   };
 
   return (
@@ -104,6 +175,7 @@ export function ProjectGrid() {
                 key={tile.id}
                 tile={tile}
                 order={homeTiles.findIndex((item) => item.id === tile.id)}
+                onOpen={openModal}
               />
             ))}
           </div>
@@ -127,6 +199,7 @@ export function ProjectGrid() {
           <ColumnsIcon count={3} />
         </button>
       </div>
+      <MiniProjectModal project={openProject} onRequestClose={closeModal} />
     </>
   );
 }

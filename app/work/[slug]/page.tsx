@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { getNextProject, getProject, publishedProjects } from "@/content/projects";
 import { ProjectGallery } from "@/components/project-gallery";
 import { ProjectResults } from "@/components/project-results";
+import { KlockyStory } from "@/components/klocky-story";
 
 export function generateStaticParams() {
   return publishedProjects().map((project) => ({ slug: project.slug }));
@@ -51,46 +52,74 @@ export default async function ProjectPage({
   const project = getProject(slug);
   if (!project) notFound();
   const next = getNextProject(project.slug);
+  const visualFirst = project.presentation === "visual-first";
 
   return (
     <main id="main">
       <div className="wrap">
-        <header className="project-header">
-          <p className="kicker">
-            {project.company} / {project.name}
-          </p>
-          <h1>{project.headline}</h1>
-          <div className="project-deck">
-            <p>{project.intro}</p>
-            <span>{project.capabilities}</span>
-          </div>
-        </header>
-        <ProjectResults project={project} />
-        <ProjectGallery project={project} />
-        {project.problem || project.made ? (
-          <section className="case-brief" aria-label="The story">
-            {project.problem ? (
-              <div>
-                <p className="kicker">The problem</p>
-                <h2>What needed to change.</h2>
-                <p>{project.problem}</p>
+        {visualFirst ? (
+          <>
+            <header className="project-header klocky-header">
+              <img
+                className="klocky-logo"
+                src="/work/klocky/logo.svg"
+                width="320"
+                height="108"
+                alt="Klocky by humin"
+              />
+              <p className="kicker">Independent product / {project.year}</p>
+              <h1>{project.headline}</h1>
+              <div className="project-deck">
+                <p>{project.intro}</p>
+                {project.projectUrl ? (
+                  <a href={project.projectUrl} target="_blank" rel="noreferrer">
+                    Visit Klocky <span aria-hidden="true">↗</span>
+                  </a>
+                ) : null}
               </div>
-            ) : null}
-            {project.made ? (
-              <div>
-                <p className="kicker">The work</p>
-                <h2>What I made better.</h2>
-                <p>{project.made}</p>
+            </header>
+            <KlockyStory project={project} />
+          </>
+        ) : (
+          <>
+            <header className="project-header">
+              <p className="kicker">
+                {project.company} / {project.name}
+              </p>
+              <h1>{project.headline}</h1>
+              <div className="project-deck">
+                <p>{project.intro}</p>
+                <span>{project.capabilities}</span>
               </div>
+            </header>
+            <ProjectResults project={project} />
+            <ProjectGallery project={project} />
+            {project.problem || project.made ? (
+              <section className="case-brief" aria-label="The story">
+                {project.problem ? (
+                  <div>
+                    <p className="kicker">The problem</p>
+                    <h2>What needed to change.</h2>
+                    <p>{project.problem}</p>
+                  </div>
+                ) : null}
+                {project.made ? (
+                  <div>
+                    <p className="kicker">The work</p>
+                    <h2>What I made better.</h2>
+                    <p>{project.made}</p>
+                  </div>
+                ) : null}
+              </section>
             ) : null}
-          </section>
-        ) : null}
-        <div className="case-credit">
-          <div>
-            <p className="kicker">Contribution</p>
-            <p>{project.role}</p>
-          </div>
-        </div>
+            <div className="case-credit">
+              <div>
+                <p className="kicker">Contribution</p>
+                <p>{project.role}</p>
+              </div>
+            </div>
+          </>
+        )}
         <Link className="next-project" href={`/work/${next.slug}/`}>
           <span className="kicker">Next / {next.company}</span>
           <h2>

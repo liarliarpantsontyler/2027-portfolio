@@ -64,6 +64,25 @@ export function ProjectMedia({ item, first }: { item: ProjectImage; first: boole
     );
   }
 
+  if (item.kind === "video" && item.loop && reduceMotion && item.poster) {
+    return (
+      <div
+        className={`story-media ${item.treatment}${item.orientation ? ` ${item.orientation}` : ""}${item.inset ? " inset" : ""}${item.wash ? " wash" : ""}`}
+      >
+        {item.treatment === "device" ? (
+          <div
+            className={`device-frame${item.orientation ? ` ${item.orientation}` : ""}`}
+            style={{ aspectRatio: `${item.width} / ${item.height}` }}
+          >
+            <img src={item.poster} width={item.width} height={item.height} alt={item.alt} />
+          </div>
+        ) : (
+          <img src={item.poster} width={item.width} height={item.height} alt={item.alt} />
+        )}
+      </div>
+    );
+  }
+
   const looping = item.kind === "video" && item.loop && !reduceMotion;
   const framed = item.treatment === "device" && item.kind === "video";
   const deviceAspect = `${item.width} / ${item.height}`;
@@ -101,11 +120,14 @@ export function ProjectMedia({ item, first }: { item: ProjectImage; first: boole
   return (
     <div
       ref={item.kind === "video" ? mediaRef : undefined}
-      className={`story-media ${item.treatment}${item.inset ? " inset" : ""}${item.wash ? " wash" : ""}`}
+      className={`story-media ${item.treatment}${item.orientation ? ` ${item.orientation}` : ""}${item.inset ? " inset" : ""}${item.wash ? " wash" : ""}`}
     >
       {item.kind === "video" ? (
         framed ? (
-          <div className="device-frame" style={{ aspectRatio: deviceAspect }}>
+          <div
+            className={`device-frame${item.orientation ? ` ${item.orientation}` : ""}`}
+            style={{ aspectRatio: deviceAspect }}
+          >
             {video}
           </div>
         ) : (

@@ -17,7 +17,7 @@ export function HomeMedia({ tile }: { tile: HomeTile }) {
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || reduceMotion || tile.kind !== "video") return;
+    if (!video || reduceMotion || tile.mediaKind !== "video") return;
 
     const play = () => {
       video.muted = true;
@@ -27,9 +27,60 @@ export function HomeMedia({ tile }: { tile: HomeTile }) {
     play();
     video.addEventListener("canplay", play);
     return () => video.removeEventListener("canplay", play);
-  }, [reduceMotion, tile.kind, tile.src]);
+  }, [reduceMotion, tile.mediaKind, tile.src]);
 
-  if (tile.kind === "video" && !reduceMotion) {
+  if (tile.id === "klocky-cover") {
+    return (
+      <span
+        className="klocky-home-cover"
+        role="img"
+        aria-label={tile.alt}
+      >
+        {reduceMotion ? (
+          <img
+            className="klocky-home-signal"
+            src={tile.poster}
+            width={tile.width}
+            height={tile.height}
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <video
+            ref={videoRef}
+            className="klocky-home-signal"
+            src={tile.src}
+            poster={tile.poster}
+            width={tile.width}
+            height={tile.height}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            disablePictureInPicture
+            aria-hidden="true"
+          />
+        )}
+        <span className="klocky-home-phone" aria-hidden="true">
+          <span className="klocky-home-screen">
+            <img
+              src="/home/klocky-collection.webp"
+              width="390"
+              height="3618"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+          </span>
+          <span className="klocky-home-camera" />
+        </span>
+      </span>
+    );
+  }
+
+  if (tile.mediaKind === "video" && !reduceMotion) {
     return (
       <video
         ref={videoRef}

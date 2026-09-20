@@ -28,6 +28,7 @@ export type ProjectImage = {
   placeholder?: boolean;
   placeholderHint?: string;
   src2x?: string;
+  orientation?: "portrait" | "landscape";
 };
 
 export type Project = {
@@ -46,11 +47,93 @@ export type Project = {
   made?: string;
   role: string;
   gallery: ProjectImage[];
+  projectUrl?: string;
+  presentation?: "standard" | "visual-first";
   /** Omit from nav, next-project chain, and static routes when true. */
   hidden?: boolean;
 };
 
 export const projects: Project[] = [
+  {
+    slug: "klocky",
+    company: "Independent",
+    name: "Klocky",
+    shortName: "Klocky",
+    headline: "Time, well spent.",
+    intro:
+      "A customizable clock that turns any spare screen into a small moment of calm.",
+    capabilities: "Product design · Visual systems · AI-assisted build",
+    theme: "klocky",
+    year: "2026",
+    role:
+      "Tyler conceived and designed Klocky, then shipped the working product with AI-assisted engineering collaboration.",
+    projectUrl: "https://www.klocky.xyz/",
+    presentation: "visual-first",
+    gallery: [
+      {
+        src: "/work/klocky/hero.mp4",
+        width: 1688,
+        height: 780,
+        alt: "Klocky clock designs moving through the welcome carousel",
+        title: "Thirteen ways to tell the time.",
+        caption: "A collection of clocks, each with its own composition and atmosphere.",
+        treatment: "device",
+        kind: "video",
+        poster: "/work/klocky/hero-poster.webp",
+        loop: true,
+        orientation: "landscape",
+      },
+      {
+        src: "/work/klocky/meridian.webp",
+        width: 1688,
+        height: 780,
+        alt: "Meridian clock on a cobalt generative background",
+        title: "Meridian",
+        caption: "",
+        treatment: "device",
+        orientation: "landscape",
+      },
+      {
+        src: "/work/klocky/onboarding.mp4",
+        width: 780,
+        height: 1688,
+        alt: "Klocky onboarding from time and place through clock selection",
+        title: "Choose a starting point.",
+        caption: "Set the time and place, then begin with a clock that feels right.",
+        treatment: "device",
+        kind: "video",
+        poster: "/work/klocky/onboarding-poster.webp",
+        loop: true,
+        orientation: "portrait",
+      },
+      {
+        src: "/work/klocky/customization.mp4",
+        width: 1688,
+        height: 780,
+        alt: "Klocky editor changing background, layout, and typography",
+        title: "Make it yours.",
+        caption: "Background, layout, and type change the whole character of the clock.",
+        treatment: "device",
+        kind: "video",
+        poster: "/work/klocky/customization-poster.webp",
+        loop: true,
+        orientation: "landscape",
+      },
+      {
+        src: "/work/klocky/fullscreen.mp4",
+        width: 1688,
+        height: 780,
+        alt: "Sunday clock running quietly in fullscreen",
+        title: "Then let it be.",
+        caption: "The controls disappear, leaving time and atmosphere behind.",
+        treatment: "device",
+        kind: "video",
+        poster: "/work/klocky/fullscreen-poster.webp",
+        loop: true,
+        orientation: "landscape",
+      },
+    ],
+  },
   {
     slug: "oats-overnight-app",
     company: "Oats Overnight",
