@@ -32,7 +32,15 @@ function LinkArrowIcon() {
   );
 }
 
-function ModalMedia({ item, reduceMotion }: { item: MiniProjectMedia; reduceMotion: boolean }) {
+function ModalMedia({
+  item,
+  reduceMotion,
+  hideCaption = false,
+}: {
+  item: MiniProjectMedia;
+  reduceMotion: boolean;
+  hideCaption?: boolean;
+}) {
   const isVideo = item.mediaKind === "video";
 
   return (
@@ -62,7 +70,7 @@ function ModalMedia({ item, reduceMotion }: { item: MiniProjectMedia; reduceMoti
           decoding="async"
         />
       )}
-      {item.caption ? <figcaption>{item.caption}</figcaption> : null}
+      {item.caption && !hideCaption ? <figcaption>{item.caption}</figcaption> : null}
     </figure>
   );
 }
@@ -183,57 +191,54 @@ export const MiniProjectModal = forwardRef<
                 {project.media.length === 1 ? (
                   <ModalMedia item={project.media[0]} reduceMotion={reduceMotion} />
                 ) : (
-                  <>
-                    <div className="mini-project-carousel-viewport">
-                      <ModalMedia
-                        key={project.media[slideIndex].src}
-                        item={project.media[slideIndex]}
-                        reduceMotion={reduceMotion}
-                      />
-                    </div>
-                    <div className="mini-project-carousel-controls">
-                      <button
-                        type="button"
-                        className="mini-project-carousel-nav"
-                        aria-label="Previous slide"
-                        disabled={slideIndex === 0}
-                        onClick={() => setSlideIndex((index) => Math.max(0, index - 1))}
-                      >
-                        <ChevronIcon direction="left" />
-                      </button>
-                      <div
-                        className="mini-project-carousel-dots"
-                        role="tablist"
-                        aria-label="Choose slide"
-                      >
-                        {project.media.map((item, index) => (
-                          <button
-                            key={item.src}
-                            type="button"
-                            role="tab"
-                            className="mini-project-carousel-dot"
-                            aria-selected={index === slideIndex}
-                            aria-label={`Slide ${index + 1} of ${project.media.length}`}
-                            onClick={() => setSlideIndex(index)}
-                          />
-                        ))}
-                      </div>
-                      <button
-                        type="button"
-                        className="mini-project-carousel-nav"
-                        aria-label="Next slide"
-                        disabled={slideIndex === project.media.length - 1}
-                        onClick={() =>
-                          setSlideIndex((index) => Math.min(project.media.length - 1, index + 1))
-                        }
-                      >
-                        <ChevronIcon direction="right" />
-                      </button>
-                    </div>
-                  </>
+                  <div className="mini-project-carousel-viewport">
+                    <ModalMedia
+                      key={project.media[slideIndex].src}
+                      item={project.media[slideIndex]}
+                      reduceMotion={reduceMotion}
+                      hideCaption
+                    />
+                  </div>
                 )}
               </div>
             </div>
+            {project.media.length > 1 ? (
+              <div className="mini-project-carousel-controls">
+                <button
+                  type="button"
+                  className="mini-project-carousel-nav"
+                  aria-label="Previous slide"
+                  disabled={slideIndex === 0}
+                  onClick={() => setSlideIndex((index) => Math.max(0, index - 1))}
+                >
+                  <ChevronIcon direction="left" />
+                </button>
+                <div className="mini-project-carousel-dots" role="tablist" aria-label="Choose slide">
+                  {project.media.map((item, index) => (
+                    <button
+                      key={item.src}
+                      type="button"
+                      role="tab"
+                      className="mini-project-carousel-dot"
+                      aria-selected={index === slideIndex}
+                      aria-label={`Slide ${index + 1} of ${project.media.length}`}
+                      onClick={() => setSlideIndex(index)}
+                    />
+                  ))}
+                </div>
+                <button
+                  type="button"
+                  className="mini-project-carousel-nav"
+                  aria-label="Next slide"
+                  disabled={slideIndex === project.media.length - 1}
+                  onClick={() =>
+                    setSlideIndex((index) => Math.min(project.media.length - 1, index + 1))
+                  }
+                >
+                  <ChevronIcon direction="right" />
+                </button>
+              </div>
+            ) : null}
             <div className="mini-project-copy">
               <h2 id={titleId}>{project.title}</h2>
               <p id={descriptionId}>{project.description}</p>

@@ -41,45 +41,42 @@ The build writes a static site to `out/`. Netlify publish directory is already s
 
 ## Add a mini project
 
-Mini projects appear as homepage tiles and open in the shared modal instead of getting a full case-study page.
+Mini projects are homepage tiles that open in the **shared modal** (no `/work/[slug]` page). **Reference:** `vizzy-cover` in `content/home.ts`. **Copy-paste starter:** `content/mini-project.template.ts`.
 
-1. Add the cover and modal media to `public/work/` (or `public/home/` for a homepage-specific cover).
-2. Add one object to `homeTiles` in `content/home.ts` using `destination.type: "modal"`.
-3. Fill in a unique `slug`, short `title` and `description`, and one or more `media` items. Each item needs `src`, dimensions, and useful alt text; videos use `mediaKind: "video"` and may include a `poster`.
-4. Assign both `column` and `column3` so the tile has a deliberate position in either homepage layout.
-5. Run `npm run build` before publishing.
+### Template (do not fork the modal)
 
-The modal layout, close behavior, mobile presentation, and shareable `?project=slug` URL all come from the shared component. Do not create another modal component for an individual mini project.
+| Piece | Location |
+| --- | --- |
+| Tile + modal content | `content/home.ts` → `homeTiles` with `destination.type: "modal"` |
+| Modal UI | `components/mini-project-modal.tsx` |
+| Layout / carousel styling | `app/globals.css` → `.mini-project-*` |
 
-```ts
-{
-  id: "project-slug",
-  src: "/home/project-cover.webp",
-  width: 1200,
-  height: 900,
-  alt: "Description of the homepage cover",
-  label: "Project title",
-  column: "left",
-  column3: 1,
-  destination: {
-    type: "modal",
-    project: {
-      slug: "project-slug",
-      title: "Project title",
-      description: "A short explanation of the work.",
-      media: [
-        {
-          src: "/work/project-detail.webp",
-          width: 1600,
-          height: 1200,
-          alt: "Description of the project detail",
-          caption: "Optional caption",
-        },
-      ],
-    },
-  },
-}
+One modal for all mini projects. Do not add a project-specific modal component.
+
+### Checklist
+
+1. **Homepage cover** — `public/home/` (MP4 + WebP poster). Set tile `width` / `height` to the real aspect ratio (e.g. 1920×1080 landscape, 1080×1440 portrait). The grid uses that ratio for the tile shape.
+2. **Modal media** — `public/work/<project>/`. Prefer H.264 MP4 for demos and WebP for stills. Export a poster frame for each video.
+3. **Copy the template** from `content/mini-project.template.ts` into `homeTiles`. Use a unique `slug` (used in `/?project=slug`).
+4. **Grid position** — set both `column` (`"left"` \| `"right"`) and `column3` (`1` \| `2` \| `3`).
+5. **Optional link** — `projectUrl` + `projectUrlLabel` (curved arrow, opens in new tab).
+6. **Carousel** — two or more `media` items; arrows and dots render on white under the media. Captions on carousel slides are hidden in the modal (use description or single-slide captions if needed).
+7. **`npm run build`** before publish.
+
+### Transcode a cover from `.mov`
+
+```bash
+ffmpeg -i ~/Downloads/your-demo.mov -an -vf "scale=1920:-2" -c:v libx264 -pix_fmt yuv420p -crf 23 -movflags +faststart public/home/your-project-cover.mp4
+ffmpeg -ss 1 -i public/home/your-project-cover.mp4 -frames:v 1 -q:v 2 public/home/your-project-cover-poster.webp
 ```
+
+### Modal behavior (fixed — match Vizzy)
+
+- ~960×880 modal, media full width on black
+- Video slides: `object-fit: contain`, top-aligned
+- Image slides in carousel: `object-fit: cover`, top-aligned (full bleed like video)
+- Carousel controls on **white**, between media and title
+- Close: backdrop click, Escape, or browser back when opened via history
 
 ## Case study fields
 

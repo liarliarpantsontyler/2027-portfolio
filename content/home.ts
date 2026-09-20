@@ -125,8 +125,8 @@ export const homeTiles: HomeTile[] = [
   {
     id: "vizzy-cover",
     src: "/home/vizzy-cover.mp4",
-    width: 1080,
-    height: 1440,
+    width: 1920,
+    height: 1080,
     alt: "Vizzy Figma plugin moving comments between pages",
     label: "Vizzy",
     mediaKind: "video",
@@ -157,7 +157,6 @@ export const homeTiles: HomeTile[] = [
             width: 1688,
             height: 950,
             alt: "Vizzy plugin UI inside Figma",
-            caption: "Built for the way design teams actually work in Figma.",
           },
         ],
       },

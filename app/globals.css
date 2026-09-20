@@ -6,6 +6,7 @@
   --tile: #f5f5f5;
   --lime: #defb52;
   --gap: 10px;
+  --tile-gap: 48px;
   --radius: 10px;
   --rail: 320px;
   --font: Figtree, "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -92,15 +93,15 @@ dd {
 .home {
   display: grid;
   grid-template-columns: var(--rail) minmax(0, 1fr);
-  gap: var(--gap);
-  padding: 0 var(--gap) var(--gap);
+  gap: var(--tile-gap);
+  padding: 0 var(--tile-gap) var(--gap);
   min-height: 100svh;
 }
 
 .work-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--gap);
+  gap: var(--tile-gap);
   min-width: 0;
 }
 
@@ -264,14 +265,14 @@ dd {
 .work-column {
   display: flex;
   flex-direction: column;
-  gap: var(--gap);
-  padding-top: var(--gap);
+  gap: var(--tile-gap);
+  padding-top: var(--tile-gap);
   min-width: 0;
 }
 
 .grid-switch {
   position: fixed;
-  left: var(--gap);
+  left: var(--tile-gap);
   bottom: 52px;
   z-index: 30;
   display: flex;
@@ -576,6 +577,7 @@ body.mini-project-open {
   min-height: 0;
   display: flex;
   flex-direction: column;
+  background: #000;
 }
 
 .mini-project-media {
@@ -589,7 +591,7 @@ body.mini-project-open {
 
 .mini-project-media.single {
   align-items: stretch;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .mini-project-figure {
@@ -617,6 +619,7 @@ body.mini-project-open {
 .mini-project-media.carousel {
   flex: 1 1 auto;
   min-height: 0;
+  gap: 0;
 }
 
 .mini-project-carousel-viewport {
@@ -624,22 +627,35 @@ body.mini-project-open {
   min-height: 0;
   min-width: 0;
   display: flex;
-  align-items: center;
+  align-items: stretch;
+  background: #000;
 }
 
 .mini-project-carousel-viewport .mini-project-figure {
   width: 100%;
   height: 100%;
-  justify-content: center;
+  min-height: 0;
+  overflow: hidden;
+  justify-content: flex-start;
+  align-items: stretch;
 }
 
-.mini-project-carousel-viewport .mini-project-figure img,
 .mini-project-carousel-viewport .mini-project-figure video {
   flex: 1 1 auto;
-  min-height: 0;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center top;
+}
+
+.mini-project-carousel-viewport .mini-project-figure img {
+  flex: 1 1 auto;
   width: 100%;
   height: 100%;
-  max-height: none;
+  object-fit: cover;
+  object-position: center top;
 }
 
 .mini-project-carousel-controls {
@@ -649,8 +665,8 @@ body.mini-project-open {
   justify-content: center;
   gap: 14px;
   min-height: 44px;
-  padding-inline: clamp(20px, 3.5vw, 32px);
-  padding-bottom: 4px;
+  padding: 14px clamp(20px, 3.5vw, 32px) 0;
+  background: var(--paper);
 }
 
 .mini-project-carousel-nav {
@@ -714,6 +730,10 @@ body.mini-project-open {
   flex: 0 0 auto;
   margin-top: auto;
   padding: clamp(18px, 2.5vw, 24px) clamp(20px, 3.5vw, 32px) clamp(22px, 3vw, 28px);
+}
+
+.mini-project-content:has(.mini-project-carousel-controls) .mini-project-copy {
+  padding-top: 8px;
 }
 
 .mini-project-copy h2 {
