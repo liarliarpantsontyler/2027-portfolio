@@ -16,7 +16,14 @@ npm install
 npm run dev
 ```
 
-Production build:
+If the dev server shows **Cannot find module './NN.js'**, the `.next` cache is stale—usually because `npm run build` ran while `next dev` was still up. Stop dev, then:
+
+```bash
+npm run dev:clean
+```
+
+Production build (stop the dev server first—`prebuild` will refuse if port 3000 is in use):
+
 
 ```bash
 npm run build

@@ -1,17 +1,32 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { forwardRef, useEffect, useId, useImperativeHandle, useRef, useState } from "react";
 import type { MiniProject, MiniProjectMedia } from "@/content/home";
 
-function CloseIcon() {
+function ChevronIcon({ direction }: { direction: "left" | "right" }) {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path
-        d="M5 5l14 14M19 5 5 19"
+        d={direction === "left" ? "M14 6l-6 6 6 6" : "M10 6l6 6-6 6"}
         fill="none"
         stroke="currentColor"
         strokeWidth="1.8"
         strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function LinkArrowIcon() {
+  return (
+    <svg className="mini-project-link-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M9.999 5.516a30.2 30.2 0 0 1 7.797-.152.94.94 0 0 1 .568.272m.12 8.365a30.2 30.2 0 0 0 .152-7.797.95.95 0 0 0-.272-.568m0 0L5.636 18.364"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -52,18 +67,23 @@ function ModalMedia({ item, reduceMotion }: { item: MiniProjectMedia; reduceMoti
   );
 }
 
-export function MiniProjectModal({
-  project,
-  onRequestClose,
-}: {
-  project: MiniProject | null;
-  onRequestClose: () => void;
-}) {
+export type MiniProjectModalHandle = {
+  show: () => void;
+};
+
+export const MiniProjectModal = forwardRef<
+  MiniProjectModalHandle,
+  {
+    project: MiniProject | null;
+    onRequestClose: () => void;
+  }
+>(function MiniProjectModal({ project, onRequestClose }, ref) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const returnFocusRef = useRef<HTMLElement | null>(null);
   const titleId = useId();
   const descriptionId = useId();
   const [reduceMotion, setReduceMotion] = useState(false);
+  const [slideIndex, setSlideIndex] = useState(0);
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -74,11 +94,46 @@ export function MiniProjectModal({
   }, []);
 
   useEffect(() => {
+    setSlideIndex(0);
+  }, [project?.slug]);
+
+  useEffect(() => {
+    if (!project || project.media.length < 2) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        setSlideIndex((index) => Math.max(0, index - 1));
+      }
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        setSlideIndex((index) => Math.min(project.media.length - 1, index + 1));
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [project]);
+
+  useImperativeHandle(ref, () => ({
+    show: () => {
+      const dialog = dialogRef.current;
+      if (!dialog || dialog.open) return;
+
+      returnFocusRef.current = document.activeElement as HTMLElement | null;
+      document.body.classList.add("mini-project-open");
+      dialog.showModal();
+    },
+  }));
+
+  useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
 
     if (project) {
-      returnFocusRef.current = document.activeElement as HTMLElement | null;
+      if (!returnFocusRef.current) {
+        returnFocusRef.current = document.activeElement as HTMLElement | null;
+      }
       if (!dialog.open) dialog.showModal();
       document.body.classList.add("mini-project-open");
       return;
@@ -113,29 +168,90 @@ export function MiniProjectModal({
     >
       {project ? (
         <div className="mini-project-shell">
-          <div className="mini-project-close-row">
-            <button
-              className="mini-project-close"
-              type="button"
-              onClick={onRequestClose}
-              aria-label="Close project"
-            >
-              <CloseIcon />
-            </button>
-          </div>
           <div className="mini-project-content">
-            <div className={`mini-project-media${project.media.length === 1 ? " single" : ""}`}>
-              {project.media.map((item, index) => (
-                <ModalMedia key={`${item.src}-${index}`} item={item} reduceMotion={reduceMotion} />
-              ))}
+            <div className="mini-project-stage">
+              <div
+                className={`mini-project-media${project.media.length === 1 ? " single" : " carousel"}`}
+                {...(project.media.length > 1
+                  ? {
+                      role: "region",
+                      "aria-roledescription": "carousel",
+                      "aria-label": "Project media",
+                    }
+                  : {})}
+              >
+                {project.media.length === 1 ? (
+                  <ModalMedia item={project.media[0]} reduceMotion={reduceMotion} />
+                ) : (
+                  <>
+                    <div className="mini-project-carousel-viewport">
+                      <ModalMedia
+                        key={project.media[slideIndex].src}
+                        item={project.media[slideIndex]}
+                        reduceMotion={reduceMotion}
+                      />
+                    </div>
+                    <div className="mini-project-carousel-controls">
+                      <button
+                        type="button"
+                        className="mini-project-carousel-nav"
+                        aria-label="Previous slide"
+                        disabled={slideIndex === 0}
+                        onClick={() => setSlideIndex((index) => Math.max(0, index - 1))}
+                      >
+                        <ChevronIcon direction="left" />
+                      </button>
+                      <div
+                        className="mini-project-carousel-dots"
+                        role="tablist"
+                        aria-label="Choose slide"
+                      >
+                        {project.media.map((item, index) => (
+                          <button
+                            key={item.src}
+                            type="button"
+                            role="tab"
+                            className="mini-project-carousel-dot"
+                            aria-selected={index === slideIndex}
+                            aria-label={`Slide ${index + 1} of ${project.media.length}`}
+                            onClick={() => setSlideIndex(index)}
+                          />
+                        ))}
+                      </div>
+                      <button
+                        type="button"
+                        className="mini-project-carousel-nav"
+                        aria-label="Next slide"
+                        disabled={slideIndex === project.media.length - 1}
+                        onClick={() =>
+                          setSlideIndex((index) => Math.min(project.media.length - 1, index + 1))
+                        }
+                      >
+                        <ChevronIcon direction="right" />
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
             <div className="mini-project-copy">
               <h2 id={titleId}>{project.title}</h2>
               <p id={descriptionId}>{project.description}</p>
+              {project.projectUrl ? (
+                <a
+                  className="mini-project-link"
+                  href={project.projectUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {project.projectUrlLabel || "View project"}
+                  <LinkArrowIcon />
+                </a>
+              ) : null}
             </div>
           </div>
         </div>
       ) : null}
     </dialog>
   );
-}
+});

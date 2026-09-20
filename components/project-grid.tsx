@@ -1,9 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { flushSync } from "react-dom";
 import Link from "next/link";
 import { HomeMedia } from "@/components/home-media";
-import { MiniProjectModal } from "@/components/mini-project-modal";
+import {
+  MiniProjectModal,
+  type MiniProjectModalHandle,
+} from "@/components/mini-project-modal";
 import {
   homeTiles,
   type HomeModalTile,
@@ -51,9 +55,17 @@ function Tile({
   order: number;
   onOpen: (tile: HomeModalTile) => void;
 }) {
+  const mediaStyle =
+    tile.id === "klocky-cover"
+      ? undefined
+      : ({ ["--media-ratio" as string]: `${tile.width} / ${tile.height}` } as CSSProperties);
+
   const inner = (
     <>
-      <span className={`work-tile-media${tile.wash ? " wash" : ""}${tile.lined ? " lined" : ""}`}>
+      <span
+        className={`work-tile-media${tile.wash ? " wash" : ""}${tile.lined ? " lined" : ""}`}
+        style={mediaStyle}
+      >
         <HomeMedia tile={tile} />
       </span>
       {tile.label ? <TileLabel name={tile.label} /> : null}
@@ -113,6 +125,7 @@ function splitTiles(count: 2 | 3) {
 export function ProjectGrid() {
   const [cols, setCols] = useState<2 | 3>(3);
   const [openProject, setOpenProject] = useState<MiniProject | null>(null);
+  const modalRef = useRef<MiniProjectModalHandle>(null);
 
   useEffect(() => {
     const syncProjectFromUrl = () => {
@@ -148,7 +161,8 @@ export function ProjectGrid() {
       "",
       url,
     );
-    setOpenProject(project);
+    flushSync(() => setOpenProject(project));
+    modalRef.current?.show();
   };
 
   const closeModal = () => {
@@ -199,7 +213,7 @@ export function ProjectGrid() {
           <ColumnsIcon count={3} />
         </button>
       </div>
-      <MiniProjectModal project={openProject} onRequestClose={closeModal} />
+      <MiniProjectModal ref={modalRef} project={openProject} onRequestClose={closeModal} />
     </>
   );
 }

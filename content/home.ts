@@ -15,6 +15,8 @@ export type MiniProject = {
   title: string;
   description: string;
   media: [MiniProjectMedia, ...MiniProjectMedia[]];
+  projectUrl?: string;
+  projectUrlLabel?: string;
 };
 
 type HomeTileBase = {
@@ -119,5 +121,46 @@ export const homeTiles: HomeTile[] = [
     poster: "/work/fun-01-poster.webp",
     column: "right",
     column3: 3,
+  },
+  {
+    id: "vizzy-cover",
+    src: "/home/vizzy-cover.mp4",
+    width: 1080,
+    height: 1440,
+    alt: "Vizzy Figma plugin moving comments between pages",
+    label: "Vizzy",
+    mediaKind: "video",
+    poster: "/home/vizzy-cover-poster.webp",
+    column: "right",
+    column3: 1,
+    destination: {
+      type: "modal",
+      project: {
+        slug: "vizzy",
+        title: "Vizzy Figma Plugin",
+        description:
+          "I got tired of not being able to move comments page-to-page or into another file. Vizzy is the plugin I built to fix that. Sole designer and developer.",
+        projectUrl:
+          "https://www.figma.com/community/generative-plugin/1683396907519346280/vizzy-comment-mover",
+        projectUrlLabel: "Check out Vizzy",
+        media: [
+          {
+            src: "/work/vizzy/demo.mp4",
+            width: 1688,
+            height: 1072,
+            alt: "Screen recording of Vizzy moving Figma comments between pages",
+            mediaKind: "video",
+            poster: "/work/vizzy/demo-poster.webp",
+          },
+          {
+            src: "/work/vizzy/figma-ui.webp",
+            width: 1688,
+            height: 950,
+            alt: "Vizzy plugin UI inside Figma",
+            caption: "Built for the way design teams actually work in Figma.",
+          },
+        ],
+      },
+    },
   },
 ];
