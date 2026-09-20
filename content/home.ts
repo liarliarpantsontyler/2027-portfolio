@@ -124,13 +124,12 @@ export const homeTiles: HomeTile[] = [
   },
   {
     id: "vizzy-cover",
-    src: "/home/vizzy-cover.mp4",
-    width: 1920,
-    height: 1080,
-    alt: "Vizzy Figma plugin moving comments between pages",
+    src: "/home/vizzy-cover.webp",
+    width: 1024,
+    height: 576,
+    alt: "Vizzy Figma plugin UI with sticky comment cards on the canvas",
     label: "Vizzy",
-    mediaKind: "video",
-    poster: "/home/vizzy-cover-poster.webp",
+    mediaKind: "image",
     column: "right",
     column3: 1,
     destination: {
