@@ -1,14 +1,6 @@
+import { KlockyCollection } from "@/components/klocky-collection";
 import type { Project } from "@/content/projects";
 import { ProjectMedia } from "@/components/project-media";
-
-const clockStills = [
-  ["meridian", "Meridian"],
-  ["fold", "Fold"],
-  ["sunday", "Sunday"],
-  ["lucent", "Lucent"],
-  ["index", "Index"],
-  ["quarters", "Quarters"],
-] as const;
 
 export function KlockyStory({ project }: { project: Project }) {
   const [hero, , onboarding, customization, fullscreen] = project.gallery;
@@ -25,23 +17,7 @@ export function KlockyStory({ project }: { project: Project }) {
         <p>Each clock pairs its own composition with an original generative atmosphere.</p>
       </section>
 
-      <div className="klocky-clock-grid" aria-label="Six Klocky clock designs">
-        {clockStills.map(([id, name]) => (
-          <figure key={id}>
-            <div className="klocky-still-frame">
-              <img
-                src={`/work/klocky/${id}.webp`}
-                width="1688"
-                height="780"
-                loading="lazy"
-                decoding="async"
-                alt={`${name} clock design in Klocky`}
-              />
-            </div>
-            <figcaption>{name}</figcaption>
-          </figure>
-        ))}
-      </div>
+      <KlockyCollection />
 
       <section className="klocky-feature klocky-feature-portrait">
         <div className="klocky-feature-copy">

@@ -1,0 +1,16 @@
+---
+description: Layout contract for full /work/[slug] project pages (header spacing and visual-first)
+globs: app/work/**/*,components/*-story.tsx,content/projects.ts,app/globals.css
+alwaysApply: false
+---
+
+# Full project page layout
+
+Canonical doc: README → **Full project page layout contract**.
+
+Non-negotiables:
+
+- All case studies use the shared `.project-header` in `app/work/[slug]/page.tsx`; kicker is the first element.
+- Top spacing is **only** `.project-header { padding: 28px 0 48px; }` in `app/globals.css`. Never override header/wrap/main padding for a single project.
+- `presentation: "visual-first"` → custom story component for body sections only; header structure stays the same.
+- Project-specific CSS goes under story/gallery classes (e.g. `.klocky-story`), not `.klocky-header` layout.

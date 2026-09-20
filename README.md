@@ -39,6 +39,16 @@ The build writes a static site to `out/`. Netlify publish directory is already s
 
 `content/site.ts` holds name, bio, experience, and links.
 
+## Full project page layout contract
+
+Use this when adding or editing any `/work/[slug]/` case study (paste into Codex, Claude, Antigravity, etc. if needed).
+
+- Shell: `SiteFrame` → `#main` → `.wrap` → **`.project-header`** (kicker is always the first child).
+- Header spacing comes **only** from `.project-header` in `app/globals.css` (`padding: 28px 0 48px`). **Do not** add project-specific top/bottom padding or margin on the header, `.wrap`, or `#main`.
+- **`presentation: "visual-first"`** (see Klocky) may use a dedicated story component for the body (e.g. `components/klocky-story.tsx`). Custom layout and styling belong there, in gallery treatments, or theme tokens—not in the header.
+- `.klocky-header` is for typography and link color only, not layout offsets. Do not reintroduce per-project header padding classes.
+- New visual-first projects: add `presentation: "visual-first"`, a story component, and content in `content/projects.ts`—same header markup as standard pages in `app/work/[slug]/page.tsx`.
+
 ## Add a mini project
 
 Mini projects are homepage tiles that open in the **shared modal** (no `/work/[slug]` page). **Reference:** `vizzy-cover` in `content/home.ts`. **Copy-paste starter:** `content/mini-project.template.ts`.

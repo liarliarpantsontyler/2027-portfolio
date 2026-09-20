@@ -1,45 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import type { ProjectImage } from "@/content/projects";
+import { MotionVideo } from "@/components/motion-video";
 import { OatsOverview } from "@/components/oats-overview";
 
 export function ProjectMedia({ item, first }: { item: ProjectImage; first: boolean }) {
-  const mediaRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [reduceMotion, setReduceMotion] = useState(false);
-
-  useEffect(() => {
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReduceMotion(media.matches);
-    update();
-    media.addEventListener("change", update);
-    return () => media.removeEventListener("change", update);
-  }, []);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    const root = mediaRef.current;
-    if (!video || !root || reduceMotion || item.kind !== "video") return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          void video.play().catch(() => {
-            video.muted = true;
-            void video.play().catch(() => {});
-          });
-        } else {
-          video.pause();
-        }
-      },
-      { threshold: 0.35 },
-    );
-
-    observer.observe(root);
-    return () => observer.disconnect();
-  }, [item.kind, item.src, reduceMotion]);
-
   if (item.treatment === "overview") return <OatsOverview />;
 
   if (item.placeholder) {
@@ -64,46 +29,13 @@ export function ProjectMedia({ item, first }: { item: ProjectImage; first: boole
     );
   }
 
-  if (item.kind === "video" && item.loop && reduceMotion && item.poster) {
-    return (
-      <div
-        className={`story-media ${item.treatment}${item.orientation ? ` ${item.orientation}` : ""}${item.inset ? " inset" : ""}${item.wash ? " wash" : ""}`}
-      >
-        {item.treatment === "device" ? (
-          <div
-            className={`device-frame${item.orientation ? ` ${item.orientation}` : ""}`}
-            style={{ aspectRatio: `${item.width} / ${item.height}` }}
-          >
-            <img src={item.poster} width={item.width} height={item.height} alt={item.alt} />
-          </div>
-        ) : (
-          <img src={item.poster} width={item.width} height={item.height} alt={item.alt} />
-        )}
-      </div>
-    );
-  }
-
-  const looping = item.kind === "video" && item.loop && !reduceMotion;
   const framed = item.treatment === "device" && item.kind === "video";
   const deviceAspect = `${item.width} / ${item.height}`;
 
-  const video = looping ? (
-    <video
-      ref={videoRef}
-      src={item.src}
-      poster={item.poster}
-      width={item.width}
-      height={item.height}
-      muted
-      loop
-      playsInline
-      preload="metadata"
-      disablePictureInPicture
-      aria-label={item.alt}
-    />
+  const video = item.loop ? (
+    <MotionVideo key={item.src} src={item.src} poster={item.poster} width={item.width} height={item.height} alt={item.alt} />
   ) : (
     <video
-      ref={videoRef}
       width={item.width}
       height={item.height}
       poster={item.poster}
@@ -119,7 +51,6 @@ export function ProjectMedia({ item, first }: { item: ProjectImage; first: boole
 
   return (
     <div
-      ref={item.kind === "video" ? mediaRef : undefined}
       className={`story-media ${item.treatment}${item.orientation ? ` ${item.orientation}` : ""}${item.inset ? " inset" : ""}${item.wash ? " wash" : ""}`}
     >
       {item.kind === "video" ? (

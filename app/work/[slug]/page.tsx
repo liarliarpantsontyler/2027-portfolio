@@ -57,41 +57,28 @@ export default async function ProjectPage({
   return (
     <main id="main">
       <div className="wrap">
+        {/* Do not add header padding or layout overrides; see README “Full project page layout contract”. */}
+        <header className={visualFirst ? "project-header klocky-header" : "project-header"}>
+          <p className="kicker">
+            {visualFirst
+              ? "Design & Dev by Tyler Hunter (owner)"
+              : `${project.company} / ${project.name}`}
+          </p>
+          <h1>{project.headline}</h1>
+          <div className="project-deck">
+            <p>{project.intro}</p>
+            {visualFirst && project.projectUrl ? (
+              <a href={project.projectUrl} target="_blank" rel="noreferrer">
+                Visit Klocky <span aria-hidden="true">↗</span>
+              </a>
+            ) : null}
+            {!visualFirst ? <span>{project.capabilities}</span> : null}
+          </div>
+        </header>
         {visualFirst ? (
-          <>
-            <header className="project-header klocky-header">
-              <img
-                className="klocky-logo"
-                src="/work/klocky/logo.svg"
-                width="320"
-                height="108"
-                alt="Klocky by humin"
-              />
-              <p className="kicker">Independent product / {project.year}</p>
-              <h1>{project.headline}</h1>
-              <div className="project-deck">
-                <p>{project.intro}</p>
-                {project.projectUrl ? (
-                  <a href={project.projectUrl} target="_blank" rel="noreferrer">
-                    Visit Klocky <span aria-hidden="true">↗</span>
-                  </a>
-                ) : null}
-              </div>
-            </header>
-            <KlockyStory project={project} />
-          </>
+          <KlockyStory project={project} />
         ) : (
           <>
-            <header className="project-header">
-              <p className="kicker">
-                {project.company} / {project.name}
-              </p>
-              <h1>{project.headline}</h1>
-              <div className="project-deck">
-                <p>{project.intro}</p>
-                <span>{project.capabilities}</span>
-              </div>
-            </header>
             <ProjectResults project={project} />
             <ProjectGallery project={project} />
             {project.problem || project.made ? (
