@@ -2096,6 +2096,13 @@ body.mini-project-open {
   font-size: 14px;
 }
 
+.experience article .experience-meta {
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
 .experience article p:last-child {
   margin-top: 8px;
   color: var(--muted);
