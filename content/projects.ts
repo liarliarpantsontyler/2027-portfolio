@@ -110,7 +110,7 @@ export const projects: Project[] = [
         src: "/work/klocky/customization.mp4",
         width: 1170,
         height: 2532,
-        alt: "Klocky editor choosing Chroma, the Sunday layout, and Editorial Serif before revealing the finished clock",
+        alt: "Klocky editor choosing Chroma, the Fold layout, and Antonio before revealing the finished clock",
         title: "Make it yours.",
         caption: "Background, layout, and type change the whole character of the clock.",
         treatment: "device",
