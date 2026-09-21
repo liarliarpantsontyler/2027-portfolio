@@ -1,12 +1,12 @@
 # Portfolio roadmap
 
-Last updated: 2026-09-20
+Last updated: 2026-09-21
 
 This is the shared source of truth for planned portfolio work. Any coding assistant with access to this repository can read it. Order reflects Tyler's current priorities; it is not a delivery schedule.
 
 ## What's next?
 
-**Next: OATS-01 — Cross-sell and upsell system.** Start by inventorying the existing Oats app case study and media, then outline the dedicated growth case study and identify the data needed for its revenue estimate. The case study has not been started.
+**Next: OATS-02 — Loyalty program and reward systems.** OATS-01 is live at `/work/cross-sell-upsell/` with narrative scaffold and media placeholders; replace placeholder metrics and swap in production screenshots before final publish.
 
 The larger goal is to split the broad Oats Overnight app case study into focused projects with enough depth to show the problem, research, design decisions, interactions, and results. Ratings & Notes already has its own case study and should remain separate.
 
@@ -14,8 +14,8 @@ The larger goal is to split the broad Oats Overnight app case study into focused
 
 | Order | ID | Project | Status |
 | --- | --- | --- | --- |
-| 1 | OATS-01 | Cross-sell and upsell system | Planned — next |
-| 2 | OATS-02 | Loyalty program and reward systems | Planned |
+| 1 | OATS-01 | Cross-sell and upsell system | In progress — page at `/work/cross-sell-upsell/`; assets and sourced metrics pending |
+| 2 | OATS-02 | Loyalty program and reward systems | Planned — next |
 | 3 | OATS-03 | Survey feature design | Planned |
 | 4 | OATS-04 | Restructure the Oats app overview and portfolio navigation | Planned — after the focused stories are ready |
 
@@ -39,7 +39,9 @@ Evidence to collect:
 - Actual launch date and five-month reporting window; eligible audience, exposure, conversion, order value, refunds/cancellations, and any experiment or comparison group.
 - Estimate incremental revenue using the best available baseline. Prefer a holdout comparison of net revenue per eligible user multiplied by exposed eligible users. Without a credible comparison, report attributed sales separately and label any incremental estimate with its assumptions and uncertainty. Do not invent a dollar amount or equate all offer sales with incremental revenue. Distinguish revenue from profit.
 
-Done when: a dedicated case study explains the initial ask, user behavior, design decisions, complete purchase flows, and a sourced result or explicitly qualified estimate.
+**Progress (2026-09-21):** Dedicated page shipped — [`content/briefs/cross-sell-upsell.md`](content/briefs/cross-sell-upsell.md), [`components/oats-cross-sell-story.tsx`](components/oats-cross-sell-story.tsx). Homepage Oats tile still points to `/work/oats-overnight-app/` until OATS-04. Hero uses placeholder **+$215K** and **~14%** acceptance until production data replaces them.
+
+Done when: production media fills placeholders, analytics source the 70% / revenue / conversion figures, and the estimate is either sourced or explicitly qualified per evidence rules above.
 
 ## OATS-02 — Loyalty program and reward systems
 

@@ -1408,6 +1408,300 @@ body.mini-project-open {
   line-height: 1.55;
 }
 
+.oats-growth-story {
+  margin-top: 0;
+}
+
+.oats-growth-hero-stage {
+  margin-bottom: clamp(72px, 10vw, 120px);
+}
+
+.oats-growth-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.oats-growth-hero-primary .story-media {
+  min-height: clamp(320px, 42vw, 520px);
+}
+
+.oats-growth-hero-secondary {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.oats-growth-beat {
+  max-width: 720px;
+  margin: clamp(88px, 12vw, 140px) 0;
+}
+
+.oats-growth-beat-compact {
+  margin-block: clamp(64px, 8vw, 96px);
+}
+
+.oats-growth-beat h2,
+.oats-growth-feature-copy h2,
+.oats-growth-system h2,
+.oats-growth-impact h2 {
+  font-size: clamp(28px, 3.6vw, 48px);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  margin-bottom: 20px;
+}
+
+.oats-growth-beat > p,
+.oats-growth-feature-copy > p {
+  font-size: 16px;
+  line-height: 1.55;
+  max-width: 62ch;
+}
+
+.oats-growth-beat > p + p {
+  margin-top: 16px;
+}
+
+.oats-growth-pull {
+  margin: clamp(28px, 4vw, 40px) 0;
+  padding: 0;
+  border: none;
+  font-size: clamp(22px, 2.8vw, 34px);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+  max-width: 22ch;
+}
+
+.oats-growth-emphasis {
+  margin-top: 18px !important;
+  font-size: clamp(17px, 1.8vw, 20px) !important;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.45 !important;
+  max-width: 48ch !important;
+}
+
+.oats-growth-principles {
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  max-width: 62ch;
+}
+
+.oats-growth-principles li {
+  font-size: 16px;
+  line-height: 1.55;
+  padding-left: 1.4em;
+  text-indent: -1.4em;
+}
+
+.oats-growth-principles strong {
+  font-weight: 600;
+}
+
+.oats-growth-system {
+  max-width: none;
+}
+
+.oats-growth-flow {
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0;
+  max-width: 520px;
+}
+
+.oats-growth-flow li {
+  position: relative;
+  padding: 20px 0 20px 28px;
+  border-left: 2px solid color-mix(in srgb, var(--ink) 18%, transparent);
+}
+
+.oats-growth-flow li::before {
+  content: "";
+  position: absolute;
+  left: -7px;
+  top: 26px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--ink);
+}
+
+.oats-growth-flow li:not(:last-child)::after {
+  content: "↓";
+  position: absolute;
+  left: 22px;
+  bottom: -2px;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1;
+}
+
+.oats-growth-flow-title {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+
+.oats-growth-flow li > p:last-child {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--muted);
+  max-width: 40ch;
+}
+
+.oats-growth-feature {
+  margin: clamp(100px, 14vw, 160px) 0;
+}
+
+.oats-growth-feature-split {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.95fr) minmax(320px, 1.05fr);
+  gap: clamp(40px, 6vw, 80px);
+  align-items: start;
+}
+
+.oats-growth-feature-copy {
+  max-width: 580px;
+}
+
+.oats-growth-feature-copy .kicker {
+  margin-bottom: 14px;
+}
+
+.oats-growth-feature-media-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-width: 0;
+}
+
+.oats-growth-need {
+  margin-top: 14px !important;
+  font-size: 13px !important;
+  color: var(--muted) !important;
+  font-style: italic;
+}
+
+.oats-growth-decisions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+  margin: clamp(100px, 14vw, 160px) 0;
+  padding-top: 42px;
+  border-top: 1px solid var(--line);
+}
+
+.oats-growth-decision h3 {
+  font-size: clamp(20px, 2.2vw, 28px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 10px 0 18px;
+}
+
+.oats-growth-decision dl {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.oats-growth-decision dt {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.oats-growth-decision dd {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.oats-growth-impact {
+  margin: clamp(100px, 14vw, 160px) 0;
+  padding: clamp(32px, 4vw, 48px);
+  border-radius: 12px;
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.oats-growth-impact .kicker {
+  color: #b5b5b5;
+}
+
+.oats-growth-impact-primary {
+  font-size: clamp(40px, 5vw, 72px);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin: 16px 0 20px;
+}
+
+.oats-growth-impact-method {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #b5b5b5;
+  max-width: 58ch;
+}
+
+.oats-growth-impact-secondary {
+  margin: 24px 0 0;
+  padding-left: 1.2em;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #b5b5b5;
+}
+
+.oats-growth-related ul {
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 62ch;
+}
+
+.oats-growth-related a {
+  color: #2859e8;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.oats-growth-related a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.oats-growth-credit {
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr);
+  gap: 28px;
+  padding: 42px 0 56px;
+  border-top: 1px solid var(--line);
+  margin-top: clamp(64px, 8vw, 96px);
+}
+
+.oats-growth-credit > p:last-child {
+  font-size: 15px;
+  line-height: 1.55;
+  max-width: 64ch;
+}
+
 .oats-overview {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -1922,6 +2216,28 @@ body.mini-project-open {
   .klocky-credit {
     grid-template-columns: 1fr;
     gap: 18px;
+  }
+
+  .oats-growth-hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .oats-growth-feature-split {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .oats-growth-decisions {
+    grid-template-columns: 1fr;
+  }
+
+  .oats-growth-credit {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .oats-growth-pull {
+    max-width: none;
   }
 
   .story-media.device .device-frame.landscape {

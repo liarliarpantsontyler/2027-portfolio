@@ -5,6 +5,7 @@ import { getNextProject, getProject, publishedProjects } from "@/content/project
 import { ProjectGallery } from "@/components/project-gallery";
 import { ProjectResults } from "@/components/project-results";
 import { KlockyStory } from "@/components/klocky-story";
+import { OatsCrossSellStory } from "@/components/oats-cross-sell-story";
 
 export function generateStaticParams() {
   return publishedProjects().map((project) => ({ slug: project.slug }));
@@ -52,31 +53,37 @@ export default async function ProjectPage({
   const project = getProject(slug);
   if (!project) notFound();
   const next = getNextProject(project.slug);
-  const visualFirst = project.presentation === "visual-first";
+  const isKlocky = project.slug === "klocky";
+  const isCrossSell = project.slug === "cross-sell-upsell";
+  const hasCustomStory = isKlocky || isCrossSell;
 
   return (
     <main id="main">
       <div className="wrap">
         {/* Do not add header padding or layout overrides; see README “Full project page layout contract”. */}
-        <header className={visualFirst ? "project-header klocky-header" : "project-header"}>
+        <header className={isKlocky ? "project-header klocky-header" : "project-header"}>
           <p className="kicker">
-            {visualFirst
+            {isKlocky
               ? "Design & Dev by Tyler Hunter (owner)"
               : `${project.company} / ${project.name}`}
           </p>
           <h1>{project.headline}</h1>
           <div className="project-deck">
             <p>{project.intro}</p>
-            {visualFirst && project.projectUrl ? (
+            {isKlocky && project.projectUrl ? (
               <a href={project.projectUrl} target="_blank" rel="noreferrer">
                 Visit Klocky <span aria-hidden="true">↗</span>
               </a>
             ) : null}
-            {!visualFirst ? <span>{project.capabilities}</span> : null}
+            {!isKlocky ? <span>{project.capabilities}</span> : null}
           </div>
         </header>
-        {visualFirst ? (
-          <KlockyStory project={project} />
+        {hasCustomStory ? (
+          <>
+            {isCrossSell ? <ProjectResults project={project} /> : null}
+            {isKlocky ? <KlockyStory project={project} /> : null}
+            {isCrossSell ? <OatsCrossSellStory project={project} /> : null}
+          </>
         ) : (
           <>
             <ProjectResults project={project} />
