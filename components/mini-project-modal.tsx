@@ -2,6 +2,11 @@
 
 import { forwardRef, useEffect, useId, useImperativeHandle, useRef, useState } from "react";
 import type { MiniProject, MiniProjectMedia } from "@/content/home";
+import { sampleImageEdgeBackground } from "@/lib/sample-image-edge-background";
+
+function figureFitClass(item: MiniProjectMedia) {
+  return item.fit === "cover" ? "fit-cover" : "fit-contain";
+}
 
 function ChevronIcon({ direction }: { direction: "left" | "right" }) {
   return (
@@ -36,19 +41,25 @@ function ModalMedia({
   item,
   reduceMotion,
   hideCaption = false,
+  stageBackground,
+  onSampleBackground,
 }: {
   item: MiniProjectMedia;
   reduceMotion: boolean;
   hideCaption?: boolean;
+  stageBackground: string;
+  onSampleBackground: (src: string, color: string) => void;
 }) {
   const isVideo = item.mediaKind === "video";
-  const mediaBackground = item.background;
-  const figureStyle = mediaBackground ? { backgroundColor: mediaBackground } : undefined;
-  const videoStyle = mediaBackground ? { backgroundColor: mediaBackground } : undefined;
+  const mediaBackground = item.background ?? stageBackground;
+  const figureStyle = { backgroundColor: mediaBackground };
+  const videoStyle = item.background ? { backgroundColor: item.background } : undefined;
 
   return (
     <figure
-      className={`mini-project-figure${mediaBackground ? " has-media-background" : ""}`}
+      className={`mini-project-figure ${figureFitClass(item)}${
+        isVideo && item.background ? " has-media-background" : ""
+      }`}
       style={figureStyle}
     >
       {isVideo && (!reduceMotion || !item.poster) ? (
@@ -75,6 +86,11 @@ function ModalMedia({
           alt={item.alt}
           loading="lazy"
           decoding="async"
+          onLoad={(event) => {
+            if (item.background || isVideo) return;
+            const img = event.currentTarget;
+            onSampleBackground(item.src, sampleImageEdgeBackground(img));
+          }}
         />
       )}
       {item.caption && !hideCaption ? <figcaption>{item.caption}</figcaption> : null}
@@ -99,6 +115,11 @@ export const MiniProjectModal = forwardRef<
   const descriptionId = useId();
   const [reduceMotion, setReduceMotion] = useState(false);
   const [slideIndex, setSlideIndex] = useState(0);
+  const [sampledBackgrounds, setSampledBackgrounds] = useState<Record<string, string>>({});
+
+  const rememberSampledBackground = (src: string, color: string) => {
+    setSampledBackgrounds((prev) => (prev[src] === color ? prev : { ...prev, [src]: color }));
+  };
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -110,6 +131,7 @@ export const MiniProjectModal = forwardRef<
 
   useEffect(() => {
     setSlideIndex(0);
+    setSampledBackgrounds({});
   }, [project?.slug]);
 
   useEffect(() => {
@@ -172,7 +194,10 @@ export const MiniProjectModal = forwardRef<
       ? project.media[0]
       : project.media[slideIndex]
     : null;
-  const stageBackground = activeMedia?.background ?? "#000";
+  const stageBackground =
+    activeMedia?.background ??
+    (activeMedia ? sampledBackgrounds[activeMedia.src] : undefined) ??
+    "#000000";
 
   return (
     <dialog
@@ -205,7 +230,12 @@ export const MiniProjectModal = forwardRef<
                   : {})}
               >
                 {project.media.length === 1 ? (
-                  <ModalMedia item={project.media[0]} reduceMotion={reduceMotion} />
+                  <ModalMedia
+                    item={project.media[0]}
+                    reduceMotion={reduceMotion}
+                    stageBackground={stageBackground}
+                    onSampleBackground={rememberSampledBackground}
+                  />
                 ) : (
                   <div
                     className={`mini-project-carousel-viewport${
@@ -218,6 +248,8 @@ export const MiniProjectModal = forwardRef<
                       item={project.media[slideIndex]}
                       reduceMotion={reduceMotion}
                       hideCaption
+                      stageBackground={stageBackground}
+                      onSampleBackground={rememberSampledBackground}
                     />
                   </div>
                 )}

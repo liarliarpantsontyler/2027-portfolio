@@ -1,0 +1,27 @@
+---
+description: Mini project tiles, modal media import quality, fit, and backgrounds
+globs: content/home.ts,content/mini-project.template.ts,components/mini-project-modal.tsx,components/home-media.tsx,components/project-grid.tsx,public/home/**,public/work/**,scripts/import-mini-project-media.mjs
+alwaysApply: false
+---
+
+# Mini projects (homepage modal)
+
+Canonical doc: README → **Add a mini project**. One shared modal: `components/mini-project-modal.tsx`. Do not fork per-project modals.
+
+## Importing images (non-negotiable)
+
+- **Do not re-encode** user images unless they explicitly ask. Prefer byte-copy (`cp`) of JPG, PNG, or WebP they provide.
+- If conversion is required: **WebP quality ≥ 92** (match `scripts/encode-klocky.mjs` posters). Never use cwebp/ffmpeg quality below 90 without explicit approval.
+- **Do not downscale** unless source width exceeds 2560px and they want a web cap. Always set `width` / `height` in `content/home.ts` to the **actual** pixel dimensions of the file in `public/`.
+- **Full resolution:** Do not rely on chat attachments alone (~1024px cap). User should drop files in `public/work/<slug>/` or give an absolute disk path. Use `node scripts/import-mini-project-media.mjs` — never hand-roll `cwebp -q 80`.
+- Run the import script to print `{ width, height, background }` per file; paste into `homeTiles` modal `media` entries.
+
+## Modal display
+
+- **Default `fit`:** `contain` (no crop). Use `fit: "cover"` only for intentional full-bleed UI shots.
+- **Background:** Set `background` on each slide (from import script edge sampling). Do not leave product photography on pure `#000` letterbox when the image has a solid field color.
+- **Videos:** `contain`; use `background` for screen recordings (see Oontelligence in `content/home.ts`).
+
+## Adding a tile
+
+Copy `content/mini-project.template.ts` into `homeTiles`. Unique `slug` → `/?project=<slug>`. Set `column` and `column3`.

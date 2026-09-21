@@ -5,7 +5,7 @@
  * UI: components/mini-project-modal.tsx + .mini-project-* in app/globals.css
  *
  * Do not create a per-project modal. All mini projects share this layout:
- * - Large modal (~960×880 max), full-bleed media on black
+ * - Large modal (~960×880 max); per-slide background + default fit (contain)
  * - Optional carousel (2+ media): controls sit on white, below media
  * - Title, description, optional external link with arrow
  * - Shareable URL: /?project=<slug>
@@ -40,12 +40,15 @@ export const miniProjectTileTemplate = {
           alt: "What the demo video shows",
           mediaKind: "video",
           poster: "/work/your-project/demo-poster.webp",
+          // background: "rgb(47, 47, 47)", // screen recordings — letterbox matches capture
         },
         {
           src: "/work/your-project/detail.webp",
           width: 1688,
           height: 950,
           alt: "Secondary still or UI shot",
+          // background: "#ffffff", // from: node scripts/import-mini-project-media.mjs --out public/work/your-project ...
+          // fit: "cover", // optional full-bleed crop for dense UI only
         },
       ],
     },

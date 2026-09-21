@@ -653,9 +653,16 @@ body.mini-project-open {
 .mini-project-carousel-viewport .mini-project-figure img {
   flex: 1 1 auto;
   width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center top;
+}
+
+.mini-project-figure.fit-cover img {
   height: 100%;
   object-fit: cover;
-  object-position: center top;
 }
 
 /* Screen recordings: scale to full width without object-fit letterboxing (browser default is black). */
@@ -1169,6 +1176,12 @@ body.mini-project-open {
 
 .story-figure.half .story-media.device .device-frame {
   width: min(100%, 300px);
+}
+
+.story-media.device .device-frame > .motion-video {
+  position: absolute;
+  inset: 0;
+  height: 100%;
 }
 
 .story-media.device .device-frame video {

@@ -8,6 +8,8 @@ export type MiniProjectMedia = {
   mediaKind?: HomeMediaKind;
   poster?: string;
   caption?: string;
+  /** How the slide fills the modal stage. Default: contain (no crop). */
+  fit?: "contain" | "cover";
   /** Letterbox / stage fill when media aspect ratio does not fill the modal (e.g. match a screen recording). */
   background?: string;
 };
@@ -164,16 +166,90 @@ export const homeTiles: HomeTile[] = [
     },
   },
   {
+    id: "retail-bottles-cover",
+    src: "/home/retail-bottles-cover.jpg",
+    width: 1024,
+    height: 768,
+    alt: "Oats Overnight retail shake bottles arranged on a purple background with flavor ingredients",
+    label: "Retail bottles",
+    mediaKind: "image",
+    column: "right",
+    column3: 3,
+    destination: {
+      type: "modal",
+      project: {
+        slug: "retail-bottles",
+        title: "Oats Overnight retail bottles",
+        description:
+          "I designed the illustration and packaging for Oats Overnight’s retail shake bottles — a flavor-coded system built for shelf impact. One label structure repeats across every flavor; color and graphic carry the rest. It’s illustration work, but it’s the same muscle as a branding system — just outside the usual UX and product-design frame.",
+        projectUrl: "/work/oats-overnight-app/",
+        projectUrlLabel: "Oats app case study",
+        media: [
+          {
+            src: "/work/retail-bottles/hero-flatlay.jpg",
+            width: 1024,
+            height: 768,
+            alt: "Flat lay of Oats Overnight retail bottles on a purple field with ingredients for each flavor",
+            background: "#d2a1f9",
+          },
+          {
+            src: "/work/retail-bottles/lineup-green.jpg",
+            width: 1024,
+            height: 768,
+            alt: "Full lineup of retail bottle flavors on a bright green background",
+            background: "#78a21f",
+          },
+          {
+            src: "/work/retail-bottles/marketing-grid.jpg",
+            width: 1024,
+            height: 682,
+            alt: "Grid of product photography for individual retail bottle flavors",
+            background: "#a8d437",
+          },
+          {
+            src: "/work/retail-bottles/blueberry-explorations.jpg",
+            width: 1024,
+            height: 902,
+            alt: "Ten Blueberry Muffin label illustration explorations in purple",
+            background: "#ffffff",
+          },
+          {
+            src: "/work/retail-bottles/design-matrix.jpg",
+            width: 1024,
+            height: 583,
+            alt: "Large matrix of bottle label design iterations across flavors and color systems",
+            background: "#ffffff",
+          },
+          {
+            src: "/work/retail-bottles/walmart.jpg",
+            width: 831,
+            height: 1024,
+            alt: "Walmart retail creative featuring three Oats Overnight shake flavors",
+            background: "#ffffff",
+          },
+          {
+            src: "/work/retail-bottles/retail-shelf.jpg",
+            width: 630,
+            height: 1024,
+            alt: "Oats Overnight bottles on shelf in a grocery store",
+            background: "#fbfbfb",
+          },
+        ],
+      },
+    },
+  },
+  {
     id: "oontelligence-cover",
-    src: "/home/oontelligence-cover.mp4",
+    src: "/home/oontelligence-cover.mp4?v=20250921b",
     width: 720,
     height: 762,
     alt: "Phone screen showing flavor ratings, notes, loyalty rewards, and delivery in the Oats Overnight app",
     label: "Oontelligence",
     mediaKind: "video",
-    poster: "/home/oontelligence-cover-poster.webp",
+    poster: "/home/oontelligence-cover-poster.webp?v=20250921b",
     column: "left",
     column3: 2,
+    lined: true,
     destination: {
       type: "modal",
       project: {

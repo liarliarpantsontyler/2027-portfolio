@@ -65,13 +65,18 @@ One modal for all mini projects. Do not add a project-specific modal component.
 
 ### Checklist
 
-1. **Homepage cover** — `public/home/` (MP4 + WebP poster). Set tile `width` / `height` to the real aspect ratio (e.g. 1920×1080 landscape, 1080×1440 portrait). The grid uses that ratio for the tile shape.
-2. **Modal media** — `public/work/<project>/`. Prefer H.264 MP4 for demos and WebP for stills. Export a poster frame for each video.
-3. **Copy the template** from `content/mini-project.template.ts` into `homeTiles`. Use a unique `slug` (used in `/?project=slug`).
+1. **Homepage cover** — `public/home/` (MP4 + WebP poster, or a still). Set tile `width` / `height` to the real aspect ratio (e.g. 1920×1080 landscape, 1080×1440 portrait). The grid uses that ratio for the tile shape.
+2. **Modal media** — `public/work/<project>/`. Use **`node scripts/import-mini-project-media.mjs`** to copy files in (default: no re-encode). Chat attachments are ~1024px wide; drop full-res files in the repo or pass a disk path to the script.
+3. **Copy the template** from `content/mini-project.template.ts` into `homeTiles`. Use a unique `slug` (used in `/?project=slug`). Paste `width`, `height`, and `background` from the import script output for each slide.
 4. **Grid position** — set both `column` (`"left"` \| `"right"`) and `column3` (`1` \| `2` \| `3`).
 5. **Optional link** — `projectUrl` + `projectUrlLabel` (curved arrow, opens in new tab).
 6. **Carousel** — two or more `media` items; arrows and dots render on white under the media. Captions on carousel slides are hidden in the modal (use description or single-slide captions if needed).
 7. **`npm run build`** before publish.
+
+### Media import (do not crush or crop in assets)
+
+- **Copy, don’t recompress:** The script byte-copies by default. Optional `--webp` converts at quality **92** (same bar as Klocky posters). Do not run ad-hoc `cwebp -q 80` on portfolio art.
+- **Per-slide metadata:** Each carousel item can set `background` (letterbox color from script sampling) and `fit` (`"contain"` default, `"cover"` only when you want full-bleed crop).
 
 ### Transcode a cover from `.mov`
 
@@ -82,11 +87,18 @@ ffmpeg -ss 1 -i public/home/your-project-cover.mp4 -frames:v 1 -q:v 2 public/hom
 
 ### Modal behavior (fixed — match Vizzy)
 
-- ~960×880 modal, media full width on black
-- Video slides: `object-fit: contain`, top-aligned
-- Image slides in carousel: `object-fit: cover`, top-aligned (full bleed like video)
+- ~960×880 modal; stage letterbox uses each slide’s `background` (or auto-sampled from the image edge)
+- **Stills default to fit:** `object-fit: contain` (no crop). Set `fit: "cover"` on a slide only for intentional full-bleed UI
+- Video slides: `object-fit: contain`, top-aligned; use `background` for screen recordings
 - Carousel controls on **white**, between media and title
 - Close: backdrop click, Escape, or browser back when opened via history
+
+```bash
+# Copy modal stills + print width/height/background for home.ts
+node scripts/import-mini-project-media.mjs --out public/work/my-slug ~/Downloads/my-shots/*.jpg
+# Optional WebP at q92 (only if you need WebP)
+node scripts/import-mini-project-media.mjs --webp --out public/work/my-slug ./incoming/
+```
 
 ## Case study fields
 
