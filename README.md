@@ -2,6 +2,10 @@
 
 Personal site for [liarliarpantsontyler.com](https://www.liarliarpantsontyler.com). Editorial homepage, image-forward work grid, concise case studies.
 
+## Roadmap
+
+[ROADMAP.md](ROADMAP.md) is the shared source of truth for planned work and what comes next. Coding assistants should read it when asked “what's next on my roadmap?” Shared assistant guidance lives in [AGENTS.md](AGENTS.md), with pointers for Claude and Cursor. In any other coding app, open this repository and ask it to read `ROADMAP.md`; apps without access to these files cannot see the plan automatically.
+
 ## Stack
 
 - Next.js App Router, static export

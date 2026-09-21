@@ -1,0 +1,6 @@
+---
+description: Shared portfolio roadmap and next planned work
+alwaysApply: true
+---
+
+Follow `AGENTS.md`. Use root `ROADMAP.md` as the single source of truth for planned work, priorities, and status. Read it when asked what's next on the roadmap. A status question alone does not authorize implementation. Update the roadmap as authorized work progresses; do not duplicate its content here.
