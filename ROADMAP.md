@@ -39,7 +39,7 @@ Evidence to collect:
 - Actual launch date and five-month reporting window; eligible audience, exposure, conversion, order value, refunds/cancellations, and any experiment or comparison group.
 - Estimate incremental revenue using the best available baseline. Prefer a holdout comparison of net revenue per eligible user multiplied by exposed eligible users. Without a credible comparison, report attributed sales separately and label any incremental estimate with its assumptions and uncertainty. Do not invent a dollar amount or equate all offer sales with incremental revenue. Distinguish revenue from profit.
 
-**Progress (2026-09-21):** Dedicated page shipped — [`content/briefs/cross-sell-upsell.md`](content/briefs/cross-sell-upsell.md), [`components/oats-cross-sell-story.tsx`](components/oats-cross-sell-story.tsx). Homepage Oats tile still points to `/work/oats-overnight-app/` until OATS-04. Hero uses placeholder **+$215K** and **~14%** acceptance until production data replaces them.
+**Progress (2026-09-21):** Homepage QuickSell beat live on `/work/cross-sell-upsell/` with redacted 393px production stills (`homepage-oon-protein-coffee`, `homepage-protein-pack-upsell`) in [`public/work/oats-cross-sell/`](public/work/oats-cross-sell/). Portal pass documented 16→24 copy paths (Manage → Upgrade to 24 Pack; subscription upgrade modal). Pack ladder, 8-pack modal, and 60fps hero motion still pending. Metrics remain placeholder **+$215K** / **~14%** until analytics sourced.
 
 Done when: production media fills placeholders, analytics source the 70% / revenue / conversion figures, and the estimate is either sourced or explicitly qualified per evidence rules above.
 

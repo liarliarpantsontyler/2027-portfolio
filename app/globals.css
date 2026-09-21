@@ -1505,6 +1505,50 @@ body.mini-project-open {
   font-weight: 600;
 }
 
+
+
+.oats-growth-hero-device .story-media.device {
+  min-height: clamp(640px, 72vw, 820px);
+  padding: clamp(24px, 4vw, 48px) 10%;
+}
+
+.oats-growth-feature-portrait {
+  display: grid;
+  grid-template-columns: minmax(230px, 0.8fr) minmax(360px, 1.2fr);
+  align-items: center;
+  gap: clamp(48px, 9vw, 120px);
+}
+
+.oats-growth-feature-portrait-reverse {
+  grid-template-columns: minmax(360px, 1.2fr) minmax(230px, 0.8fr);
+}
+
+.oats-growth-feature-portrait-reverse .oats-growth-feature-copy {
+  order: 2;
+}
+
+.oats-growth-feature-portrait-reverse .story-media {
+  order: 1;
+}
+
+.oats-growth-feature-portrait .story-media.device {
+  min-height: 720px;
+  padding: 58px 10%;
+}
+
+@media (max-width: 900px) {
+  .oats-growth-feature-portrait,
+  .oats-growth-feature-portrait-reverse {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .oats-growth-feature-portrait-reverse .oats-growth-feature-copy,
+  .oats-growth-feature-portrait-reverse .story-media {
+    order: unset;
+  }
+}
+
+/* removed homepage static grid */
 .oats-growth-system {
   max-width: none;
 }

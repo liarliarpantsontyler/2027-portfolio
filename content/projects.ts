@@ -998,6 +998,18 @@ export const projects: Project[] = [
     role: "Tyler contributed product design and visual systems within Teladoc’s wider OneApp team. Illustration work included exploration and sketches; an independent illustrator created the production artwork.",
     gallery: [
       {
+        src: "/work/teladoc-wide.mp4",
+        width: 3840,
+        height: 2160,
+        alt: "Wide view of Teladoc product screens sharing brand, care cards, and UI patterns",
+        title: "One language across care.",
+        caption: "Project OneApp screens flowing through a shared brand and interaction system.",
+        treatment: "composition",
+        kind: "video",
+        poster: "/work/teladoc-wide-poster.webp",
+        loop: true,
+      },
+      {
         src: "/work/teladoc-app-overview.webp",
         width: 867,
         height: 1024,

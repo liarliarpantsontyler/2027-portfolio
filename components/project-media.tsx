@@ -29,7 +29,8 @@ export function ProjectMedia({ item, first }: { item: ProjectImage; first: boole
     );
   }
 
-  const framed = item.treatment === "device" && item.kind === "video";
+  const framed =
+    item.treatment === "device" && (item.kind === "video" || item.orientation === "portrait");
   const deviceAspect = `${item.width} / ${item.height}`;
 
   const video = item.loop ? (
@@ -64,6 +65,21 @@ export function ProjectMedia({ item, first }: { item: ProjectImage; first: boole
         ) : (
           video
         )
+      ) : framed ? (
+        <div
+          className={`device-frame${item.orientation ? ` ${item.orientation}` : ""}`}
+          style={{ aspectRatio: deviceAspect }}
+        >
+          <img
+            src={item.src}
+            srcSet={item.src2x ? `${item.src} 1x, ${item.src2x} 2x` : undefined}
+            width={item.width}
+            height={item.height}
+            alt={item.alt}
+            loading={first ? "eager" : "lazy"}
+            decoding="async"
+          />
+        </div>
       ) : (
         <img
           src={item.src}
