@@ -496,16 +496,26 @@ export const projects: Project[] = [
         src: "/work/creativeos-chat-strategy.mp4",
         width: 1920,
         height: 1080,
-        alt: "Placeholder for home chat with questions card and competitive research",
+        alt: "Placeholder for home chat with inline questions card",
         title: "Thinking first. Homework in parallel.",
         caption:
-          "The chat surfaces a few focused questions as inline fields—not a wall of markdown. Competitive precedent and product data pull in the background so you are not waiting on research or analytics to move.",
+          "The chat surfaces a few focused questions as inline fields—not a wall of markdown—while product data and competitive precedent pull in on their own timeline so you are not blocked on separate research tickets.",
         treatment: "edge",
         kind: "video",
         placeholder: true,
         placeholderHint:
-          "Screen recording or screenshot: home chat with Questions card (unanswered) + Research / Competitive analysis block in the thread; optional inset of project view Amplitude findings with staleness badge.",
+          "Screen recording or screenshot: home chat with Questions card (unanswered); optional inset of project view Amplitude findings with staleness badge.",
         chapter: "Chat that pushes thinking",
+      },
+      {
+        src: "/work/creativeos/competitive-research.webp",
+        width: 1024,
+        height: 759,
+        alt: "creativeOS home chat running parallel competitive searches on subscription pricing and portal upsell precedent",
+        title: "Competitive analysis, without leaving the chat.",
+        caption:
+          "After it reads your brief, creativeOS runs targeted searches on category precedent—Subscribe & Save tiers, peer DTC quantity upsells, Recharge portal patterns, conversion research—while you keep thinking. The SEARCH steps show up in the thread so you see what it pulled, not a black-box summary.",
+        treatment: "edge",
       },
       {
         src: "/work/creativeos-chat-highlight.webp",
