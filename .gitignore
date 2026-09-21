@@ -7,3 +7,10 @@ out
 .vercel
 .idea
 .vscode
+
+# TypeScript incremental build (regenerated locally / in CI)
+*.tsbuildinfo
+
+# Accidental npm/tool state under static assets
+public/**/.npm/
+public/**/.local/
