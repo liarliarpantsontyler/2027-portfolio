@@ -658,6 +658,36 @@ body.mini-project-open {
   object-position: center top;
 }
 
+/* Screen recordings: scale to full width without object-fit letterboxing (browser default is black). */
+.mini-project-media.has-media-background,
+.mini-project-carousel-viewport.has-media-background {
+  overflow: hidden;
+}
+
+.mini-project-media.has-media-background.single {
+  align-items: flex-start;
+}
+
+.mini-project-carousel-viewport.has-media-background {
+  align-items: flex-start;
+}
+
+.mini-project-media.has-media-background .mini-project-figure.has-media-background,
+.mini-project-carousel-viewport.has-media-background .mini-project-figure.has-media-background {
+  height: auto;
+  flex: 0 0 auto;
+}
+
+.mini-project-media.has-media-background .mini-project-figure.has-media-background video,
+.mini-project-carousel-viewport.has-media-background .mini-project-figure.has-media-background video {
+  flex: 0 0 auto;
+  width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: unset;
+  object-position: top;
+}
+
 .mini-project-carousel-controls {
   display: flex;
   flex: 0 0 auto;

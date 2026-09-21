@@ -42,15 +42,22 @@ function ModalMedia({
   hideCaption?: boolean;
 }) {
   const isVideo = item.mediaKind === "video";
+  const mediaBackground = item.background;
+  const figureStyle = mediaBackground ? { backgroundColor: mediaBackground } : undefined;
+  const videoStyle = mediaBackground ? { backgroundColor: mediaBackground } : undefined;
 
   return (
-    <figure className="mini-project-figure">
+    <figure
+      className={`mini-project-figure${mediaBackground ? " has-media-background" : ""}`}
+      style={figureStyle}
+    >
       {isVideo && (!reduceMotion || !item.poster) ? (
         <video
           src={item.src}
           poster={item.poster}
           width={item.width}
           height={item.height}
+          style={videoStyle}
           autoPlay={!reduceMotion}
           muted
           loop={!reduceMotion}
@@ -160,6 +167,13 @@ export const MiniProjectModal = forwardRef<
     [],
   );
 
+  const activeMedia = project
+    ? project.media.length === 1
+      ? project.media[0]
+      : project.media[slideIndex]
+    : null;
+  const stageBackground = activeMedia?.background ?? "#000";
+
   return (
     <dialog
       ref={dialogRef}
@@ -177,9 +191,11 @@ export const MiniProjectModal = forwardRef<
       {project ? (
         <div className="mini-project-shell">
           <div className="mini-project-content">
-            <div className="mini-project-stage">
+            <div className="mini-project-stage" style={{ background: stageBackground }}>
               <div
-                className={`mini-project-media${project.media.length === 1 ? " single" : " carousel"}`}
+                className={`mini-project-media${project.media.length === 1 ? " single" : " carousel"}${
+                  activeMedia?.background ? " has-media-background" : ""
+                }`}
                 {...(project.media.length > 1
                   ? {
                       role: "region",
@@ -191,7 +207,12 @@ export const MiniProjectModal = forwardRef<
                 {project.media.length === 1 ? (
                   <ModalMedia item={project.media[0]} reduceMotion={reduceMotion} />
                 ) : (
-                  <div className="mini-project-carousel-viewport">
+                  <div
+                    className={`mini-project-carousel-viewport${
+                      project.media[slideIndex].background ? " has-media-background" : ""
+                    }`}
+                    style={{ background: stageBackground }}
+                  >
                     <ModalMedia
                       key={project.media[slideIndex].src}
                       item={project.media[slideIndex]}

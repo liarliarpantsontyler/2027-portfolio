@@ -8,6 +8,8 @@ export type MiniProjectMedia = {
   mediaKind?: HomeMediaKind;
   poster?: string;
   caption?: string;
+  /** Letterbox / stage fill when media aspect ratio does not fill the modal (e.g. match a screen recording). */
+  background?: string;
 };
 
 export type MiniProject = {
@@ -156,6 +158,46 @@ export const homeTiles: HomeTile[] = [
             width: 1688,
             height: 950,
             alt: "Vizzy plugin UI inside Figma",
+          },
+        ],
+      },
+    },
+  },
+  {
+    id: "oontelligence-cover",
+    src: "/home/oontelligence-cover.mp4",
+    width: 720,
+    height: 762,
+    alt: "Phone screen showing flavor ratings, notes, loyalty rewards, and delivery in the Oats Overnight app",
+    label: "Oontelligence",
+    mediaKind: "video",
+    poster: "/home/oontelligence-cover-poster.webp",
+    column: "left",
+    column3: 2,
+    destination: {
+      type: "modal",
+      project: {
+        slug: "oontelligence",
+        title: "Oontelligence",
+        description:
+          "I connected loyalty rewards + Smart Delivery to Ratings & Notes to get more customers sharing what they think of each flavor. That feedback feeds Oontelligence, our AI flavor-data platform, helping us improve existing flavors, develop new ones, and decide what products to create next.",
+        projectUrl: "/work/flavor-ratings/",
+        projectUrlLabel: "Flavor Ratings case study",
+        media: [
+          {
+            src: "/work/oontelligence/demo.mp4",
+            width: 1080,
+            height: 1144,
+            alt: "Screen recording of loyalty, delivery, and Ratings & Notes working together in the app",
+            mediaKind: "video",
+            poster: "/work/oontelligence/demo-poster.webp",
+            background: "rgb(47, 47, 47)",
+          },
+          {
+            src: "/work/ratings-components.webp",
+            width: 2000,
+            height: 1138,
+            alt: "Rating controls, flavor badges, category switching, and sorting in the Ratings & Notes system",
           },
         ],
       },
