@@ -125,7 +125,6 @@ export function HomeMedia({ tile }: { tile: HomeTile }) {
         loop
         playsInline
         preload="auto"
-        fetchPriority={tile.id === "teladoc-screens" ? "high" : undefined}
         disablePictureInPicture
         aria-label={tile.alt}
       />
