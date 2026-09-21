@@ -26,6 +26,7 @@ export type ProjectImage = {
   inset?: boolean;
   wash?: boolean;
   placeholder?: boolean;
+  placeholderPublic?: boolean;
   placeholderHint?: string;
   src2x?: string;
   orientation?: "portrait" | "landscape";
@@ -627,6 +628,7 @@ export const projects: Project[] = [
         treatment: "edge",
         kind: "video",
         placeholder: true,
+        placeholderPublic: true,
         placeholderHint:
           "Screen recording or screenshot: home chat with Questions card (unanswered); optional inset of project view Amplitude findings with staleness badge.",
         chapter: "Chat that pushes thinking",
@@ -651,6 +653,7 @@ export const projects: Project[] = [
           "When output hand-waves or data needs a second read, you mark the exact words—Pin, Clarify, Comment—not a vague reply. The popover is the UI; the thread stays legible for you and teammates.",
         treatment: "edge",
         placeholder: true,
+        placeholderPublic: true,
         placeholderHint:
           "Screenshot: text selected on an assistant message with reaction menu open (Pin / Drop / Push / Clarify / Comment).",
         chapter: "Highlight, clarify, send once",
@@ -666,6 +669,7 @@ export const projects: Project[] = [
         treatment: "paper",
         half: true,
         placeholder: true,
+        placeholderPublic: true,
         placeholderHint:
           "Screenshot: assistant bubble with yellow chat-mark highlights and initials + Questions card or send pill showing Send answers + N comments →.",
       },
@@ -678,6 +682,7 @@ export const projects: Project[] = [
         caption: "The first message creates the project, files the thread, and shapes a PRD from the conversation.",
         treatment: "paper",
         placeholder: true,
+        placeholderPublic: true,
         placeholderHint:
           "Screenshot: New Chat → first send → project appears in the sidebar with a structured brief on the project page.",
         chapter: "Brief the studio, not a blank page",
@@ -691,6 +696,7 @@ export const projects: Project[] = [
         caption: "Weak audience, fuzzy success metrics, and solution-first asks get named with concrete fixes — every time.",
         treatment: "paper",
         placeholder: true,
+        placeholderPublic: true,
         placeholderHint:
           "Screenshot: brief quality callouts or pre-ship gut check (weakest part / what to cut / what to bet on).",
         chapter: "Pressure-test before pixels",
@@ -705,6 +711,7 @@ export const projects: Project[] = [
         treatment: "edge",
         kind: "video",
         placeholder: true,
+        placeholderPublic: true,
         placeholderHint:
           "Screen recording: generate prototypes → cards appear one-by-one → By the Book / Pushing It sections on the canvas.",
         chapter: "Six directions, two strategic bets",
@@ -718,6 +725,7 @@ export const projects: Project[] = [
         caption: "Comment mode with element targeting and screen-scoped notes — not a paragraph in a doc.",
         treatment: "edge",
         placeholder: true,
+        placeholderPublic: true,
         placeholderHint:
           "Screenshot or clip: full-preview overlay in Comment mode with a drawn region or element highlight and note composer.",
         chapter: "Critique on the work, not in a doc",
@@ -731,6 +739,7 @@ export const projects: Project[] = [
         caption: "Apply comments and rework rebuilds that file from its HTML with your words baked in — and a one-line changelog on the card.",
         treatment: "paper",
         placeholder: true,
+        placeholderPublic: true,
         placeholderHint:
           "Screenshot: prototype card with Apply comments and rework + changelog badge (Revision of…).",
         chapter: "Rework one direction, keep the rest",
@@ -744,6 +753,7 @@ export const projects: Project[] = [
         caption: "Push to Figma rebuilds native layers, binds design tokens, and adds a rationale card — verified editable before it counts as done.",
         treatment: "edge",
         placeholder: true,
+        placeholderPublic: true,
         placeholderHint:
           "Screenshot: Push to Figma sheet + resulting Figma page (Round N, sections, rationale text beside frames).",
         chapter: "Hand off editable work to Figma",
@@ -758,6 +768,7 @@ export const projects: Project[] = [
         treatment: "paper",
         half: true,
         placeholder: true,
+        placeholderPublic: true,
         placeholderHint: "Screenshot: Import from Figma modal or card badge ⇠ Pulled from Figma · vN.",
       },
       {
@@ -770,6 +781,7 @@ export const projects: Project[] = [
         treatment: "paper",
         half: true,
         placeholder: true,
+        placeholderPublic: true,
         placeholderHint: "Screenshot: Critique Log / ledger view with open rows expanded and addressed items collapsed.",
       },
       {
@@ -781,6 +793,7 @@ export const projects: Project[] = [
         caption: "Say commit to memory in a critique note — the studio stages it, promotes it, and every future direction has to respect it.",
         treatment: "paper",
         placeholder: true,
+        placeholderPublic: true,
         placeholderHint:
           "Screenshot: critique note with commit to memory + pending memory queue or standing rules on the project.",
         chapter: "It remembers what you teach it",
@@ -794,6 +807,7 @@ export const projects: Project[] = [
         caption: "Per-person critique shards, avatars on notes, sync status, and activity — agency with recourse, not an approval queue.",
         treatment: "edge",
         placeholder: true,
+        placeholderPublic: true,
         placeholderHint:
           "Screenshot: two authors on critique cards, chat attribution, and sync pill / contributors panel.",
         chapter: "Built for a real team",
@@ -807,6 +821,7 @@ export const projects: Project[] = [
         caption: "Governed blocks, brand tokens, and hard checks before approval — on-brand and technically correct by construction.",
         treatment: "paper",
         placeholder: true,
+        placeholderPublic: true,
         placeholderHint: "Screenshot: email builder form + generated Klaviyo-ready HTML preview.",
         chapter: "Email and governance",
       },
