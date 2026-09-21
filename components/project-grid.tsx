@@ -46,6 +46,12 @@ function isModalTile(tile: HomeTile): tile is HomeModalTile {
   return tile.destination.type === "modal";
 }
 
+/** Homepage tiles never render shorter than square; wide media letterboxes in the tile. */
+function tileMediaAspectRatio(tile: HomeTile): `${number} / ${number}` {
+  const height = Math.max(tile.height, tile.width);
+  return `${tile.width} / ${height}`;
+}
+
 function Tile({
   tile,
   order,
@@ -55,15 +61,18 @@ function Tile({
   order: number;
   onOpen: (tile: HomeModalTile) => void;
 }) {
-  const mediaStyle =
+  const mediaStyle: CSSProperties | undefined =
     tile.id === "klocky-cover"
       ? undefined
-      : ({ ["--media-ratio" as string]: `${tile.width} / ${tile.height}` } as CSSProperties);
+      : {
+          ["--media-ratio" as string]: tileMediaAspectRatio(tile),
+          ...(tile.background ? { background: tile.background } : {}),
+        };
 
   const inner = (
     <>
       <span
-        className={`work-tile-media${tile.wash ? " wash" : ""}${tile.lined ? " lined" : ""}`}
+        className={`work-tile-media${tile.wash ? " wash" : ""}${tile.lined ? " lined" : ""}${tile.fit === "cover" ? " fit-cover" : ""}`}
         style={mediaStyle}
       >
         <HomeMedia tile={tile} />

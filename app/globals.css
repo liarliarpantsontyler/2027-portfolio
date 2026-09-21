@@ -347,8 +347,8 @@ dd {
   mix-blend-mode: multiply;
 }
 
-.work-tile-media:not(:has(.klocky-home-cover)) img,
-.work-tile-media:not(:has(.klocky-home-cover)) video {
+.work-tile-media:not(:has(.klocky-home-cover)):not(:has(.oontelligence-home-cover)) img,
+.work-tile-media:not(:has(.klocky-home-cover)):not(:has(.oontelligence-home-cover)) video {
   display: block;
   width: 100%;
   height: auto;
@@ -356,6 +356,38 @@ dd {
   object-fit: contain;
   border-radius: var(--radius);
   transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.work-tile-media.fit-cover:not(:has(.klocky-home-cover)):not(:has(.oontelligence-home-cover)) img,
+.work-tile-media.fit-cover:not(:has(.klocky-home-cover)):not(:has(.oontelligence-home-cover)) video {
+  object-fit: cover;
+}
+
+/* Oontelligence tile: zoom the phone, crop the lower third (homepage only). */
+.oontelligence-home-cover {
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--media-ratio);
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: rgb(47, 47, 47);
+}
+
+.oontelligence-home-cover video,
+.oontelligence-home-cover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 18%;
+  transform: scale(1.42);
+  transform-origin: 50% 24%;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.work-tile:hover .oontelligence-home-cover video,
+.work-tile:hover .oontelligence-home-cover img {
+  transform: scale(1.46);
 }
 
 .work-tile:hover .work-tile-media img,

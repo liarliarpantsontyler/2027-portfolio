@@ -80,6 +80,38 @@ export function HomeMedia({ tile }: { tile: HomeTile }) {
     );
   }
 
+  if (tile.id === "oontelligence-cover") {
+    return (
+      <span className="oontelligence-home-cover" role="img" aria-label={tile.alt}>
+        {reduceMotion ? (
+          <img
+            src={tile.poster}
+            width={tile.width}
+            height={tile.height}
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <video
+            ref={videoRef}
+            src={tile.src}
+            poster={tile.poster}
+            width={tile.width}
+            height={tile.height}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            disablePictureInPicture
+            aria-hidden="true"
+          />
+        )}
+      </span>
+    );
+  }
+
   if (tile.mediaKind === "video" && !reduceMotion) {
     return (
       <video
@@ -99,9 +131,14 @@ export function HomeMedia({ tile }: { tile: HomeTile }) {
     );
   }
 
+  const stillSrc =
+    tile.mediaKind === "gif" && !reduceMotion
+      ? tile.src
+      : tile.poster || tile.src;
+
   return (
     <img
-      src={tile.poster || tile.src}
+      src={stillSrc}
       width={tile.width}
       height={tile.height}
       alt={tile.alt}

@@ -2,10 +2,16 @@
 
 import { forwardRef, useEffect, useId, useImperativeHandle, useRef, useState } from "react";
 import type { MiniProject, MiniProjectMedia } from "@/content/home";
+import {
+  isPortraitSlide,
+  resolveSlideFit,
+  resolveStageBackground,
+  slideUsesLetterboxBackground,
+} from "@/lib/mini-project-slide-layout";
 import { sampleImageEdgeBackground } from "@/lib/sample-image-edge-background";
 
 function figureFitClass(item: MiniProjectMedia) {
-  return item.fit === "cover" ? "fit-cover" : "fit-contain";
+  return resolveSlideFit(item) === "cover" ? "fit-cover" : "fit-contain";
 }
 
 function ChevronIcon({ direction }: { direction: "left" | "right" }) {
@@ -51,8 +57,8 @@ function ModalMedia({
   onSampleBackground: (src: string, color: string) => void;
 }) {
   const isVideo = item.mediaKind === "video";
-  const mediaBackground = item.background ?? stageBackground;
-  const figureStyle = { backgroundColor: mediaBackground };
+  const letterbox = slideUsesLetterboxBackground(item);
+  const figureStyle = letterbox ? { backgroundColor: item.background ?? stageBackground } : undefined;
   const videoStyle = item.background ? { backgroundColor: item.background } : undefined;
 
   return (
@@ -87,7 +93,7 @@ function ModalMedia({
           loading="lazy"
           decoding="async"
           onLoad={(event) => {
-            if (item.background || isVideo) return;
+            if (item.background || isVideo || !isPortraitSlide(item)) return;
             const img = event.currentTarget;
             onSampleBackground(item.src, sampleImageEdgeBackground(img));
           }}
@@ -194,10 +200,11 @@ export const MiniProjectModal = forwardRef<
       ? project.media[0]
       : project.media[slideIndex]
     : null;
-  const stageBackground =
-    activeMedia?.background ??
-    (activeMedia ? sampledBackgrounds[activeMedia.src] : undefined) ??
-    "#000000";
+  const stageBackground = activeMedia
+    ? resolveStageBackground(activeMedia, sampledBackgrounds)
+    : "#000000";
+  const activeHasMediaBackground =
+    activeMedia?.mediaKind === "video" && Boolean(activeMedia.background);
 
   return (
     <dialog
@@ -219,7 +226,7 @@ export const MiniProjectModal = forwardRef<
             <div className="mini-project-stage" style={{ background: stageBackground }}>
               <div
                 className={`mini-project-media${project.media.length === 1 ? " single" : " carousel"}${
-                  activeMedia?.background ? " has-media-background" : ""
+                  activeHasMediaBackground ? " has-media-background" : ""
                 }`}
                 {...(project.media.length > 1
                   ? {
@@ -239,7 +246,7 @@ export const MiniProjectModal = forwardRef<
                 ) : (
                   <div
                     className={`mini-project-carousel-viewport${
-                      project.media[slideIndex].background ? " has-media-background" : ""
+                      activeHasMediaBackground ? " has-media-background" : ""
                     }`}
                     style={{ background: stageBackground }}
                   >

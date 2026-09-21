@@ -18,9 +18,10 @@ Canonical doc: README → **Add a mini project**. One shared modal: `components/
 
 ## Modal display
 
-- **Default `fit`:** `contain` (no crop). Use `fit: "cover"` only for intentional full-bleed UI shots.
-- **Background:** Set `background` on each slide (from import script edge sampling). Do not leave product photography on pure `#000` letterbox when the image has a solid field color.
-- **Videos:** `contain`; use `background` for screen recordings (see Oontelligence in `content/home.ts`).
+- **Landscape stills** (`width >= height`): default **full-bleed** (`cover`). No `background` in `home.ts` unless overriding.
+- **Portrait stills** (`height > width`): default **`contain`** + **`background`** from import script (letterbox matches the art).
+- **Videos:** always **`contain`**; optional `background` for screen recordings only (Oontelligence — do not change video slides when editing other projects).
+- **Override:** set `fit` explicitly only when the default is wrong.
 
 ## Adding a tile
 

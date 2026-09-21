@@ -8,7 +8,7 @@ export type MiniProjectMedia = {
   mediaKind?: HomeMediaKind;
   poster?: string;
   caption?: string;
-  /** How the slide fills the modal stage. Default: contain (no crop). */
+  /** Override fit. Stills default: landscape → cover, portrait → contain. Videos always contain. */
   fit?: "contain" | "cover";
   /** Letterbox / stage fill when media aspect ratio does not fill the modal (e.g. match a screen recording). */
   background?: string;
@@ -36,6 +36,10 @@ type HomeTileBase = {
   column3?: 1 | 2 | 3;
   wash?: boolean;
   lined?: boolean;
+  /** Tile stage fill when letterboxing or behind cover (edge sample from import script). */
+  background?: string;
+  /** How cover media fills the square-min tile. Default: contain. */
+  fit?: "contain" | "cover";
 };
 
 export type HomeLinkTile = HomeTileBase & {
@@ -115,13 +119,13 @@ export const homeTiles: HomeTile[] = [
   },
   {
     id: "just-for-fun",
-    src: "/work/fun-01.mp4",
+    src: "/work/fun-01.gif",
     width: 720,
     height: 720,
     alt: "Hand-drawn animation loop",
     destination: { type: "link", href: "/work/just-for-fun/" },
     label: "Just for Fun",
-    mediaKind: "video",
+    mediaKind: "gif",
     poster: "/work/fun-01-poster.webp",
     column: "right",
     column3: 3,
@@ -134,6 +138,7 @@ export const homeTiles: HomeTile[] = [
     alt: "Vizzy Figma plugin UI with sticky comment cards on the canvas",
     label: "Vizzy",
     mediaKind: "image",
+    background: "#defc52",
     column: "right",
     column3: 1,
     destination: {
@@ -173,6 +178,7 @@ export const homeTiles: HomeTile[] = [
     alt: "Oats Overnight retail shake bottles arranged on a purple background with flavor ingredients",
     label: "Retail bottles",
     mediaKind: "image",
+    fit: "cover",
     column: "right",
     column3: 3,
     destination: {
@@ -181,7 +187,7 @@ export const homeTiles: HomeTile[] = [
         slug: "retail-bottles",
         title: "Oats Overnight retail bottles",
         description:
-          "I designed the illustration and packaging for Oats Overnight’s retail shake bottles — a flavor-coded system built for shelf impact. One label structure repeats across every flavor; color and graphic carry the rest. It’s illustration work, but it’s the same muscle as a branding system — just outside the usual UX and product-design frame.",
+          "I designed the illustration and packaging system for Oats Overnight’s retail shake bottles. Each flavor uses the same label structure, with color and illustration doing the work to make every bottle distinct and easy to recognize on shelf. It’s a simple system that can scale as new flavors are added.",
         projectUrl: "/work/oats-overnight-app/",
         projectUrlLabel: "Oats app case study",
         media: [
@@ -190,35 +196,42 @@ export const homeTiles: HomeTile[] = [
             width: 1024,
             height: 768,
             alt: "Flat lay of Oats Overnight retail bottles on a purple field with ingredients for each flavor",
-            background: "#d2a1f9",
           },
           {
             src: "/work/retail-bottles/lineup-green.jpg",
             width: 1024,
             height: 768,
             alt: "Full lineup of retail bottle flavors on a bright green background",
-            background: "#78a21f",
           },
           {
             src: "/work/retail-bottles/marketing-grid.jpg",
             width: 1024,
             height: 682,
             alt: "Grid of product photography for individual retail bottle flavors",
-            background: "#a8d437",
+          },
+          {
+            src: "/work/retail-bottles/floating-lineup.jpg",
+            width: 1024,
+            height: 255,
+            alt: "Oats Overnight bottles floating on a light blue field",
           },
           {
             src: "/work/retail-bottles/blueberry-explorations.jpg",
             width: 1024,
             height: 902,
             alt: "Ten Blueberry Muffin label illustration explorations in purple",
-            background: "#ffffff",
+          },
+          {
+            src: "/work/retail-bottles/flavor-explorations.png",
+            width: 1024,
+            height: 748,
+            alt: "Label design explorations for Caramel Macchiato, Banana Pudding, and Chocolate Chip Cookie Dough",
           },
           {
             src: "/work/retail-bottles/design-matrix.jpg",
             width: 1024,
             height: 583,
             alt: "Large matrix of bottle label design iterations across flavors and color systems",
-            background: "#ffffff",
           },
           {
             src: "/work/retail-bottles/walmart.jpg",
@@ -228,11 +241,23 @@ export const homeTiles: HomeTile[] = [
             background: "#ffffff",
           },
           {
+            src: "/work/retail-bottles/kitchen-lineup.jpg",
+            width: 1024,
+            height: 809,
+            alt: "Retail bottle flavors lined up on a kitchen counter",
+          },
+          {
             src: "/work/retail-bottles/retail-shelf.jpg",
             width: 630,
             height: 1024,
             alt: "Oats Overnight bottles on shelf in a grocery store",
             background: "#fbfbfb",
+          },
+          {
+            src: "/work/retail-bottles/expo-booth.jpg",
+            width: 1024,
+            height: 811,
+            alt: "Oats Overnight team at an expo booth with branded backdrop",
           },
         ],
       },
@@ -247,6 +272,7 @@ export const homeTiles: HomeTile[] = [
     label: "Oontelligence",
     mediaKind: "video",
     poster: "/home/oontelligence-cover-poster.webp?v=20250921b",
+    background: "rgb(47, 47, 47)",
     column: "left",
     column3: 2,
     lined: true,

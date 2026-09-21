@@ -201,11 +201,16 @@ async function main() {
 
     const publicPath = "/" + path.relative(path.resolve("public"), destFile).split(path.sep).join("/");
 
+    const orientation = height > width ? "portrait" : "landscape";
+    const backgroundRequired = orientation === "portrait";
+
     results.push({
       src: publicPath,
       width,
       height,
-      background,
+      orientation,
+      backgroundRequired,
+      ...(backgroundRequired ? { background } : { backgroundOptional: background }),
       file: path.relative(process.cwd(), destFile),
     });
   }
