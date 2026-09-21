@@ -114,9 +114,25 @@ Each project uses the same shape: headline, intro, outcomes, problem, approach, 
 
 ## Git
 
-This folder is its own repository. It does not touch the Humin repo. To publish:
+- **Repo:** [github.com/liarliarpantsontyler/2027-portfolio](https://github.com/liarliarpantsontyler/2027-portfolio)
+- **Default branch:** `main` (local). Day-to-day work happens on `main`, not long-lived `cursor/*` branches.
+- **Remote:** `origin` → `https://github.com/liarliarpantsontyler/2027-portfolio.git`
+
+This folder is its own repository. It does not touch the Humin repo.
+
+### Publish changes
 
 ```bash
-git remote add origin git@github.com:liarliarpantsontyler/YOUR-REPO.git
-git push -u origin main
+git push origin main
 ```
+
+### One-time: sync `main` on GitHub (after renaming off `cursor/rebuild-personal-portfolio`)
+
+If GitHub still uses the old Cursor default branch, run once (requires `gh auth login`):
+
+```bash
+chmod +x scripts/sync-main-to-github.sh
+./scripts/sync-main-to-github.sh
+```
+
+Then in **Netlify** → **Build & deploy → Branches** → set **Production branch** to `main` and deploy.

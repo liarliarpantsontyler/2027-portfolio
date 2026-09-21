@@ -1,3 +1,6 @@
+# Production branch is configured in Netlify UI (Site settings → Build & deploy → Branches).
+# Use `main` after running scripts/sync-main-to-github.sh.
+
 [build]
   command = "npm run build"
   publish = "out"
