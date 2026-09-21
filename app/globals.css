@@ -567,8 +567,7 @@ body.mini-project-open {
   --mini-project-height: min(880px, calc(100dvh - 48px));
   position: fixed;
   top: 50%;
-  /* Center over the work grid column, not the full viewport (rail sits left). */
-  left: calc((100vw + var(--rail) + var(--gap)) / 2);
+  left: 50%;
   width: var(--mini-project-width);
   max-width: var(--mini-project-width);
   height: var(--mini-project-height);
@@ -610,6 +609,10 @@ body.mini-project-open {
   display: flex;
   flex-direction: column;
   background: #000;
+}
+
+.mini-project-close {
+  display: none;
 }
 
 .mini-project-media {
@@ -855,6 +858,17 @@ body.mini-project-open {
 @keyframes mini-project-backdrop-in {
   from {
     opacity: 0;
+  }
+}
+
+@keyframes mini-project-sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -2212,14 +2226,77 @@ body.mini-project-open {
   }
 
   .mini-project-modal {
-    --mini-project-width: calc(100vw - 16px);
-    --mini-project-height: min(92dvh, calc(100dvh - 16px));
-    left: 50%;
-    border-radius: 24px;
+    --mini-project-width: 100%;
+    --mini-project-height: min(
+      72dvh,
+      calc(100dvh - 24px - env(safe-area-inset-top, 0px))
+    );
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    height: var(--mini-project-height);
+    max-height: var(--mini-project-height);
+    transform: none;
+    border-radius: 24px 24px 0 0;
+    box-shadow: 0 -16px 56px rgba(0, 0, 0, 0.16);
+    animation: mini-project-sheet-in 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .mini-project-shell {
+    overscroll-behavior: contain;
+  }
+
+  .mini-project-stage {
+    position: relative;
+  }
+
+  .mini-project-close {
+    display: grid;
+    place-items: center;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 3;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.9);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mini-project-close svg {
+    width: 22px;
+    height: 22px;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+  }
+
+  .mini-project-close:hover {
+    color: #fff;
+  }
+
+  .mini-project-close:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.85);
+    outline-offset: 2px;
   }
 
   .mini-project-copy {
-    padding: 16px 18px 20px;
+    padding: 12px 18px calc(20px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .mini-project-copy h2 {
+    font-size: clamp(22px, 6.5vw, 28px);
+  }
+
+  .mini-project-copy p {
+    margin-top: 10px;
+    font-size: 15px;
   }
 
   .mini-project-carousel-controls {
@@ -2317,7 +2394,8 @@ body.mini-project-open {
   }
 
   .mini-project-carousel-nav,
-  .mini-project-carousel-dot {
+  .mini-project-carousel-dot,
+  .mini-project-close {
     transition: none;
   }
 }

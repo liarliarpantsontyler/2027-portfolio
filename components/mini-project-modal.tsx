@@ -14,6 +14,20 @@ function figureFitClass(item: MiniProjectMedia) {
   return resolveSlideFit(item) === "cover" ? "fit-cover" : "fit-contain";
 }
 
+function CloseIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M6 6l12 12M18 6L6 18"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 function ChevronIcon({ direction }: { direction: "left" | "right" }) {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -224,6 +238,14 @@ export const MiniProjectModal = forwardRef<
         <div className="mini-project-shell">
           <div className="mini-project-content">
             <div className="mini-project-stage" style={{ background: stageBackground }}>
+              <button
+                type="button"
+                className="mini-project-close"
+                aria-label="Close project"
+                onClick={onRequestClose}
+              >
+                <CloseIcon />
+              </button>
               <div
                 className={`mini-project-media${project.media.length === 1 ? " single" : " carousel"}${
                   activeHasMediaBackground ? " has-media-background" : ""
