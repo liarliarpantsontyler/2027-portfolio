@@ -1139,6 +1139,87 @@ body.mini-project-open {
   color: var(--muted);
 }
 
+.story-media.placeholder.public {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border: none;
+  background: #111;
+}
+
+.project-story.creativeos .story-media.placeholder.public {
+  background: #111;
+}
+
+.story-placeholder-backdrop {
+  position: absolute;
+  inset: -8%;
+  width: 116%;
+  height: 116%;
+  object-fit: cover;
+  filter: blur(28px) saturate(0.85);
+  transform: scale(1.05);
+  pointer-events: none;
+}
+
+.story-placeholder-scrim {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, #0a0a0a 72%, transparent);
+  pointer-events: none;
+}
+
+.story-placeholder-public {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: inherit;
+  height: 100%;
+  padding: 36px 28px;
+  text-align: center;
+}
+
+.story-placeholder-public-kicker {
+  margin: 0 0 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #8a8a8a;
+}
+
+.story-placeholder-public-body {
+  max-width: 36ch;
+  margin: 0 0 16px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: -0.02em;
+  color: #e8e8e8;
+}
+
+.story-placeholder-public-link {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #fff;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, #fff 35%, transparent);
+  text-underline-offset: 3px;
+}
+
+.story-placeholder-public-link:hover {
+  text-decoration-color: #fff;
+}
+
+.story-placeholder-public-link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
 .project-story.fun {
   --story-bg: #fff3c4;
 }
