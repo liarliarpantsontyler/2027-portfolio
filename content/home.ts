@@ -94,19 +94,6 @@ export const homeTiles: HomeTile[] = [
     lined: true,
   },
   {
-    id: "oats-cover",
-    src: "/home/oats-cover.mp4",
-    width: 1080,
-    height: 1440,
-    alt: "Oats Overnight App cover on a phone",
-    destination: { type: "link", href: "/work/oats-overnight-app/" },
-    label: "Oats Overnight App",
-    mediaKind: "video",
-    poster: "/home/oats-cover-poster.webp",
-    column: "left",
-    column3: 1,
-  },
-  {
     id: "creativeos-cover",
     src: "/home/creativeos-cover.mp4",
     width: 1080,
@@ -190,8 +177,6 @@ export const homeTiles: HomeTile[] = [
         title: "Oats Overnight retail bottles",
         description:
           "I designed the illustration and packaging system for Oats Overnight’s retail shake bottles. Each flavor uses the same label structure, with color and illustration doing the work to make every bottle distinct and easy to recognize on shelf. It’s a simple system that can scale as new flavors are added.",
-        projectUrl: "/work/oats-overnight-app/",
-        projectUrlLabel: "Oats app case study",
         media: [
           {
             src: "/work/retail-bottles/hero-flatlay.jpg",

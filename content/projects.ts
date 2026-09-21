@@ -136,6 +136,7 @@ export const projects: Project[] = [
   },
   {
     slug: "oats-overnight-app",
+    hidden: true,
     company: "Oats Overnight",
     name: "The customer app",
     shortName: "Oats App",

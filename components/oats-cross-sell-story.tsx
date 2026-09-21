@@ -286,8 +286,7 @@ export function OatsCrossSellStory({ project }: { project: Project }) {
             decisions.
           </li>
           <li>
-            <Link href="/work/oats-overnight-app/">The customer app</Link> — loyalty, surveys, and the broader logged-in
-            experience (dedicated case studies coming).
+            The customer app — loyalty, surveys, and the broader logged-in experience (dedicated case study coming).
           </li>
         </ul>
       </section>
