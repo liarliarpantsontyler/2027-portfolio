@@ -132,7 +132,7 @@ function splitTiles(count: 2 | 3) {
 }
 
 export function ProjectGrid() {
-  const [cols, setCols] = useState<2 | 3>(3);
+  const [cols, setCols] = useState<2 | 3>(2);
   const [openProject, setOpenProject] = useState<MiniProject | null>(null);
   const modalRef = useRef<MiniProjectModalHandle>(null);
 
@@ -153,7 +153,7 @@ export function ProjectGrid() {
 
   useEffect(() => {
     const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (stored === "2") setCols(2);
+    if (stored === "2" || stored === "3") setCols(Number(stored) as 2 | 3);
   }, []);
 
   const setLayout = (next: 2 | 3) => {
