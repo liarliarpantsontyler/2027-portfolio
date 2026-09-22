@@ -3,7 +3,7 @@ import { rmSync } from "node:fs";
 
 function devServerRunning() {
   try {
-    const output = execSync("lsof -ti :3000", { encoding: "utf8" }).trim();
+    const output = execSync("lsof -tiTCP:3000 -sTCP:LISTEN", { encoding: "utf8" }).trim();
     return output.length > 0;
   } catch {
     return false;

@@ -1,12 +1,12 @@
 # Portfolio roadmap
 
-Last updated: 2026-09-21
+Last updated: 2026-09-22
 
 This is the shared source of truth for planned portfolio work. Any coding assistant with access to this repository can read it. Order reflects Tyler's current priorities; it is not a delivery schedule.
 
 ## What's next?
 
-**Next: OATS-02 — Loyalty program and reward systems.** OATS-01 is live at `/work/cross-sell-upsell/` with narrative scaffold and media placeholders; replace placeholder metrics and swap in production screenshots before final publish.
+**Next: finish OATS-01 media and evidence.** The visual-first page rewrite and selected stills are implemented. Capture one qualifying native-resolution motion pilot before producing the three clips; then obtain the analytics reporting window and denominator. OATS-02 follows this work.
 
 The larger goal is to split the broad Oats Overnight app case study into focused projects with enough depth to show the problem, research, design decisions, interactions, and results. Ratings & Notes already has its own case study and should remain separate.
 
@@ -14,7 +14,7 @@ The larger goal is to split the broad Oats Overnight app case study into focused
 
 | Order | ID | Project | Status |
 | --- | --- | --- | --- |
-| 1 | OATS-01 | Cross-sell and upsell system | In progress — page at `/work/cross-sell-upsell/`; assets and sourced metrics pending |
+| 1 | OATS-01 | Cross-sell and upsell system | Page rebuilt with real stills — high-resolution motion and analytics evidence pending |
 | 2 | OATS-02 | Loyalty program and reward systems | Planned — next |
 | 3 | OATS-03 | Survey feature design | Planned |
 | 4 | OATS-04 | Restructure the Oats app overview and portfolio navigation | Planned — after the focused stories are ready |
@@ -39,9 +39,34 @@ Evidence to collect:
 - Actual launch date and five-month reporting window; eligible audience, exposure, conversion, order value, refunds/cancellations, and any experiment or comparison group.
 - Estimate incremental revenue using the best available baseline. Prefer a holdout comparison of net revenue per eligible user multiplied by exposed eligible users. Without a credible comparison, report attributed sales separately and label any incremental estimate with its assumptions and uncertainty. Do not invent a dollar amount or equate all offer sales with incremental revenue. Distinguish revenue from profit.
 
-**Progress (2026-09-21):** Homepage QuickSell beat live on `/work/cross-sell-upsell/` with redacted 393px production stills (`homepage-oon-protein-coffee`, `homepage-protein-pack-upsell`) in [`public/work/oats-cross-sell/`](public/work/oats-cross-sell/). Portal pass documented 16→24 copy paths (Manage → Upgrade to 24 Pack; subscription upgrade modal). Pack ladder, 8-pack modal, and 60fps hero motion still pending. Metrics remain placeholder **+$215K** / **~14%** until analytics sourced.
+**Implementation started (2026-09-21):** Rebuild around homepage discovery, contextual add-ons, and the prefilled 16→24 upgrade. The prior entry claimed production stills existed, but that media directory was absent from the audited checkout. Remove +$215K / ~14% placeholders. Exclude the unverified pack ladder and 8-pack modal. Validate one recording before producing three clips; native 393×852 layout at 3× capture is the target, with no upscaling.
 
-Done when: production media fills placeholders, analytics source the 70% / revenue / conversion figures, and the estimate is either sourced or explicitly qualified per evidence rules above.
+**Design evidence:** Only [For Dev :: Build Week of 7/20 :: X-sell](https://www.figma.com/design/AJCLHBCMcPPStppNG9sRNq/X-sell-Upsell-Sandbox?node-id=245-8222) was reviewed. Tyler confirmed end-to-end ownership. Notes document a smaller loyalty header, replacement of the carousel with an educational offer, and reuse of existing Quick Add eligibility (Protein Pack → extra FIDs → upgrade; coffee-only subscriptions omit Oats add-ons; hide when no upgrade remains). These rules are documented design intent, not independently verified backend behavior. Figma's 78% no-action figure conflicts with the earlier ~70%; its action table also exceeds its stated active-user denominator. Keep both unpublished pending source, window, and definition verification. The production coffee CTA currently opens the builder directly, unlike the education flow in Figma.
+
+**Delivered (2026-09-22):** Replaced the long scaffold with a visual-first case study in `components/oats-cross-sell-story.tsx`, updated the project entry and scoped CSS, and added six lossless WebP stills in `public/work/oats-cross-sell/`. The page leads with the live homepage, compares a clearly labeled historical Figma reference, shows the real coffee builder, contextual Protein Pack details, and a prefilled 24/24 upgrade. A compact diagram explains the documented existing Quick Add sequence. Removed placeholder revenue, conversion, no-action metrics, unsupported personalization claims, public evidence notes, the pack ladder, and the 8-pack modal. Tyler's end-to-end ownership is explicit. No portal purchase or subscription change was made.
+
+**Homepage addition (2026-09-22):** Added a linked Cross-sell + Upsell tile in `content/home.ts` with `public/home/cross-sell-cover.webp`. The 1080 × 1440 cover composes the verified 786px-wide production capture at its native size over a vector color field; it contains no private shipment map or address. Checked the tile and destination at desktop and 393px mobile widths. The case study now has gentle editorial motion on the opening device and documented progression, disabled for reduced-motion users. These CSS animations do not depict portal interactions and do not replace the requested videos.
+
+**Media provenance and limits:**
+
+| Asset | Source | Actual pixels | Treatment |
+| --- | --- | --- | --- |
+| `homepage.webp` | Live Chrome mobile capture, September 21 | 786 × 1240 | Native 2× image cropped above shipment map/details; no scaling |
+| `historical-homepage.webp` | Approved Figma page, node `275:17866` | 1179 × 1380 | Native 3× vector export, cropped above address/order details |
+| `coffee-builder.webp` | Live portal, September 22 | 393 × 852 | Native browser still; no scaling |
+| `protein-context.webp` | Live portal, September 22 | 393 × 852 | Native browser still; no scaling |
+| `protein-details.webp` | Live portal, September 22 | 393 × 852 | Native browser still; no scaling |
+| `upgrade.webp` | Live portal, September 22 | 393 × 852 | Native browser still; no scaling |
+
+The four 1× source stills are interim and displayed below their intrinsic width (typically 270 CSS pixels), but do not meet the desired 3× capture resolution. Replace them with native high-density captures when the motion workflow is available. Lossless WebP avoids introducing another compression pass; it cannot recover detail missing from the source. The cropped historical reference and homepage contain no shipping address or map. Modal/context stills were visually checked for private details.
+
+**Motion quality gate — not delivered:** Browser automation exposes still capture, not a video recorder. Native Chrome capture controls repeatedly timed out; its successful export was 2×, and changing to DPR 3 did not produce a verified export. No low-resolution footage, synthetic interaction, or slideshow was substituted. Required setup: a recorder producing actual 1179 × 2556 pixels from a 393 × 852 mobile layout (native iPhone capture or a DPR-3 browser capture), with frame rate verified by media inspection; target 60fps. Validate a short pilot for sharp text and smooth scroll first. Then record separate 10–20 second clips: homepage coffee → production builder; contextual Protein Pack → recurring terms; Manage → 24-pack prefilled flavors and editing. Export H.264 MP4 with matching WebP posters, redact private details, and wire readable posters plus playback controls/reduced-motion handling with deferred loading. Preserve sources. No existing desktop video remains on this page. The homepage cover and editorial motion are shipped; the three actual interaction recordings remain outstanding.
+
+**Validation (2026-09-22):** Production build, TypeScript checks, and static export passed. Desktop at 1440px and mobile at 393 × 852 were visually inspected; no horizontal overflow, missing images, public placeholder metrics, or browser console errors were found. Shared header padding remains 28px 0 48px. Stills load eagerly only for the opening image and lazily thereafter; this version has no autoplay or video downloads. The standard prebuild check was corrected to detect only listening processes on port 3000, avoiding false positives from closed browser sockets. `npm run build` passed with that guard enabled after stopping the development server. Network access was needed for the existing Google Fonts dependency.
+
+**Remaining analytics evidence:** Confirm the reporting window, denominator, event definitions, and source for the Figma 78% figure before publication. Obtain launch date and exposure/conversion/net-revenue data with a credible baseline before claiming business impact. The public page currently reports only verified shipped behaviors.
+
+Done when: the motion pilot meets the quality bar, the three genuine mobile clips and high-density stills are integrated and checked, and any published business metrics have verified sources and definitions. Missing metrics may remain unpublished rather than be replaced by estimates without evidence.
 
 ## OATS-02 — Loyalty program and reward systems
 
