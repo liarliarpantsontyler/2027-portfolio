@@ -1,14 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Figtree } from "next/font/google";
 import { site } from "@/content/site";
 import { siteUrl } from "@/lib/site";
 import "./globals.css";
-
-const figtree = Figtree({
-  subsets: ["latin"],
-  weight: ["500", "600"],
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -77,7 +70,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   };
 
   return (
-    <html lang="en" className={figtree.className}>
+    <html lang="en">
+      <head>
+        <link rel="preload" href="/figtree-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+      </head>
       <body>
         <script
           type="application/ld+json"
