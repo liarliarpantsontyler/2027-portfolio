@@ -1,0 +1,42 @@
+---
+description: Homepage grid spacing, proportional tiles, and device-mock CSS (incl. iPad Safari)
+globs: app/globals.css,content/home.ts,components/home-project-tile.tsx,components/home-media.tsx,components/project-grid.tsx
+alwaysApply: false
+---
+
+# Homepage tiles (grid + CSS)
+
+Canonical doc: README → **Homepage project grid** and **Homepage tile layout (CSS)**.
+
+## Frame spacing (rail + grid)
+
+- Use **`--home-gutter`** (`clamp(24px, 2.4vw, 46px)`) for outer padding and gaps on **both** `.home` and `.site-frame` — same top/left inset for the rail.
+- Row gap and column gap must stay **one token** (`--home-tile-gap: var(--home-gutter)`). Do not split row vs column with different `vw` clamps.
+- Internal rail stack spacing stays **`--gap` (10px)** between name / intro / clock / lists only.
+
+## In-tile proportion (framed tiles)
+
+- Framed inset: **`padding: clamp(16px, 7%, 48px)`** (tighter tiles e.g. vizzy: **4%**) — **percent of tile width**, not `vw`.
+- Concentric corners: outer shell **`min(76px, max(26px, 12.6%))`** with inner viewport **`clamp(10px, 5.6cqw, 28px)`** on **child** `.home-media-viewport` (see existing rules in `app/globals.css`).
+- Do not put **`cqw` in custom properties on the same element** that consumes them for padding (Safari/iPad fails silently).
+
+## Composite device mocks (phones, scroll art)
+
+Reference: **`.klocky-home-phone`** in `app/globals.css` + markup in `components/home-media.tsx` (`klocky-cover`).
+
+Non-negotiable:
+
+1. **Aspect box** — shell height from width, not content: `::before { padding-bottom: calc(100% * H / W); content: ""; }`.
+2. **`overflow: hidden`** on the shell; screen **`position: absolute; inset: …`** so tall images/video **cannot** stretch the frame.
+3. **Width budget** from stage width + `stageAspect` in `homeTileLayout` (Klocky 4/5):  
+   `width: min(55%, calc(88% * 5 / 4 * 390 / 844))` — every `%` is relative to the **same** containing block width.
+4. Avoid **`aspect-ratio` + `max-height` + `height: auto`** on boxes with scrolling inner media as the only constraint.
+5. Avoid **`height: calc(var(--token) * …)`** when `--token` contains **`min()`** — iPad Safari may ignore it.
+
+## Before shipping layout changes
+
+Verify:
+
+- **iPad portrait (~834px)** and **landscape (~1024px)** — device mock **width ÷ height** matches target ratio (e.g. 390/844 ≈ 0.462).
+- **Home ↔ project page** — rail name block **top inset === left inset**.
+- Slow resize — framed padding **÷ tile width** stays ~stable (no stepped gutter jumps except intentional mobile stack at ≤860px).

@@ -51,11 +51,23 @@ The homepage uses an editorial row grid (not masonry). Layout lives in `content/
 | --- | --- |
 | `homeTiles` | Tile media, links/modals, and `rank` (top-to-bottom reading order; also mobile single column) |
 | `homeLayoutRows` | Row sequence: `standard` (2-up) or `compact` (3-up) + `tileIds` — no single-column rows on desktop |
-| `homeTileLayout` | Per tile: `framed` or `fullBleed`, optional `stageAspect`, optional `mediaScale`, optional `mediaViewport` (`aspect`, `fit`, `position`, `radius` — crop via object-fit/position, not large transform scale) |
+| `homeTileLayout` | Per tile: `framed` or `fullBleed`, optional `stageAspect`, optional `mediaScale`, optional `mediaViewport` (`aspect`, `fit`, `position` — crop via object-fit/position, not large transform scale; viewport corner radius is scaled in CSS) |
 
 Rendering: `components/project-grid.tsx` + `components/home-project-tile.tsx`. Styles: `app/globals.css` → `.home-project-grid`. The sticky left rail is unchanged.
 
 To add or move a tile: add/update `homeTiles`, add an entry in `homeTileLayout`, place the tile id in exactly one `homeLayoutRows` row, and set a unique `rank` matching visual order.
+
+### Homepage tile layout (CSS)
+
+Shared tokens and patterns live in `app/globals.css`. Cursor rule: `.cursor/rules/homepage-tiles.mdc`.
+
+**Frame (rail + grid):** `--home-gutter` (`clamp(24px, 2.4vw, 46px)`) on `.home` and `.site-frame` for padding and column gap; tile row/column gaps use the same token. Rail card spacing inside the column stays `--gap` (10px).
+
+**Framed tiles:** inset padding scales with tile width (`7%`, capped); outer and inner corner radii stay concentric (see `.home-tile--framed` and `.home-media-viewport`).
+
+**Device mocks inside a tile** (e.g. Klocky phone over Signal): copy **`.klocky-home-phone`** — aspect ratio via a `::before` padding box, `overflow: hidden` on the shell, screen/content `position: absolute` so scrolling art cannot stretch the frame. Size width from stage `stageAspect` (e.g. 4/5 → use `calc(88% * 5 / 4 * …)` for height budget). Do not rely on `aspect-ratio` + `max-height` alone or `calc(var(--token) * …)` when the token uses `min()` (breaks on iPad Safari).
+
+**Check before merge:** iPad portrait (~834px) and landscape (~1024px); home vs project page rail inset matches; device mock width ÷ height ≈ intended ratio (390/844 for Klocky).
 
 ## Full project page layout contract
 
