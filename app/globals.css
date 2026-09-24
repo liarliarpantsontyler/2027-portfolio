@@ -612,8 +612,8 @@ dd {
   z-index: 2;
   top: 50%;
   left: 50%;
-  width: 55%;
-  max-height: 88%;
+  /* Fit 55% stage width and 88% stage height without breaking 390:844 (Safari/iPad) */
+  width: min(55cqw, calc(88cqh * 390 / 844));
   height: auto;
   aspect-ratio: 390 / 844;
   padding: 1.5%;
