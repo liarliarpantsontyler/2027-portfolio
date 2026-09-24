@@ -120,6 +120,7 @@ dd {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--gap);
+  align-items: start;
   min-width: 0;
 }
 
@@ -363,6 +364,11 @@ dd {
 .work-tile-media.wash img,
 .work-tile-media.wash video {
   mix-blend-mode: multiply;
+}
+
+.home-media-observe {
+  display: block;
+  width: 100%;
 }
 
 .work-tile-media:not(:has(.klocky-home-cover)):not(:has(.oontelligence-home-cover)) img,
@@ -1286,6 +1292,10 @@ body.mini-project-open {
 .story-media video {
   width: 100%;
   height: auto;
+}
+
+.story-media > .motion-video {
+  width: 100%;
 }
 
 .story-media.paper {
@@ -2264,4 +2274,49 @@ body.mini-project-open {
 
 @media (prefers-reduced-motion: reduce) {
   .klocky-motion-controls { display: none; }
+}
+
+/* Loyalty case study: existing mobile recordings already contain device chrome. */
+.loyalty-story .loyalty-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 24px 48px;
+  padding: clamp(28px, 5vw, 64px);
+  border-radius: 16px;
+  background: #76b548;
+}
+.loyalty-hero .growth-tag { border-color: #426a2a55; }
+.loyalty-story .loyalty-hero figcaption { grid-column: 2; margin: 0; color: #173509; }
+.case-study-clip { width: min(100%, 350px); margin-inline: auto; }
+.case-study-clip .motion-video { border-radius: 26px; overflow: hidden; }
+.case-study-clip .motion-video :is(img, video) { display: block; width: 100%; height: 100%; object-fit: contain; }
+.case-study-clip-controls { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 16px; margin-top: 16px; }
+.case-study-clip-controls :is(button, a) { padding: 8px 0; border: 0; background: none; color: inherit; font: inherit; font-size: 12px; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+.case-study-clip-controls :is(button, a):hover { text-decoration-thickness: 2px; }
+.loyalty-premise > p:not(.kicker) { max-width: 65ch; margin-top: 22px; font-size: 17px; line-height: 1.65; }
+.loyalty-loop { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 32px 0; margin: 32px 0 0; list-style: none; border-block: 1px solid var(--line); }
+.loyalty-loop span { display: block; color: var(--muted); font-size: 12px; margin-bottom: 12px; }
+.loyalty-loop strong { font-size: 24px; font-weight: 500; letter-spacing: -.03em; }
+.loyalty-loop p { font-size: 14px; line-height: 1.5; margin-top: 10px; }
+.loyalty-hub, .loyalty-achievements { padding: clamp(28px, 5vw, 64px); border-radius: 14px; background: #f0f3e7; }
+.loyalty-hub-screen .case-study-clip { max-width: 292px; }
+.loyalty-story .loyalty-hub-screen figcaption { width: min(100%, 292px); }
+.loyalty-progress { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: clamp(32px, 6vw, 88px); }
+.loyalty-progress figure { padding: 36px; background: #e9e2f3; border-radius: 14px; }
+.loyalty-progress .story-media { max-width: 360px; margin-inline: auto; border-radius: 16px; overflow: hidden; }
+.loyalty-achievements { background: #fff3d5; }
+.loyalty-achievements .story-media { width: min(100%, 292px); border-radius: 24px; overflow: hidden; }
+.loyalty-story .growth-contribution a { display: inline-block; font-size: 14px; line-height: 1.6; margin-top: 22px; text-decoration: underline; text-underline-offset: 4px; }
+@media (max-width: 700px) {
+  .loyalty-story .loyalty-hero, .loyalty-progress { grid-template-columns: 1fr; }
+  .loyalty-hero > .case-study-clip { order: -1; }
+  .loyalty-story .loyalty-hero figcaption { grid-column: 1; }
+  .loyalty-loop { grid-template-columns: 1fr; gap: 28px; }
+  .loyalty-loop li { border-left: 2px solid #76b548; padding-left: 18px; }
+  .loyalty-premise > p:not(.kicker) { font-size: 16px; }
+  .loyalty-progress figure { padding: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .case-study-clip-controls button { display: none; }
 }

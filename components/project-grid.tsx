@@ -1,13 +1,17 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { flushSync } from "react-dom";
 import Link from "next/link";
 import { HomeMedia } from "@/components/home-media";
-import {
-  MiniProjectModal,
-  type MiniProjectModalHandle,
-} from "@/components/mini-project-modal";
+import type { MiniProjectModalHandle } from "@/components/mini-project-modal";
+
+const MiniProjectModal = dynamic(
+  () =>
+    import("@/components/mini-project-modal").then((mod) => mod.MiniProjectModal),
+  { ssr: false },
+);
 import {
   homeTiles,
   type HomeModalTile,
@@ -121,14 +125,19 @@ function ColumnsIcon({ count }: { count: 2 | 3 }) {
 }
 
 function splitTiles(count: 2 | 3) {
-  if (count === 2) {
-    return [
-      homeTiles.filter((tile) => tile.column === "left"),
-      homeTiles.filter((tile) => tile.column === "right"),
-    ];
-  }
+  const sorted = [...homeTiles].sort((a, b) => a.rank - b.rank);
+  const columns = Array.from({ length: count }, () => [] as HomeTile[]);
+  sorted.forEach((tile, index) => {
+    columns[index % count].push(tile);
+  });
+  return columns;
+}
 
-  return [1, 2, 3].map((lane) => homeTiles.filter((tile) => tile.column3 === lane));
+if (process.env.NODE_ENV !== "production") {
+  const ranks = homeTiles.map((tile) => tile.rank);
+  if (new Set(ranks).size !== ranks.length) {
+    throw new Error("homeTiles: each tile must have a unique rank.");
+  }
 }
 
 export function ProjectGrid() {
@@ -197,7 +206,7 @@ export function ProjectGrid() {
               <Tile
                 key={tile.id}
                 tile={tile}
-                order={homeTiles.findIndex((item) => item.id === tile.id)}
+                order={tile.rank}
                 onOpen={openModal}
               />
             ))}

@@ -29,8 +29,7 @@ export const miniProjectTileTemplate = {
   poster: "/home/your-project-cover-poster.webp",
   // background: "#defc52", // wide UI still — edge sample from import script (vizzy-cover)
   // fit: "cover", // product photography — full-bleed tile (retail-bottles-cover)
-  column: "right",
-  column3: 1,
+  rank: 10,
   destination: {
     type: "modal",
     project: {

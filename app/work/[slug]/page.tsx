@@ -6,6 +6,7 @@ import { ProjectGallery } from "@/components/project-gallery";
 import { ProjectResults } from "@/components/project-results";
 import { KlockyStory } from "@/components/klocky-story";
 import { OatsCrossSellStory } from "@/components/oats-cross-sell-story";
+import { OatsLoyaltyStory } from "@/components/oats-loyalty-story";
 
 export function generateStaticParams() {
   return publishedProjects().map((project) => ({ slug: project.slug }));
@@ -55,7 +56,8 @@ export default async function ProjectPage({
   const next = getNextProject(project.slug);
   const isKlocky = project.slug === "klocky";
   const isCrossSell = project.slug === "cross-sell-upsell";
-  const hasCustomStory = isKlocky || isCrossSell;
+  const isLoyalty = project.slug === "loyalty-rewards";
+  const hasCustomStory = isKlocky || isCrossSell || isLoyalty;
 
   return (
     <main id="main">
@@ -83,6 +85,7 @@ export default async function ProjectPage({
             {isCrossSell ? <ProjectResults project={project} /> : null}
             {isKlocky ? <KlockyStory project={project} /> : null}
             {isCrossSell ? <OatsCrossSellStory project={project} /> : null}
+            {isLoyalty ? <OatsLoyaltyStory project={project} /> : null}
           </>
         ) : (
           <>

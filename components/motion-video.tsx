@@ -74,6 +74,7 @@ export function MotionVideo({
           poster={poster}
           width={width}
           height={height}
+          autoPlay
           muted
           loop
           playsInline

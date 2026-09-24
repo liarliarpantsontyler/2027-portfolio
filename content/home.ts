@@ -32,8 +32,8 @@ type HomeTileBase = {
   label?: string;
   mediaKind?: HomeMediaKind;
   poster?: string;
-  column: "left" | "right";
-  column3?: 1 | 2 | 3;
+  /** Homepage reading order (1 = top-left); same sequence for 2-col, 3-col, and mobile. Bottom of grid: cross-sell, then retail-bottles, then just-for-fun (ranks 7–9) unless Tyler changes it. */
+  rank: number;
   wash?: boolean;
   lined?: boolean;
   /** Tile stage fill when letterboxing or behind cover (edge sample from import script). */
@@ -63,34 +63,7 @@ export const homeTiles: HomeTile[] = [
     label: "Klocky",
     mediaKind: "video",
     poster: "/home/klocky-signal-poster.webp",
-    column: "left",
-    column3: 3,
-  },
-  {
-    id: "cross-sell-cover",
-    src: "/home/cross-sell-cover.webp",
-    width: 1080,
-    height: 1440,
-    alt: "Mobile Oats Overnight portal showing the Protein Coffee discovery offer above order status",
-    destination: { type: "link", href: "/work/cross-sell-upsell/" },
-    label: "Cross-sell + Upsell",
-    mediaKind: "image",
-    fit: "cover",
-    column: "left",
-    column3: 1,
-  },
-  {
-    id: "teladoc-screens",
-    src: "/home/teladoc-screens-cover.mp4",
-    width: 2160,
-    height: 3200,
-    alt: "Five Teladoc product screens",
-    destination: { type: "link", href: "/work/teladoc-health/" },
-    label: "Teladoc Health",
-    mediaKind: "video",
-    poster: "/home/teladoc-screens-cover-poster.webp",
-    column: "left",
-    column3: 1,
+    rank: 1,
   },
   {
     id: "ratings-cover",
@@ -102,8 +75,7 @@ export const homeTiles: HomeTile[] = [
     label: "Flavor Ratings",
     mediaKind: "video",
     poster: "/home/ratings-cover-poster.webp",
-    column: "right",
-    column3: 2,
+    rank: 2,
     lined: true,
   },
   {
@@ -116,61 +88,7 @@ export const homeTiles: HomeTile[] = [
     label: "creativeOS",
     mediaKind: "video",
     poster: "/home/creativeos-cover-poster.webp",
-    column: "right",
-    column3: 2,
-  },
-  {
-    id: "just-for-fun",
-    src: "/work/fun-01.gif",
-    width: 720,
-    height: 720,
-    alt: "Hand-drawn animation loop",
-    destination: { type: "link", href: "/work/just-for-fun/" },
-    label: "Just for Fun",
-    mediaKind: "gif",
-    poster: "/work/fun-01-poster.webp",
-    column: "right",
-    column3: 3,
-  },
-  {
-    id: "vizzy-cover",
-    src: "/home/vizzy-cover.webp",
-    width: 1024,
-    height: 576,
-    alt: "Vizzy Figma plugin UI with sticky comment cards on the canvas",
-    label: "Vizzy",
-    mediaKind: "image",
-    background: "#defc52",
-    column: "right",
-    column3: 1,
-    destination: {
-      type: "modal",
-      project: {
-        slug: "vizzy",
-        title: "Vizzy Figma Plugin",
-        description:
-          "I got tired of not being able to move comments page-to-page or into another file. Vizzy is the plugin I built to fix that. Sole designer and developer.",
-        projectUrl:
-          "https://www.figma.com/community/generative-plugin/1683396907519346280/vizzy-comment-mover",
-        projectUrlLabel: "Check out Vizzy",
-        media: [
-          {
-            src: "/work/vizzy/demo.mp4",
-            width: 1688,
-            height: 1072,
-            alt: "Screen recording of Vizzy moving Figma comments between pages",
-            mediaKind: "video",
-            poster: "/work/vizzy/demo-poster.webp",
-          },
-          {
-            src: "/work/vizzy/figma-ui.webp",
-            width: 1688,
-            height: 950,
-            alt: "Vizzy plugin UI inside Figma",
-          },
-        ],
-      },
-    },
+    rank: 3,
   },
   {
     id: "oontelligence-cover",
@@ -182,8 +100,7 @@ export const homeTiles: HomeTile[] = [
     mediaKind: "video",
     poster: "/home/oontelligence-cover-poster.webp?v=20250921b",
     background: "rgb(47, 47, 47)",
-    column: "left",
-    column3: 2,
+    rank: 4,
     lined: true,
     destination: {
       type: "modal",
@@ -215,6 +132,69 @@ export const homeTiles: HomeTile[] = [
     },
   },
   {
+    id: "teladoc-screens",
+    src: "/home/teladoc-screens-cover.mp4",
+    width: 2160,
+    height: 3200,
+    alt: "Five Teladoc product screens",
+    destination: { type: "link", href: "/work/teladoc-health/" },
+    label: "Teladoc Health",
+    mediaKind: "video",
+    poster: "/home/teladoc-screens-cover-poster.webp",
+    rank: 5,
+  },
+  {
+    id: "vizzy-cover",
+    src: "/home/vizzy-cover.webp",
+    width: 1024,
+    height: 576,
+    alt: "Vizzy Figma plugin UI with sticky comment cards on the canvas",
+    label: "Vizzy",
+    mediaKind: "image",
+    background: "#defc52",
+    rank: 6,
+    destination: {
+      type: "modal",
+      project: {
+        slug: "vizzy",
+        title: "Vizzy Figma Plugin",
+        description:
+          "I got tired of not being able to move comments page-to-page or into another file. Vizzy is the plugin I built to fix that. Sole designer and developer.",
+        projectUrl:
+          "https://www.figma.com/community/generative-plugin/1683396907519346280/vizzy-comment-mover",
+        projectUrlLabel: "Check out Vizzy",
+        media: [
+          {
+            src: "/work/vizzy/demo.mp4",
+            width: 1688,
+            height: 1072,
+            alt: "Screen recording of Vizzy moving Figma comments between pages",
+            mediaKind: "video",
+            poster: "/work/vizzy/demo-poster.webp",
+          },
+          {
+            src: "/work/vizzy/figma-ui.webp",
+            width: 1688,
+            height: 950,
+            alt: "Vizzy plugin UI inside Figma",
+          },
+        ],
+      },
+    },
+  },
+  {
+    id: "cross-sell-cover",
+    src: "/home/cross-sell-cover.webp",
+    width: 1080,
+    height: 1440,
+    alt: "Mobile Oats Overnight portal showing the Protein Coffee discovery offer above order status",
+    destination: { type: "link", href: "/work/cross-sell-upsell/" },
+    label: "Cross-sell + Upsell",
+    mediaKind: "image",
+    fit: "cover",
+    rank: 7,
+  },
+  {
     id: "retail-bottles-cover",
     src: "/home/retail-bottles-cover.jpg",
     width: 1024,
@@ -223,8 +203,7 @@ export const homeTiles: HomeTile[] = [
     label: "Retail bottles",
     mediaKind: "image",
     fit: "cover",
-    column: "left",
-    column3: 2,
+    rank: 8,
     destination: {
       type: "modal",
       project: {
@@ -304,5 +283,17 @@ export const homeTiles: HomeTile[] = [
         ],
       },
     },
+  },
+  {
+    id: "just-for-fun",
+    src: "/work/fun-01.mp4",
+    width: 720,
+    height: 720,
+    alt: "Hand-drawn animation loop",
+    destination: { type: "link", href: "/work/just-for-fun/" },
+    label: "Just for Fun",
+    mediaKind: "video",
+    poster: "/work/fun-01-poster.webp",
+    rank: 9,
   },
 ];

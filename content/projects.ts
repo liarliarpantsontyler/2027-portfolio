@@ -433,6 +433,47 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "loyalty-rewards",
+    company: "Oats Overnight",
+    name: "Loyalty & Rewards",
+    shortName: "Loyalty",
+    headline: "A reason to participate.",
+    intro: "Connecting flavor feedback, points, and rewards to give customers visible reasons to participate in what Oats makes next.",
+    capabilities: "Product design · Loyalty · Interaction design",
+    theme: "oats",
+    year: "2026",
+    presentation: "visual-first",
+    role: "Product and interaction design connecting feedback, points, progression, and rewards across the customer portal.",
+    gallery: [
+      {
+        src: "/work/oats-loyalty/earning-points.mp4",
+        poster: "/work/oats-loyalty/earning-points-poster.webp",
+        width: 660, height: 1372,
+        alt: "Recorded mobile design walkthrough: rating a flavor earns visible OON points",
+        title: "Earning points", caption: "", treatment: "edge", kind: "video",
+      },
+      {
+        src: "/work/oats-loyalty/rewards-hub.mp4",
+        poster: "/work/oats-loyalty/rewards-hub-poster.webp",
+        width: 542, height: 1172,
+        alt: "Recorded loyalty design walkthrough scrolling from profile and progress to surveys and achievements",
+        title: "Rewards hub", caption: "", treatment: "edge", kind: "video",
+      },
+      {
+        src: "/work/oats-loyalty/progression.webp",
+        width: 542, height: 694,
+        alt: "Design detail with point total, distance to the next tier, earning history, and earned versus locked benefits",
+        title: "Progression", caption: "", treatment: "edge",
+      },
+      {
+        src: "/work/oats-loyalty/achievements.webp",
+        width: 542, height: 1172,
+        alt: "Recorded design frame showing named achievement cards, progress bars, and bonus points",
+        title: "Achievements", caption: "", treatment: "edge",
+      },
+    ],
+  },
+  {
     slug: "cross-sell-upsell",
     company: "Oats Overnight",
     name: "Cross-sell + Upsell",
@@ -548,8 +589,8 @@ export const projects: Project[] = [
     gallery: [
       {
         src: "/work/creativeos-portrait.mp4",
-        width: 1080,
-        height: 1440,
+        width: 2048,
+        height: 2732,
         alt: "creativeOS interface in a vertical product walkthrough",
         title: "The studio, in motion.",
         caption: "Strategy, prototypes, critique, and handoff in one environment.",

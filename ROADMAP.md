@@ -6,7 +6,7 @@ This is the shared source of truth for planned portfolio work. Any coding assist
 
 ## What's next?
 
-**Next: finish OATS-01 media and evidence.** The visual-first page rewrite and selected stills are implemented. Capture one qualifying native-resolution motion pilot before producing the three clips; then obtain the analytics reporting window and denominator. OATS-02 follows this work.
+**Current project: OATS-02 — Loyalty & Rewards.** A first visual-first draft with two real recordings is built at `/work/loyalty-rewards/`. Next, confirm the throwing-tomatoes badge trigger and recognition with Tyler, then add that distinctive example and verify current earning/redemption rules. Cross-sell motion and analytics remain deferred; no native screen control should interrupt Tyler’s work.
 
 The larger goal is to split the broad Oats Overnight app case study into focused projects with enough depth to show the problem, research, design decisions, interactions, and results. Ratings & Notes already has its own case study and should remain separate.
 
@@ -15,7 +15,7 @@ The larger goal is to split the broad Oats Overnight app case study into focused
 | Order | ID | Project | Status |
 | --- | --- | --- | --- |
 | 1 | OATS-01 | Cross-sell and upsell system | Page rebuilt with real stills — high-resolution motion and analytics evidence pending |
-| 2 | OATS-02 | Loyalty program and reward systems | Planned — next |
+| 2 | OATS-02 | Loyalty program and reward systems | Draft built and checked — badge details, current rules, and impact evidence pending |
 | 3 | OATS-03 | Survey feature design | Planned |
 | 4 | OATS-04 | Restructure the Oats app overview and portfolio navigation | Planned — after the focused stories are ready |
 
@@ -71,6 +71,12 @@ Done when: the motion pilot meets the quality bar, the three genuine mobile clip
 ## OATS-02 — Loyalty program and reward systems
 
 **Story:** Give customers unexpected reasons to participate, especially in feedback that matters to Oats Overnight.
+
+**Started (2026-09-22):** Build around the immediate points response, a unified rewards hub, tier progression, and achievement cards. Existing `ratings-loyalty.mp4` (798 × 1528, 120fps) and `oats-loyalty.mp4` (1920 × 1404, 60fps) provide motion without new screen recording. Derivatives preserve native pixels: rewarded ratings cropped to 660 × 1372 and exported at 60fps; the loyalty hub cropped to 542 × 1172 and trimmed to the relevant five seconds. The crop removes the source’s separate shipping/account-management screen. Footage is labeled as recorded design walkthroughs, not verified current production; demo values and tier rules remain design-version examples. The exact throwing-tomatoes badge trigger and recognition are awaiting Tyler’s clarification. No badge rule or impact metric will be invented.
+
+**Draft delivered (2026-09-22):** Added `components/oats-loyalty-story.tsx`, the `loyalty-rewards` project entry and route integration, scoped CSS, and six assets in `public/work/oats-loyalty/`: two H.264 clips, two WebP posters, and progression/achievement stills. A reusable `CaseStudyClip` adds Pause, Replay, and Open video controls to the existing viewport-aware player. Clips load near the viewport, pause offscreen, and use still posters under reduced motion. The story connects feedback to points, a unified rewards hub, readable progression, and achievement recognition. Existing source recordings remain untouched. No homepage tile or deployment was added.
+
+**Validation:** Inspected at 1280px desktop and 393 × 852 mobile in a hidden browser, with no horizontal overflow or broken images. Confirmed actual playback, Pause/Replay behavior, deferred video loading, native crop dimensions and 60fps, and no browser console errors. Header padding remains 28px 0 48px. `npm run build` passed with the development server stopped, including lint/type checks and static export. Current production behavior, earning/redemption rules, the tomato badge, and measured impact still need evidence before this draft meets the full brief.
 
 - Showcase the badges, how they are earned, and the broader points and reward system.
 - Feature the **throwing tomatoes badge**: capture its real trigger, meaning, visual treatment, and customer experience rather than guessing its rules.

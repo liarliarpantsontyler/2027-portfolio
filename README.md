@@ -72,7 +72,7 @@ One modal for all mini projects. Do not add a project-specific modal component.
 1. **Homepage cover** — `public/home/` (MP4 + WebP poster, or a still). Set tile `width` / `height` to the real file dimensions. Wide stills use at least a **1:1** tile; do not leave grey letterbox bands—set tile `background` (edge sample from the import script) for UI/flat fields (`vizzy-cover`), or `fit: "cover"` for product photography (`retail-bottles-cover`).
 2. **Modal media** — `public/work/<project>/`. Use **`node scripts/import-mini-project-media.mjs`** to copy files in (default: no re-encode). Chat attachments are ~1024px wide; drop full-res files in the repo or pass a disk path to the script.
 3. **Copy the template** from `content/mini-project.template.ts` into `homeTiles`. Use a unique `slug` (used in `/?project=slug`). Paste `width`, `height`, and (for **portrait** stills only) `background` from the import script output.
-4. **Grid position** — set both `column` (`"left"` \| `"right"`) and `column3` (`1` \| `2` \| `3`).
+4. **Grid position** — set `rank` (1 = top-left reading order; unique per tile; same order for 2-col, 3-col, and mobile). Bottom of grid: **Cross-sell + Upsell** (7), **Retail bottles** (8), **Just for Fun** (9) unless Tyler changes that.
 5. **Optional link** — `projectUrl` + `projectUrlLabel` (curved arrow, opens in new tab).
 6. **Carousel** — two or more `media` items; arrows and dots render on white under the media. Captions on carousel slides are hidden in the modal (use description or single-slide captions if needed).
 7. **`npm run build`** before publish.

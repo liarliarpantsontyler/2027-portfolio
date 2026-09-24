@@ -62,21 +62,15 @@ export function ProjectMedia({ item, first }: { item: ProjectImage; first: boole
     item.treatment === "device" && (item.kind === "video" || item.orientation === "portrait");
   const deviceAspect = `${item.width} / ${item.height}`;
 
-  const video = item.loop ? (
-    <MotionVideo key={item.src} src={item.src} poster={item.poster} width={item.width} height={item.height} alt={item.alt} />
-  ) : (
-    <video
+  const video = (
+    <MotionVideo
+      key={item.src}
+      src={item.src}
+      poster={item.poster}
       width={item.width}
       height={item.height}
-      poster={item.poster}
-      controls
-      muted
-      playsInline
-      preload="metadata"
-      aria-label={item.alt}
-    >
-      <source src={item.src} type="video/mp4" />
-    </video>
+      alt={item.alt}
+    />
   );
 
   return (

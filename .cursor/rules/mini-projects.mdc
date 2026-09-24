@@ -25,4 +25,4 @@ Canonical doc: README → **Add a mini project**. One shared modal: `components/
 
 ## Adding a tile
 
-Copy `content/mini-project.template.ts` into `homeTiles`. Unique `slug` → `/?project=<slug>`. Set `column` and `column3`.
+Copy `content/mini-project.template.ts` into `homeTiles`. Unique `slug` → `/?project=<slug>`. Set a unique `rank` for homepage tile order.
