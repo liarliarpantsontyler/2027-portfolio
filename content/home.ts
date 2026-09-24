@@ -340,7 +340,6 @@ export const homeTileLayout: Record<string, HomeTileLayout> = {
       aspect: "9 / 16",
       fit: "cover",
       position: "50% 50%",
-      radius: "28px",
     },
   },
   "creativeos-cover": {
@@ -350,7 +349,6 @@ export const homeTileLayout: Record<string, HomeTileLayout> = {
       aspect: "4 / 3",
       fit: "contain",
       position: "50% 50%",
-      radius: "28px",
     },
   },
   "teladoc-screens": {
@@ -360,7 +358,6 @@ export const homeTileLayout: Record<string, HomeTileLayout> = {
       aspect: "4 / 3",
       fit: "contain",
       position: "50% 50%",
-      radius: "28px",
     },
   },
   "oontelligence-cover": {
@@ -370,7 +367,6 @@ export const homeTileLayout: Record<string, HomeTileLayout> = {
       aspect: "9 / 16",
       fit: "cover",
       position: "50% 48%",
-      radius: "28px",
     },
   },
   "cross-sell-cover": {
@@ -380,7 +376,6 @@ export const homeTileLayout: Record<string, HomeTileLayout> = {
       aspect: "9 / 16",
       fit: "cover",
       position: "50% 18%",
-      radius: "28px",
     },
   },
   "vizzy-cover": {
@@ -390,7 +385,6 @@ export const homeTileLayout: Record<string, HomeTileLayout> = {
       aspect: "4 / 3",
       fit: "contain",
       position: "50% 50%",
-      radius: "28px",
       background: "#defc52",
     },
   },
@@ -401,7 +395,6 @@ export const homeTileLayout: Record<string, HomeTileLayout> = {
       aspect: "4 / 3",
       fit: "cover",
       position: "50% 50%",
-      radius: "28px",
     },
   },
   "just-for-fun": {
@@ -411,7 +404,6 @@ export const homeTileLayout: Record<string, HomeTileLayout> = {
       aspect: "4 / 3",
       fit: "cover",
       position: "50% 50%",
-      radius: "28px",
       background: "rgb(0, 39, 87)",
     },
   },

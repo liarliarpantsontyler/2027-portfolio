@@ -59,7 +59,6 @@ function viewportStyle(layout: HomeTileLayout): CSSProperties {
     ["--viewport-ratio" as string]: viewport.aspect,
     ["--viewport-position" as string]: viewport.position ?? "50% 50%",
     ...(viewport.fit ? { ["--viewport-fit" as string]: viewport.fit } : {}),
-    ...(viewport.radius ? { ["--viewport-radius" as string]: viewport.radius } : {}),
     ...(viewport.background
       ? { ["--viewport-background" as string]: viewport.background }
       : {}),
