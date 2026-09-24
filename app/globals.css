@@ -112,7 +112,7 @@ dd {
   display: grid;
   grid-template-columns: var(--rail) minmax(0, 1fr);
   gap: var(--home-gutter);
-  padding: 0 var(--home-gutter) var(--home-gutter);
+  padding: var(--home-gutter);
   min-height: 100svh;
 }
 
@@ -121,7 +121,6 @@ dd {
   display: flex;
   flex-direction: column;
   gap: var(--home-gutter);
-  padding-top: var(--gap);
   min-width: 0;
 }
 
@@ -152,11 +151,11 @@ dd {
 
 .rail {
   position: sticky;
-  top: 0;
+  top: var(--home-gutter);
   align-self: start;
   display: flex;
   flex-direction: column;
-  padding: var(--gap) 0;
+  padding: 0;
   gap: var(--gap);
 }
 
@@ -306,14 +305,13 @@ dd {
 .site-frame {
   display: grid;
   grid-template-columns: var(--rail) minmax(0, 1fr);
-  gap: var(--gap);
-  padding: 0 var(--gap) var(--gap);
+  gap: var(--home-gutter);
+  padding: var(--home-gutter);
   min-height: 100svh;
 }
 
 .site-body {
   min-width: 0;
-  padding-top: var(--gap);
 }
 
 .site-frame .page-bar {
