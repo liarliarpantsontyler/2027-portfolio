@@ -434,6 +434,7 @@ export const projects: Project[] = [
   },
   {
     slug: "loyalty-rewards",
+    hidden: true,
     company: "Oats Overnight",
     name: "Loyalty & Rewards",
     shortName: "Loyalty",

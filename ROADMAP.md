@@ -1,6 +1,6 @@
 # Portfolio roadmap
 
-Last updated: 2026-09-22
+Last updated: 2026-09-23
 
 This is the shared source of truth for planned portfolio work. Any coding assistant with access to this repository can read it. Order reflects Tyler's current priorities; it is not a delivery schedule.
 
@@ -15,7 +15,7 @@ The larger goal is to split the broad Oats Overnight app case study into focused
 | Order | ID | Project | Status |
 | --- | --- | --- | --- |
 | 1 | OATS-01 | Cross-sell and upsell system | Page rebuilt with real stills — high-resolution motion and analytics evidence pending |
-| 2 | OATS-02 | Loyalty program and reward systems | Draft built and checked — badge details, current rules, and impact evidence pending |
+| 2 | OATS-02 | Loyalty program and reward systems | Draft built — hidden until homepage hero + badge details, rules, and impact evidence |
 | 3 | OATS-03 | Survey feature design | Planned |
 | 4 | OATS-04 | Restructure the Oats app overview and portfolio navigation | Planned — after the focused stories are ready |
 
@@ -74,7 +74,9 @@ Done when: the motion pilot meets the quality bar, the three genuine mobile clip
 
 **Started (2026-09-22):** Build around the immediate points response, a unified rewards hub, tier progression, and achievement cards. Existing `ratings-loyalty.mp4` (798 × 1528, 120fps) and `oats-loyalty.mp4` (1920 × 1404, 60fps) provide motion without new screen recording. Derivatives preserve native pixels: rewarded ratings cropped to 660 × 1372 and exported at 60fps; the loyalty hub cropped to 542 × 1172 and trimmed to the relevant five seconds. The crop removes the source’s separate shipping/account-management screen. Footage is labeled as recorded design walkthroughs, not verified current production; demo values and tier rules remain design-version examples. The exact throwing-tomatoes badge trigger and recognition are awaiting Tyler’s clarification. No badge rule or impact metric will be invented.
 
-**Draft delivered (2026-09-22):** Added `components/oats-loyalty-story.tsx`, the `loyalty-rewards` project entry and route integration, scoped CSS, and six assets in `public/work/oats-loyalty/`: two H.264 clips, two WebP posters, and progression/achievement stills. A reusable `CaseStudyClip` adds Pause, Replay, and Open video controls to the existing viewport-aware player. Clips load near the viewport, pause offscreen, and use still posters under reduced motion. The story connects feedback to points, a unified rewards hub, readable progression, and achievement recognition. Existing source recordings remain untouched. No homepage tile or deployment was added.
+**Draft delivered (2026-09-22):** Added `components/oats-loyalty-story.tsx`, the `loyalty-rewards` project entry and route integration, scoped CSS, and six assets in `public/work/oats-loyalty/`: two H.264 clips, two WebP posters, and progression/achievement stills. A reusable `CaseStudyClip` adds Pause, Replay, and Open video controls to the existing viewport-aware player. Clips load near the viewport, pause offscreen, and use still posters under reduced motion. The story connects feedback to points, a unified rewards hub, readable progression, and achievement recognition. Existing source recordings remain untouched.
+
+**Withheld from public (2026-09-23):** The case study is `hidden: true` (no rail link, no static route, 404 in production) and the homepage tile is removed until the cover hero is fixed. The prototype tile reused the earning-points recording, which reads as **Ratings & Notes** again on the grid next to Flavor Ratings. Before re-enabling: pick a distinct homepage hero — e.g. **metal shakers** or another reward/product moment from the loyalty story — not the ratings screen. Wire a new `public/home/loyalty-rewards-cover.*`, restore the tile in `content/home.ts`, then clear `hidden` on the project entry.
 
 **Validation:** Inspected at 1280px desktop and 393 × 852 mobile in a hidden browser, with no horizontal overflow or broken images. Confirmed actual playback, Pause/Replay behavior, deferred video loading, native crop dimensions and 60fps, and no browser console errors. Header padding remains 28px 0 48px. `npm run build` passed with the development server stopped, including lint/type checks and static export. Current production behavior, earning/redemption rules, the tomato badge, and measured impact still need evidence before this draft meets the full brief.
 

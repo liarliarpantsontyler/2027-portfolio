@@ -32,7 +32,7 @@ type HomeTileBase = {
   label?: string;
   mediaKind?: HomeMediaKind;
   poster?: string;
-  /** Homepage reading order (1 = top-left); same sequence for 2-col, 3-col, and mobile. Bottom of grid: cross-sell, then retail-bottles, then just-for-fun (ranks 7–9) unless Tyler changes it. */
+  /** Homepage reading order (1 = top); matches visual top-to-bottom order and mobile single column. */
   rank: number;
   wash?: boolean;
   lined?: boolean;
@@ -51,6 +51,37 @@ export type HomeModalTile = HomeTileBase & {
 };
 
 export type HomeTile = HomeLinkTile | HomeModalTile;
+
+export type HomeTileSize = "standard" | "compact" | "solo";
+export type HomeTileTreatment = "framed" | "fullBleed";
+
+export type HomeMediaViewport = {
+  /** Clip window aspect (usually the device screen), e.g. "16 / 10" */
+  aspect: `${number} / ${number}`;
+  /** object-fit inside the clip; tune crop with position, not large scale values. */
+  fit?: "cover" | "contain";
+  /** object-position, e.g. "50% 42%" */
+  position?: string;
+  /** Inner clip radius. */
+  radius?: string;
+  /** Letterbox fill when media uses contain; should match source matte. */
+  background?: string;
+};
+
+export type HomeTileLayout = {
+  treatment: HomeTileTreatment;
+  /** Reserved stage aspect for CLS; e.g. "16 / 10", "4 / 3", "1 / 1" */
+  stageAspect?: `${number} / ${number}`;
+  /** Framed only: max width of media inside padding when no viewport, e.g. 0.52 */
+  mediaScale?: number;
+  /** Cropped clip with rounded corners inside the stage. */
+  mediaViewport?: HomeMediaViewport;
+};
+
+export type HomeLayoutRow = {
+  size: HomeTileSize;
+  tileIds: string[];
+};
 
 export const homeTiles: HomeTile[] = [
   {
@@ -75,20 +106,20 @@ export const homeTiles: HomeTile[] = [
     label: "Flavor Ratings",
     mediaKind: "video",
     poster: "/home/ratings-cover-poster.webp",
+    fit: "cover",
     rank: 2,
-    lined: true,
   },
   {
     id: "creativeos-cover",
     src: "/home/creativeos-cover.mp4",
-    width: 1080,
+    width: 1920,
     height: 1440,
     alt: "creativeOS cover on a laptop",
     destination: { type: "link", href: "/work/creativeos/" },
     label: "creativeOS",
     mediaKind: "video",
     poster: "/home/creativeos-cover-poster.webp",
-    rank: 3,
+    rank: 4,
   },
   {
     id: "oontelligence-cover",
@@ -100,8 +131,7 @@ export const homeTiles: HomeTile[] = [
     mediaKind: "video",
     poster: "/home/oontelligence-cover-poster.webp?v=20250921b",
     background: "rgb(47, 47, 47)",
-    rank: 4,
-    lined: true,
+    rank: 6,
     destination: {
       type: "modal",
       project: {
@@ -133,14 +163,14 @@ export const homeTiles: HomeTile[] = [
   },
   {
     id: "teladoc-screens",
-    src: "/home/teladoc-screens-cover.mp4",
-    width: 2160,
-    height: 3200,
+    src: "/home/teladoc-screens-cover.mp4?v=20250924b",
+    width: 1920,
+    height: 1440,
     alt: "Five Teladoc product screens",
     destination: { type: "link", href: "/work/teladoc-health/" },
     label: "Teladoc Health",
     mediaKind: "video",
-    poster: "/home/teladoc-screens-cover-poster.webp",
+    poster: "/home/teladoc-screens-cover-poster.webp?v=20250924b",
     rank: 5,
   },
   {
@@ -152,7 +182,7 @@ export const homeTiles: HomeTile[] = [
     label: "Vizzy",
     mediaKind: "image",
     background: "#defc52",
-    rank: 6,
+    rank: 7,
     destination: {
       type: "modal",
       project: {
@@ -192,7 +222,7 @@ export const homeTiles: HomeTile[] = [
     label: "Cross-sell + Upsell",
     mediaKind: "image",
     fit: "cover",
-    rank: 7,
+    rank: 3,
   },
   {
     id: "retail-bottles-cover",
@@ -297,3 +327,142 @@ export const homeTiles: HomeTile[] = [
     rank: 9,
   },
 ];
+
+export const homeTileLayout: Record<string, HomeTileLayout> = {
+  "klocky-cover": {
+    treatment: "framed",
+    stageAspect: "4 / 5",
+  },
+  "ratings-cover": {
+    treatment: "framed",
+    stageAspect: "4 / 5",
+    mediaViewport: {
+      aspect: "9 / 16",
+      fit: "cover",
+      position: "50% 50%",
+      radius: "28px",
+    },
+  },
+  "creativeos-cover": {
+    treatment: "framed",
+    stageAspect: "4 / 3",
+    mediaViewport: {
+      aspect: "4 / 3",
+      fit: "contain",
+      position: "50% 50%",
+      radius: "28px",
+    },
+  },
+  "teladoc-screens": {
+    treatment: "framed",
+    stageAspect: "4 / 3",
+    mediaViewport: {
+      aspect: "4 / 3",
+      fit: "contain",
+      position: "50% 50%",
+      radius: "28px",
+    },
+  },
+  "oontelligence-cover": {
+    treatment: "framed",
+    stageAspect: "4 / 5",
+    mediaViewport: {
+      aspect: "9 / 16",
+      fit: "cover",
+      position: "50% 48%",
+      radius: "28px",
+    },
+  },
+  "cross-sell-cover": {
+    treatment: "framed",
+    stageAspect: "4 / 5",
+    mediaViewport: {
+      aspect: "9 / 16",
+      fit: "cover",
+      position: "50% 18%",
+      radius: "28px",
+    },
+  },
+  "vizzy-cover": {
+    treatment: "framed",
+    stageAspect: "4 / 5",
+    mediaViewport: {
+      aspect: "4 / 3",
+      fit: "contain",
+      position: "50% 50%",
+      radius: "28px",
+      background: "#defc52",
+    },
+  },
+  "retail-bottles-cover": {
+    treatment: "framed",
+    stageAspect: "4 / 5",
+    mediaViewport: {
+      aspect: "4 / 3",
+      fit: "cover",
+      position: "50% 50%",
+      radius: "28px",
+    },
+  },
+  "just-for-fun": {
+    treatment: "framed",
+    stageAspect: "4 / 5",
+    mediaViewport: {
+      aspect: "4 / 3",
+      fit: "cover",
+      position: "50% 50%",
+      radius: "28px",
+      background: "rgb(0, 39, 87)",
+    },
+  },
+};
+
+export const homeLayoutRows: HomeLayoutRow[] = [
+  {
+    size: "compact",
+    tileIds: ["klocky-cover", "ratings-cover", "cross-sell-cover"],
+  },
+  { size: "standard", tileIds: ["creativeos-cover", "teladoc-screens"] },
+  {
+    size: "compact",
+    tileIds: ["oontelligence-cover", "vizzy-cover", "retail-bottles-cover"],
+  },
+  { size: "solo", tileIds: ["just-for-fun"] },
+];
+
+const EXPECTED_ROW_LENGTH: Record<HomeTileSize, number> = {
+  standard: 2,
+  compact: 3,
+  solo: 1,
+};
+
+if (process.env.NODE_ENV !== "production") {
+  const ranks = homeTiles.map((tile) => tile.rank);
+  if (new Set(ranks).size !== ranks.length) {
+    throw new Error("homeTiles: each tile must have a unique rank.");
+  }
+
+  const layoutIds = homeLayoutRows.flatMap((row) => row.tileIds);
+  const tileIds = homeTiles.map((tile) => tile.id);
+  if (layoutIds.length !== tileIds.length) {
+    throw new Error("homeLayoutRows: must include every homepage tile exactly once.");
+  }
+  if (new Set(layoutIds).size !== layoutIds.length) {
+    throw new Error("homeLayoutRows: duplicate tile id.");
+  }
+  for (const id of tileIds) {
+    if (!layoutIds.includes(id)) {
+      throw new Error(`homeLayoutRows: missing tile id "${id}".`);
+    }
+    if (!homeTileLayout[id]) {
+      throw new Error(`homeTileLayout: missing layout for "${id}".`);
+    }
+  }
+  for (const row of homeLayoutRows) {
+    if (row.tileIds.length !== EXPECTED_ROW_LENGTH[row.size]) {
+      throw new Error(
+        `homeLayoutRows: row size "${row.size}" expects ${EXPECTED_ROW_LENGTH[row.size]} tiles.`,
+      );
+    }
+  }
+}

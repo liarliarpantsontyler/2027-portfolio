@@ -8,7 +8,9 @@
     "dev:clean": "rm -rf .next && next dev --port 3000",
     "prebuild": "node scripts/ensure-clean-build.mjs",
     "build": "next build",
-    "start": "npx --yes serve out"
+    "start": "npx --yes serve out",
+    "encode:home-covers": "node scripts/encode-home-covers.mjs",
+    "lighthouse:prod": "npx --yes lighthouse https://www.liarliarpantsontyler.com/ --preset=desktop --only-categories=performance --output=html --output-path=./lighthouse-report.html"
   },
   "engines": {
     "node": ">=20"

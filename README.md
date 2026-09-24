@@ -43,6 +43,20 @@ The build writes a static site to `out/`. Netlify publish directory is already s
 
 `content/site.ts` holds name, bio, experience, and links.
 
+## Homepage project grid
+
+The homepage uses an editorial row grid (not masonry). Layout lives in `content/home.ts`:
+
+| Piece | Purpose |
+| --- | --- |
+| `homeTiles` | Tile media, links/modals, and `rank` (top-to-bottom reading order; also mobile single column) |
+| `homeLayoutRows` | Row sequence: `standard` (2-up) or `compact` (3-up) + `tileIds` — no single-column rows on desktop |
+| `homeTileLayout` | Per tile: `framed` or `fullBleed`, optional `stageAspect`, optional `mediaScale`, optional `mediaViewport` (`aspect`, `fit`, `position`, `radius` — crop via object-fit/position, not large transform scale) |
+
+Rendering: `components/project-grid.tsx` + `components/home-project-tile.tsx`. Styles: `app/globals.css` → `.home-project-grid`. The sticky left rail is unchanged.
+
+To add or move a tile: add/update `homeTiles`, add an entry in `homeTileLayout`, place the tile id in exactly one `homeLayoutRows` row, and set a unique `rank` matching visual order.
+
 ## Full project page layout contract
 
 Use this when adding or editing any `/work/[slug]/` case study (paste into Codex, Claude, Antigravity, etc. if needed).
@@ -72,7 +86,7 @@ One modal for all mini projects. Do not add a project-specific modal component.
 1. **Homepage cover** — `public/home/` (MP4 + WebP poster, or a still). Set tile `width` / `height` to the real file dimensions. Wide stills use at least a **1:1** tile; do not leave grey letterbox bands—set tile `background` (edge sample from the import script) for UI/flat fields (`vizzy-cover`), or `fit: "cover"` for product photography (`retail-bottles-cover`).
 2. **Modal media** — `public/work/<project>/`. Use **`node scripts/import-mini-project-media.mjs`** to copy files in (default: no re-encode). Chat attachments are ~1024px wide; drop full-res files in the repo or pass a disk path to the script.
 3. **Copy the template** from `content/mini-project.template.ts` into `homeTiles`. Use a unique `slug` (used in `/?project=slug`). Paste `width`, `height`, and (for **portrait** stills only) `background` from the import script output.
-4. **Grid position** — set `rank` (1 = top-left reading order; unique per tile; same order for 2-col, 3-col, and mobile). Bottom of grid: **Cross-sell + Upsell** (7), **Retail bottles** (8), **Just for Fun** (9) unless Tyler changes that.
+4. **Grid position** — set a unique `rank` (1 = top of page; mobile single-column order). Add the tile id to one row in `homeLayoutRows` and set `homeTileLayout[id]` (`framed` vs `fullBleed`, optional `stageAspect`, `mediaScale`, or `mediaViewport` for Rotato-style screen crops).
 5. **Optional link** — `projectUrl` + `projectUrlLabel` (curved arrow, opens in new tab).
 6. **Carousel** — two or more `media` items; arrows and dots render on white under the media. Captions on carousel slides are hidden in the modal (use description or single-slide captions if needed).
 7. **`npm run build`** before publish.
@@ -104,6 +118,23 @@ node scripts/import-mini-project-media.mjs --out public/work/my-slug ~/Downloads
 # Optional WebP at q92 (only if you need WebP)
 node scripts/import-mini-project-media.mjs --webp --out public/work/my-slug ./incoming/
 ```
+
+## Homepage media encoding
+
+Grid cover MP4s should be H.264, silent, with `+faststart` for fast first paint. After replacing a cover in `public/home/`:
+
+```bash
+npm run encode:home-covers
+```
+
+The script remuxes efficient files in place and re-compresses oversized Rotato exports (Klocky, Teladoc) at CRF 23. Prefer MP4 + WebP poster for motion tiles (see **Just for Fun** in `content/home.ts`).
+
+## Performance checks
+
+- **Netlify:** `@netlify/plugin-lighthouse` runs after each deploy; scores and reports are in the deploy log.
+- **GitHub Actions:** `.github/workflows/lighthouse.yml` audits production weekly and on demand.
+- **Local / manual:** `npm run lighthouse:prod` writes `lighthouse-report.html`.
+- **WebPageTest:** run [webpagetest.org](https://www.webpagetest.org/) against `https://www.liarliarpantsontyler.com/` when you want filmstrip + multi-location detail (no API key required for one-off tests).
 
 ## Case study fields
 

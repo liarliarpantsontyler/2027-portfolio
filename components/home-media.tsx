@@ -5,9 +5,10 @@ import {
   useRef,
   useState,
   type ImgHTMLAttributes,
+  type ReactNode,
   type RefObject,
 } from "react";
-import type { HomeTile } from "@/content/home";
+import type { HomeTile, HomeTileLayout } from "@/content/home";
 
 function homeTileImagePriority(rank: number): Pick<
   ImgHTMLAttributes<HTMLImageElement>,
@@ -110,7 +111,8 @@ function useAutoplayWhenVisible(
 
 type DeferredVideoProps = {
   className?: string;
-  src: string;
+  /** Omit until tile is near viewport to defer bandwidth; poster still shows. */
+  src?: string;
   poster?: string;
   width: number;
   height: number;
@@ -145,7 +147,7 @@ function DeferredAutoplayVideo({
     <video
       ref={videoRef}
       className={className}
-      src={src}
+      {...(src ? { src } : {})}
       poster={poster}
       width={width}
       height={height}
@@ -153,11 +155,13 @@ function DeferredAutoplayVideo({
       muted
       loop
       playsInline
-      preload="metadata"
+      preload={src ? "metadata" : "none"}
       disablePictureInPicture
       aria-label={ariaHidden ? undefined : ariaLabel}
       aria-hidden={ariaHidden ? true : undefined}
-      onError={onFailed}
+      onError={() => {
+        if (src) onFailed();
+      }}
     />
   );
 }
@@ -191,7 +195,32 @@ function PosterImg({
   );
 }
 
-export function HomeMedia({ tile }: { tile: HomeTile }) {
+function MediaShell({
+  layout,
+  rootRef,
+  className,
+  children,
+}: {
+  layout: HomeTileLayout;
+  rootRef: RefObject<HTMLSpanElement | null>;
+  className?: string;
+  children: ReactNode;
+}) {
+  const useViewport = Boolean(layout.mediaViewport);
+  return (
+    <span ref={rootRef} className={className}>
+      {useViewport ? <span className="home-media-viewport">{children}</span> : children}
+    </span>
+  );
+}
+
+export function HomeMedia({
+  tile,
+  layout,
+}: {
+  tile: HomeTile;
+  layout: HomeTileLayout;
+}) {
   const {
     rootRef,
     reduceMotion,
@@ -204,53 +233,55 @@ export function HomeMedia({ tile }: { tile: HomeTile }) {
 
   const rank = tile.rank;
   const motionAllowed = !reduceMotion;
-  const loadMotion = motionAllowed && nearby && !videoFailed;
-  const shouldPlayVideo = loadMotion && visible && pageVisible;
+  const useVideo = motionAllowed && !videoFailed;
+  const attachVideoSrc = nearby && useVideo;
+  const shouldPlayVideo = attachVideoSrc && visible && pageVisible;
+
+  useEffect(() => {
+    setVideoFailed(false);
+  }, [tile.src, setVideoFailed]);
 
   const signalPoster = tile.poster || tile.src;
 
   if (tile.id === "klocky-cover") {
     const collectionPriority = homeTileImagePriority(rank);
     return (
-      <span
-        ref={rootRef}
-        className="klocky-home-cover"
-        role="img"
-        aria-label={tile.alt}
-      >
-        {loadMotion ? (
-          <DeferredAutoplayVideo
-            className="klocky-home-signal"
-            src={tile.src}
-            poster={tile.poster}
-            width={tile.width}
-            height={tile.height}
-            ariaHidden
-            shouldPlay={shouldPlayVideo}
-            onFailed={() => setVideoFailed(true)}
-          />
-        ) : (
-          <PosterImg
-            className="klocky-home-signal"
-            src={signalPoster}
-            width={tile.width}
-            height={tile.height}
-            alt=""
-            rank={rank}
-          />
-        )}
-        <span className="klocky-home-phone" aria-hidden="true">
-          <span className="klocky-home-screen">
-            <img
-              src="/home/klocky-collection.webp"
-              width="390"
-              height="3618"
-              alt=""
-              decoding="async"
-              {...collectionPriority}
+      <span ref={rootRef} className="home-media-observe klocky-media-root">
+        <span className="klocky-home-cover" role="img" aria-label={tile.alt}>
+          {useVideo ? (
+            <DeferredAutoplayVideo
+              className="klocky-home-signal"
+              src={attachVideoSrc ? tile.src : undefined}
+              poster={tile.poster}
+              width={tile.width}
+              height={tile.height}
+              ariaHidden
+              shouldPlay={shouldPlayVideo}
+              onFailed={() => setVideoFailed(true)}
             />
+          ) : (
+            <PosterImg
+              className="klocky-home-signal"
+              src={signalPoster}
+              width={tile.width}
+              height={tile.height}
+              alt=""
+              rank={rank}
+            />
+          )}
+          <span className="klocky-home-phone" aria-hidden="true">
+            <span className="klocky-home-screen">
+              <img
+                src="/home/klocky-collection.webp"
+                width="390"
+                height="3618"
+                alt=""
+                decoding="async"
+                {...collectionPriority}
+              />
+            </span>
+            <span className="klocky-home-camera" />
           </span>
-          <span className="klocky-home-camera" />
         </span>
       </span>
     );
@@ -258,36 +289,38 @@ export function HomeMedia({ tile }: { tile: HomeTile }) {
 
   if (tile.id === "oontelligence-cover") {
     return (
-      <span ref={rootRef} className="oontelligence-home-cover" role="img" aria-label={tile.alt}>
-        {loadMotion ? (
-          <DeferredAutoplayVideo
-            src={tile.src}
-            poster={tile.poster}
-            width={tile.width}
-            height={tile.height}
-            ariaHidden
-            shouldPlay={shouldPlayVideo}
-            onFailed={() => setVideoFailed(true)}
-          />
-        ) : (
-          <PosterImg
-            src={signalPoster}
-            width={tile.width}
-            height={tile.height}
-            alt=""
-            rank={rank}
-          />
-        )}
-      </span>
+      <MediaShell layout={layout} rootRef={rootRef} className="home-media-observe">
+        <span className="oontelligence-home-cover" role="img" aria-label={tile.alt}>
+          {useVideo ? (
+            <DeferredAutoplayVideo
+              src={attachVideoSrc ? tile.src : undefined}
+              poster={tile.poster}
+              width={tile.width}
+              height={tile.height}
+              ariaHidden
+              shouldPlay={shouldPlayVideo}
+              onFailed={() => setVideoFailed(true)}
+            />
+          ) : (
+            <PosterImg
+              src={signalPoster}
+              width={tile.width}
+              height={tile.height}
+              alt=""
+              rank={rank}
+            />
+          )}
+        </span>
+      </MediaShell>
     );
   }
 
   if (tile.mediaKind === "video") {
     return (
-      <span ref={rootRef} className="home-media-observe">
-        {loadMotion ? (
+      <MediaShell layout={layout} rootRef={rootRef} className="home-media-observe">
+        {useVideo ? (
           <DeferredAutoplayVideo
-            src={tile.src}
+            src={attachVideoSrc ? tile.src : undefined}
             poster={tile.poster}
             width={tile.width}
             height={tile.height}
@@ -304,7 +337,7 @@ export function HomeMedia({ tile }: { tile: HomeTile }) {
             rank={rank}
           />
         )}
-      </span>
+      </MediaShell>
     );
   }
 
@@ -317,7 +350,7 @@ export function HomeMedia({ tile }: { tile: HomeTile }) {
       : tile.poster || tile.src;
 
   return (
-    <span ref={rootRef} className="home-media-observe">
+    <MediaShell layout={layout} rootRef={rootRef} className="home-media-observe">
       <PosterImg
         src={stillSrc}
         width={tile.width}
@@ -325,6 +358,6 @@ export function HomeMedia({ tile }: { tile: HomeTile }) {
         alt={tile.alt}
         rank={rank}
       />
-    </span>
+    </MediaShell>
   );
 }
