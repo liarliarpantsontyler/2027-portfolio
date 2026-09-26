@@ -35,6 +35,12 @@ npm run build
 
 The build writes a static site to `out/`. Netlify publish directory is already set in `netlify.toml`.
 
+### Local Tabby demo board
+
+Run `npm run demo:tabby`, then open [localhost:4174](http://localhost:4174/). This serves the actual app from the sibling `../Tabby` folder with the sample board used in the portfolio. Search, organizing, editing, adding links, Spaces, and themes use browser-local storage. **Reset board** restores the sample content.
+
+The demo does not connect to Tabby’s production account backend or analytics. Known sample URLs get local preview images; other pasted URLs automatically fetch screenshots and metadata through Tabby’s existing Microlink service, with up to 30 seconds for a fresh capture. Previews persist with the board in your browser. This board is separate from the installed Chrome extension and does not receive its live saves. The original Tabby source stays unchanged. Set `TABBY_SOURCE_DIR` or `TABBY_DEMO_PORT` if the folder or port changes.
+
 ## Add or update a project
 
 1. Drop images or posters in `public/work/`. Prefer WebP for stills and H.264 MP4 for motion.

@@ -19,6 +19,10 @@ export type MiniProject = {
   title: string;
   description: string;
   media: [MiniProjectMedia, ...MiniProjectMedia[]];
+  /** Show this many items at once in a grid; carousel advances by page (e.g. 3 square loops). */
+  mediaGridPerSlide?: number;
+  /** Stage / cell letterbox when using mediaGridPerSlide. */
+  mediaStageBackground?: string;
   projectUrl?: string;
   projectUrlLabel?: string;
 };
@@ -85,6 +89,19 @@ export type HomeLayoutRow = {
 
 export const homeTiles: HomeTile[] = [
   {
+    id: "tabby-cover",
+    src: "/home/tabby-cover.webp",
+    width: 1440,
+    height: 1080,
+    alt: "Tabby — 0→1 Product, Brand, UX, and Development. I built Pinterest for browser tabs because I couldn’t stop keeping 70 of them open.",
+    destination: { type: "link", href: "/work/tabby/" },
+    label: "Tabby",
+    mediaKind: "image",
+    background: "#ffcf9e",
+    fit: "cover",
+    rank: 6,
+  },
+  {
     id: "klocky-cover",
     src: "/home/klocky-signal.mp4",
     width: 1080,
@@ -119,7 +136,7 @@ export const homeTiles: HomeTile[] = [
     label: "creativeOS",
     mediaKind: "video",
     poster: "/home/creativeos-cover-poster.webp",
-    rank: 4,
+    rank: 5,
   },
   {
     id: "oontelligence-cover",
@@ -131,7 +148,7 @@ export const homeTiles: HomeTile[] = [
     mediaKind: "video",
     poster: "/home/oontelligence-cover-poster.webp?v=20250921b",
     background: "rgb(47, 47, 47)",
-    rank: 6,
+    rank: 7,
     destination: {
       type: "modal",
       project: {
@@ -171,7 +188,7 @@ export const homeTiles: HomeTile[] = [
     label: "Teladoc Health",
     mediaKind: "video",
     poster: "/home/teladoc-screens-cover-poster.webp?v=20250924b",
-    rank: 5,
+    rank: 4,
   },
   {
     id: "vizzy-cover",
@@ -182,7 +199,7 @@ export const homeTiles: HomeTile[] = [
     label: "Vizzy",
     mediaKind: "image",
     background: "#defc52",
-    rank: 7,
+    rank: 8,
     destination: {
       type: "modal",
       project: {
@@ -233,7 +250,7 @@ export const homeTiles: HomeTile[] = [
     label: "Retail bottles",
     mediaKind: "image",
     fit: "cover",
-    rank: 8,
+    rank: 9,
     destination: {
       type: "modal",
       project: {
@@ -320,15 +337,55 @@ export const homeTiles: HomeTile[] = [
     width: 720,
     height: 720,
     alt: "Hand-drawn animation loop",
-    destination: { type: "link", href: "/work/just-for-fun/" },
     label: "Just for Fun",
     mediaKind: "video",
     poster: "/work/fun-01-poster.webp",
-    rank: 9,
+    background: "#f5f5f5",
+    rank: 10,
+    destination: {
+      type: "modal",
+      project: {
+        slug: "just-for-fun",
+        title: "Just for Fun",
+        description:
+          "I’m an illustrator by heart. These loops were made just for fun — vector, stop motion, and frame by frame.",
+        mediaGridPerSlide: 3,
+        mediaStageBackground: "#f5f5f5",
+        projectUrl: "/work/just-for-fun/",
+        projectUrlLabel: "See all loops",
+        media: [
+          {
+            src: "/work/fun-01.mp4",
+            width: 720,
+            height: 720,
+            alt: "Hand-drawn animation loop",
+            mediaKind: "video",
+            poster: "/work/fun-01-poster.webp",
+          },
+          ...([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const).map((n) => ({
+            src: `/work/fun-${String(n).padStart(2, "0")}.mp4`,
+            width: 720,
+            height: 720,
+            alt: "Hand-drawn animation loop",
+            mediaKind: "video" as const,
+            poster: `/work/fun-${String(n).padStart(2, "0")}-poster.webp`,
+          })),
+        ],
+      },
+    },
   },
 ];
 
 export const homeTileLayout: Record<string, HomeTileLayout> = {
+  "tabby-cover": {
+    treatment: "framed",
+    stageAspect: "4 / 5",
+    mediaViewport: {
+      aspect: "4 / 3",
+      fit: "contain",
+      background: "#ffcf9e",
+    },
+  },
   "klocky-cover": {
     treatment: "framed",
     stageAspect: "4 / 5",
@@ -402,9 +459,9 @@ export const homeTileLayout: Record<string, HomeTileLayout> = {
     stageAspect: "4 / 5",
     mediaViewport: {
       aspect: "4 / 3",
-      fit: "cover",
+      fit: "contain",
       position: "50% 50%",
-      background: "rgb(0, 39, 87)",
+      background: "#f5f5f5",
     },
   },
 };
@@ -414,12 +471,12 @@ export const homeLayoutRows: HomeLayoutRow[] = [
     size: "compact",
     tileIds: ["klocky-cover", "ratings-cover", "cross-sell-cover"],
   },
-  { size: "standard", tileIds: ["creativeos-cover", "teladoc-screens"] },
+  { size: "standard", tileIds: ["teladoc-screens", "creativeos-cover"] },
   {
     size: "compact",
-    tileIds: ["oontelligence-cover", "vizzy-cover", "retail-bottles-cover"],
+    tileIds: ["tabby-cover", "oontelligence-cover", "vizzy-cover"],
   },
-  { size: "solo", tileIds: ["just-for-fun"] },
+  { size: "standard", tileIds: ["retail-bottles-cover", "just-for-fun"] },
 ];
 
 const EXPECTED_ROW_LENGTH: Record<HomeTileSize, number> = {

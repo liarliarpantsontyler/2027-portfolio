@@ -10,6 +10,22 @@ import {
 } from "@/lib/mini-project-slide-layout";
 import { sampleImageEdgeBackground } from "@/lib/sample-image-edge-background";
 
+function chunkMedia<T>(items: readonly T[], size: number): T[][] {
+  const chunks: T[][] = [];
+  for (let index = 0; index < items.length; index += size) {
+    chunks.push(items.slice(index, index + size));
+  }
+  return chunks;
+}
+
+function projectSlides(project: MiniProject): MiniProjectMedia[][] {
+  const perSlide = project.mediaGridPerSlide;
+  if (perSlide && perSlide > 1) {
+    return chunkMedia(project.media, perSlide);
+  }
+  return project.media.map((item) => [item]);
+}
+
 function figureFitClass(item: MiniProjectMedia) {
   return resolveSlideFit(item) === "cover" ? "fit-cover" : "fit-contain";
 }
@@ -118,6 +134,57 @@ function ModalMedia({
   );
 }
 
+function ModalMediaGrid({
+  items,
+  reduceMotion,
+  cellBackground,
+}: {
+  items: MiniProjectMedia[];
+  reduceMotion: boolean;
+  cellBackground: string;
+}) {
+  return (
+    <div className="mini-project-grid" role="group" aria-label="Project media grid">
+      {items.map((item) => {
+        const isVideo = item.mediaKind === "video";
+        return (
+          <figure
+            key={item.src}
+            className="mini-project-grid-cell"
+            style={{ backgroundColor: cellBackground }}
+          >
+            {isVideo && (!reduceMotion || !item.poster) ? (
+              <video
+                src={item.src}
+                poster={item.poster}
+                width={item.width}
+                height={item.height}
+                autoPlay={!reduceMotion}
+                muted
+                loop={!reduceMotion}
+                playsInline
+                controls={reduceMotion}
+                preload={reduceMotion ? "metadata" : "auto"}
+                disablePictureInPicture={!reduceMotion}
+                aria-label={item.alt}
+              />
+            ) : (
+              <img
+                src={item.poster || item.src}
+                width={item.width}
+                height={item.height}
+                alt={item.alt}
+                loading="lazy"
+                decoding="async"
+              />
+            )}
+          </figure>
+        );
+      })}
+    </div>
+  );
+}
+
 export type MiniProjectModalHandle = {
   show: () => void;
 };
@@ -155,7 +222,9 @@ export const MiniProjectModal = forwardRef<
   }, [project?.slug]);
 
   useEffect(() => {
-    if (!project || project.media.length < 2) return;
+    if (!project) return;
+    const slides = projectSlides(project);
+    if (slides.length < 2) return;
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "ArrowLeft") {
@@ -164,7 +233,7 @@ export const MiniProjectModal = forwardRef<
       }
       if (event.key === "ArrowRight") {
         event.preventDefault();
-        setSlideIndex((index) => Math.min(project.media.length - 1, index + 1));
+        setSlideIndex((index) => Math.min(slides.length - 1, index + 1));
       }
     };
 
@@ -209,21 +278,24 @@ export const MiniProjectModal = forwardRef<
     [],
   );
 
-  const activeMedia = project
-    ? project.media.length === 1
-      ? project.media[0]
-      : project.media[slideIndex]
-    : null;
-  const stageBackground = activeMedia
-    ? resolveStageBackground(activeMedia, sampledBackgrounds)
-    : "#000000";
+  const slides = project ? projectSlides(project) : [];
+  const slideCount = slides.length;
+  const activeSlide = slides[slideIndex] ?? [];
+  const activeMedia = activeSlide[0] ?? null;
+  const isGridSlide = Boolean(project?.mediaGridPerSlide && project.mediaGridPerSlide > 1);
+  const stageBackground = project?.mediaStageBackground
+    ? project.mediaStageBackground
+    : activeMedia
+      ? resolveStageBackground(activeMedia, sampledBackgrounds)
+      : "#000000";
   const activeHasMediaBackground =
-    activeMedia?.mediaKind === "video" && Boolean(activeMedia.background);
+    !isGridSlide && activeMedia?.mediaKind === "video" && Boolean(activeMedia.background);
 
   return (
     <dialog
       ref={dialogRef}
       className="mini-project-modal"
+      data-project={project?.slug}
       aria-labelledby={titleId}
       aria-describedby={descriptionId}
       onCancel={(event) => {
@@ -247,10 +319,10 @@ export const MiniProjectModal = forwardRef<
                 <CloseIcon />
               </button>
               <div
-                className={`mini-project-media${project.media.length === 1 ? " single" : " carousel"}${
-                  activeHasMediaBackground ? " has-media-background" : ""
-                }`}
-                {...(project.media.length > 1
+                className={`mini-project-media${slideCount === 1 ? " single" : " carousel"}${
+                  isGridSlide ? " grid-slide" : ""
+                }${activeHasMediaBackground ? " has-media-background" : ""}`}
+                {...(slideCount > 1
                   ? {
                       role: "region",
                       "aria-roledescription": "carousel",
@@ -258,9 +330,9 @@ export const MiniProjectModal = forwardRef<
                     }
                   : {})}
               >
-                {project.media.length === 1 ? (
+                {slideCount === 1 && activeSlide.length === 1 ? (
                   <ModalMedia
-                    item={project.media[0]}
+                    item={activeSlide[0]}
                     reduceMotion={reduceMotion}
                     stageBackground={stageBackground}
                     onSampleBackground={rememberSampledBackground}
@@ -269,22 +341,31 @@ export const MiniProjectModal = forwardRef<
                   <div
                     className={`mini-project-carousel-viewport${
                       activeHasMediaBackground ? " has-media-background" : ""
-                    }`}
+                    }${isGridSlide ? " grid-slide" : ""}`}
                     style={{ background: stageBackground }}
                   >
-                    <ModalMedia
-                      key={project.media[slideIndex].src}
-                      item={project.media[slideIndex]}
-                      reduceMotion={reduceMotion}
-                      hideCaption
-                      stageBackground={stageBackground}
-                      onSampleBackground={rememberSampledBackground}
-                    />
+                    {isGridSlide ? (
+                      <ModalMediaGrid
+                        key={slideIndex}
+                        items={activeSlide}
+                        reduceMotion={reduceMotion}
+                        cellBackground={stageBackground}
+                      />
+                    ) : activeMedia ? (
+                      <ModalMedia
+                        key={activeMedia.src}
+                        item={activeMedia}
+                        reduceMotion={reduceMotion}
+                        hideCaption
+                        stageBackground={stageBackground}
+                        onSampleBackground={rememberSampledBackground}
+                      />
+                    ) : null}
                   </div>
                 )}
               </div>
             </div>
-            {project.media.length > 1 ? (
+            {slideCount > 1 ? (
               <div className="mini-project-carousel-controls">
                 <button
                   type="button"
@@ -296,14 +377,14 @@ export const MiniProjectModal = forwardRef<
                   <ChevronIcon direction="left" />
                 </button>
                 <div className="mini-project-carousel-dots" role="tablist" aria-label="Choose slide">
-                  {project.media.map((item, index) => (
+                  {slides.map((slide, index) => (
                     <button
-                      key={item.src}
+                      key={slide.map((item) => item.src).join("|")}
                       type="button"
                       role="tab"
                       className="mini-project-carousel-dot"
                       aria-selected={index === slideIndex}
-                      aria-label={`Slide ${index + 1} of ${project.media.length}`}
+                      aria-label={`Slide ${index + 1} of ${slideCount}`}
                       onClick={() => setSlideIndex(index)}
                     />
                   ))}
@@ -312,9 +393,9 @@ export const MiniProjectModal = forwardRef<
                   type="button"
                   className="mini-project-carousel-nav"
                   aria-label="Next slide"
-                  disabled={slideIndex === project.media.length - 1}
+                  disabled={slideIndex === slideCount - 1}
                   onClick={() =>
-                    setSlideIndex((index) => Math.min(project.media.length - 1, index + 1))
+                    setSlideIndex((index) => Math.min(slideCount - 1, index + 1))
                   }
                 >
                   <ChevronIcon direction="right" />

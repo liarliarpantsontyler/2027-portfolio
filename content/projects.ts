@@ -56,6 +56,60 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "tabby",
+    company: "Independent",
+    name: "Tabby",
+    shortName: "Tabby",
+    headline: "I’m a tabaholic, so I built Pinterest for browser tabs.",
+    intro:
+      "Tabby started as a tool I wanted for myself. I designed and built the whole product, from the name and brand to the web app and Chrome extension.",
+    capabilities: "0→1 Product · Brand · UX · Development",
+    theme: "tabby",
+    year: "2026",
+    role:
+      "I owned the concept, product strategy, naming, brand, UX, UI, development, Chrome extension, and launch.",
+    projectUrl: "https://thankyoutabby.com/",
+    presentation: "visual-first",
+    gallery: [
+      {
+        src: "/work/tabby/board.webp",
+        width: 2160,
+        height: 1320,
+        alt: "Tabby’s Work space with visual cards grouped into Side projects and Product design, populated with sample tabs from my portfolio",
+        title: "A place for everything I’m coming back to.",
+        caption: "The web app, populated with sample tabs from my portfolio.",
+        treatment: "composition",
+      },
+      {
+        src: "/work/tabby/spaces.webp",
+        width: 1140,
+        height: 665,
+        alt: "Tabby’s Spaces menu showing Work, Personal, and Research above the visual board",
+        title: "A space for each context.",
+        caption: "Spaces separate contexts. Groups organize the tabs inside them.",
+        treatment: "composition",
+      },
+      {
+        src: "/work/tabby/extension.webp",
+        width: 760,
+        height: 1380,
+        alt: "Tabby Chrome extension showing a Klocky page preview, editable title, Side projects group, and optional Clocks & tools folder",
+        title: "Save one tab.",
+        caption: "Preview the page and choose its home.",
+        treatment: "composition",
+      },
+      {
+        src: "/work/tabby/batch.webp",
+        width: 760,
+        height: 1100,
+        alt: "Tabby extension with four sample tabs selected and a Save 4 Tabs button",
+        title: "Or save the whole pile.",
+        caption: "Choose which open tabs to keep, then save them together.",
+        treatment: "composition",
+      },
+    ],
+  },
+  {
     slug: "klocky",
     company: "Independent",
     name: "Klocky",

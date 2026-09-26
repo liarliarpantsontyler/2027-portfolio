@@ -375,7 +375,19 @@ dd {
 
 .home-project-grid .home-tile--framed .work-tile-media.vizzy-tile-media,
 .home-project-grid .home-tile--framed .work-tile-media.just-for-fun-tile-media {
-  background: var(--paper);
+  background: var(--tile);
+}
+
+.home-project-grid .work-tile-media.just-for-fun-tile-media .home-media-viewport {
+  background: var(--tile);
+  border-radius: clamp(10px, 1.2vw, 16px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.home-project-grid .work-tile-media.just-for-fun-tile-media .home-media-viewport video,
+.home-project-grid .work-tile-media.just-for-fun-tile-media .home-media-viewport img {
+  border-radius: inherit;
 }
 
 .home-project-grid .klocky-media-root {
@@ -913,6 +925,63 @@ body.mini-project-open {
   max-height: 100%;
   object-fit: contain;
   object-position: center top;
+}
+
+.mini-project-carousel-viewport.grid-slide {
+  align-items: center;
+  justify-content: center;
+}
+
+.mini-project-media.grid-slide {
+  align-items: stretch;
+}
+
+.mini-project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(10px, 1.8vw, 18px);
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: clamp(16px, 2.5vw, 28px);
+  box-sizing: border-box;
+  align-content: center;
+}
+
+.mini-project-grid-cell {
+  margin: 0;
+  aspect-ratio: 1 / 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.mini-project-grid-cell video,
+.mini-project-grid-cell img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.mini-project-modal[data-project="just-for-fun"] .mini-project-stage,
+.mini-project-modal[data-project="just-for-fun"] .mini-project-carousel-viewport.grid-slide {
+  background: var(--tile) !important;
+}
+
+.mini-project-modal[data-project="just-for-fun"] .mini-project-grid-cell {
+  background: var(--tile);
+  border-radius: clamp(10px, 1.2vw, 16px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.mini-project-modal[data-project="just-for-fun"] .mini-project-grid-cell video,
+.mini-project-modal[data-project="just-for-fun"] .mini-project-grid-cell img {
+  border-radius: inherit;
 }
 
 .mini-project-figure.fit-cover img {
@@ -1743,6 +1812,225 @@ body.mini-project-open {
   max-width: 64ch;
   font-size: 15px;
   line-height: 1.55;
+}
+
+/* Tabby uses the shared case-study header and media components. */
+.tabby-header h1 {
+  max-width: 21ch;
+  font-size: clamp(44px, 5.8vw, 80px);
+}
+
+.project-visit,
+.tabby-close a {
+  width: fit-content;
+  font-size: 14px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.tabby-story {
+  --tabby-orange: #ff9932;
+  --tabby-cream: #fffdf7;
+  --tabby-charcoal: #1a1a1a;
+}
+
+.tabby-story h2 {
+  font-size: clamp(30px, 3.5vw, 50px);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.07;
+  text-wrap: balance;
+}
+
+.tabby-story figure { min-width: 0; }
+.tabby-story figcaption,
+.tabby-media-note {
+  margin-top: 16px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.tabby-story figcaption strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--ink);
+  font-weight: 600;
+}
+.tabby-story .story-media { background: transparent; }
+.tabby-board-stage {
+  padding: clamp(18px, 4vw, 52px);
+  border-radius: 16px;
+  background: #ffcf9e;
+}
+.tabby-browser {
+  overflow: hidden;
+  border: 1px solid #1a1a1a18;
+  border-radius: 10px;
+  box-shadow: 0 18px 44px #8d4c2320;
+}
+.tabby-browser .story-media { border-radius: 0; }
+.tabby-browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+  height: 30px;
+  padding: 0 12px;
+  background: var(--tabby-cream);
+  border-bottom: 1px solid #1a1a1a10;
+}
+.tabby-browser-bar i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #d2c9bd;
+}
+.tabby-browser-bar span {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: #787167;
+}
+.tabby-beat { margin-top: clamp(80px, 10vw, 140px); }
+.tabby-problem {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 4vw, 64px);
+  align-items: center;
+}
+.tabby-copy > p:not(.kicker),
+.tabby-section-heading > p,
+.tabby-close > p:not(.kicker) {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.6;
+}
+.tabby-copy > p:not(.kicker) { margin-top: 20px; max-width: 42ch; }
+.tabby-thought {
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--tabby-charcoal);
+  color: var(--tabby-cream);
+}
+.tabby-crowded-tabs {
+  display: flex;
+  gap: 3px;
+  padding: 20px 16px 0;
+  height: 51px;
+  background: #2c2c2c;
+}
+.tabby-crowded-tabs > span {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 4px;
+  background: #444;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+}
+.tabby-crowded-tabs i {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: #b8b2d9;
+}
+.tabby-crowded-tabs span:nth-child(3n) i { background: #ff9932; }
+.tabby-crowded-tabs span:nth-child(3n + 1) i { background: #a6c8a4; }
+.tabby-thought-copy { padding: clamp(28px, 4vw, 50px) 28px; }
+.tabby-thought-copy > span { font-size: 12px; color: #b4b4ac; }
+.tabby-thought-copy > p {
+  margin: 32px 0;
+  font-size: clamp(28px, 3vw, 43px);
+  letter-spacing: -0.045em;
+  line-height: 1.13;
+}
+.tabby-thought-copy em { font-style: normal; color: #ffb469; }
+.tabby-thought-copy img { width: 56px; height: 56px; }
+.tabby-section-heading {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 32px 60px;
+  align-items: end;
+  margin-bottom: 36px;
+}
+.tabby-section-heading > p { max-width: 46ch; }
+.tabby-spaces { padding: clamp(18px, 3vw, 40px); background: #f5f5f5; border-radius: 12px; }
+.tabby-spaces .story-media { max-width: 860px; margin-inline: auto; }
+.tabby-extension-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+.tabby-extension-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  height: 100%;
+  padding: clamp(20px, 3vw, 40px);
+  background: #f3eee7;
+  border-radius: 12px;
+}
+.tabby-extension-pair figure { display: grid; grid-template-rows: 1fr auto; }
+.tabby-extension-pair .story-media {
+  width: min(100%, 330px);
+  align-self: flex-start;
+  border: 1px solid #1a1a1a12;
+  border-radius: 12px;
+  box-shadow: 0 8px 26px #1a1a1a0a;
+}
+.tabby-extension-pair figcaption { padding: 0 4px; }
+.tabby-detail-note {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 28px;
+  padding-top: 26px;
+  margin-top: 30px;
+  border-top: 1px solid var(--line);
+}
+.tabby-detail-note .kicker { margin: 0; }
+.tabby-detail-note p { font-size: 14px; line-height: 1.6; color: var(--muted); max-width: 60ch; }
+.tabby-brand-board {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 20px;
+}
+.tabby-wordmark {
+  min-height: 330px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  border-radius: 12px;
+  background: var(--tabby-cream);
+  border: 1px solid #eee9e0;
+  padding: 40px;
+}
+.tabby-wordmark img { width: min(100%, 360px); height: auto; }
+.tabby-wordmark span { font-size: 14px; color: #58534a; text-align: center; }
+.tabby-brand-detail { display: grid; grid-template-rows: 1fr auto; gap: 20px; }
+.tabby-icon-stage { display: grid; place-items: center; border-radius: 12px; background: #ffcf9e; padding: 32px; }
+.tabby-icon-stage img { width: 110px; height: 110px; }
+.tabby-palette { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid #eee9e0; border-radius: 10px; overflow: hidden; }
+.tabby-palette span { padding: 38px 4px 12px; text-align: center; font-size: 11px; background: var(--tabby-orange); }
+.tabby-palette span:nth-child(2) { background: var(--tabby-cream); }
+.tabby-palette span:nth-child(3) { background: var(--tabby-charcoal); color: var(--tabby-cream); }
+.tabby-close { border-top: 1px solid var(--line); padding: 48px 0 30px; margin-top: clamp(80px, 10vw, 140px); }
+.tabby-close > p:not(.kicker) { max-width: 58ch; margin-top: 24px; }
+.tabby-close a { display: inline-block; margin-top: 24px; }
+
+@media (max-width: 700px) {
+  .tabby-problem, .tabby-section-heading, .tabby-brand-board { grid-template-columns: 1fr; }
+  .tabby-section-heading { gap: 22px; margin-bottom: 28px; }
+  .tabby-extension-pair { grid-template-columns: 1fr; gap: 36px; }
+  .tabby-detail-note { grid-template-columns: 1fr; gap: 12px; }
+  .tabby-wordmark { min-height: 250px; padding: 32px; }
+  .tabby-brand-detail { grid-template-columns: 1fr 1fr; grid-template-rows: auto; gap: 14px; }
+  .tabby-icon-stage { padding: 26px; }
+  .tabby-icon-stage img { width: 80px; height: 80px; }
+  .tabby-palette { grid-template-columns: 1fr; }
+  .tabby-palette span { padding: 12px; }
 }
 
 .oats-growth-story { margin-top: 0; }

@@ -7,6 +7,7 @@ import { ProjectResults } from "@/components/project-results";
 import { KlockyStory } from "@/components/klocky-story";
 import { OatsCrossSellStory } from "@/components/oats-cross-sell-story";
 import { OatsLoyaltyStory } from "@/components/oats-loyalty-story";
+import { TabbyStory } from "@/components/tabby-story";
 
 export function generateStaticParams() {
   return publishedProjects().map((project) => ({ slug: project.slug }));
@@ -57,13 +58,14 @@ export default async function ProjectPage({
   const isKlocky = project.slug === "klocky";
   const isCrossSell = project.slug === "cross-sell-upsell";
   const isLoyalty = project.slug === "loyalty-rewards";
-  const hasCustomStory = isKlocky || isCrossSell || isLoyalty;
+  const isTabby = project.slug === "tabby";
+  const hasCustomStory = isKlocky || isCrossSell || isLoyalty || isTabby;
 
   return (
     <main id="main">
       <div className="wrap">
         {/* Do not add header padding or layout overrides; see README “Full project page layout contract”. */}
-        <header className={isKlocky ? "project-header klocky-header" : "project-header"}>
+        <header className={`project-header${isKlocky ? " klocky-header" : isTabby ? " tabby-header" : ""}`}>
           <p className="kicker">
             {isKlocky
               ? "Design & Dev by Tyler Hunter (owner)"
@@ -72,9 +74,9 @@ export default async function ProjectPage({
           <h1>{project.headline}</h1>
           <div className="project-deck">
             <p>{project.intro}</p>
-            {isKlocky && project.projectUrl ? (
-              <a href={project.projectUrl} target="_blank" rel="noreferrer">
-                Visit Klocky <span aria-hidden="true">↗</span>
+            {(isKlocky || isTabby) && project.projectUrl ? (
+              <a className={isTabby ? "project-visit" : undefined} href={project.projectUrl} target="_blank" rel="noreferrer">
+                Visit {project.name} <span aria-hidden="true">↗</span>
               </a>
             ) : null}
             {!isKlocky ? <span>{project.capabilities}</span> : null}
@@ -86,6 +88,7 @@ export default async function ProjectPage({
             {isKlocky ? <KlockyStory project={project} /> : null}
             {isCrossSell ? <OatsCrossSellStory project={project} /> : null}
             {isLoyalty ? <OatsLoyaltyStory project={project} /> : null}
+            {isTabby ? <TabbyStory project={project} /> : null}
           </>
         ) : (
           <>

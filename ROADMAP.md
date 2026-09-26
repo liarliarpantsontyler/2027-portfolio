@@ -1,12 +1,14 @@
 # Portfolio roadmap
 
-Last updated: 2026-09-23
+Last updated: 2026-09-24
 
 This is the shared source of truth for planned portfolio work. Any coding assistant with access to this repository can read it. Order reflects Tyler's current priorities; it is not a delivery schedule.
 
 ## What's next?
 
-**Current project: OATS-02 — Loyalty & Rewards.** A first visual-first draft with two real recordings is built at `/work/loyalty-rewards/`. Next, confirm the throwing-tomatoes badge trigger and recognition with Tyler, then add that distinctive example and verify current earning/redemption rules. Cross-sell motion and analytics remain deferred; no native screen control should interrupt Tyler’s work.
+**Completed: TABBY-01 — Independent product story (2026-09-24).** Implemented and validated locally at `/work/tabby/`, with a linked homepage tile. Ready to publish through the existing portfolio deployment workflow.
+
+**Next Oats project: OATS-02 — Loyalty & Rewards.** A first visual-first draft with two real recordings is built at `/work/loyalty-rewards/`. Next, confirm the throwing-tomatoes badge trigger and recognition with Tyler, then add that distinctive example and verify current earning/redemption rules. Cross-sell motion and analytics remain deferred; no native screen control should interrupt Tyler’s work.
 
 The larger goal is to split the broad Oats Overnight app case study into focused projects with enough depth to show the problem, research, design decisions, interactions, and results. Ratings & Notes already has its own case study and should remain separate.
 
@@ -20,6 +22,32 @@ The larger goal is to split the broad Oats Overnight app case study into focused
 | 4 | OATS-04 | Restructure the Oats app overview and portfolio navigation | Planned — after the focused stories are ready |
 
 Existing foundation: **Ratings & Notes**, `/work/flavor-ratings/`. This is already a separate case study, not a new item to rebuild.
+
+## TABBY-01 — Independent product story
+
+**Demo preview fix — completed (2026-09-24):** Restored automatic website screenshots for newly pasted URLs. The original local adapter returned a mock failure for every non-sample URL and its content policy blocked the preview service. The adapter now permits the existing HTTPS Microlink endpoint with credentials omitted, retains deterministic sample previews and local account data, and allows 30 seconds for a fresh capture. Restarted the demo server. Verified a real pasted `https://example.com/` URL populated its title and screenshot, the image loaded successfully, and both persisted and rendered after reload. No production account/analytics requests or page errors. JavaScript syntax checks and `git diff --check` passed.
+
+**Done — implementation and validation, 2026-09-24.** Added a concise visual-first story at `/work/tabby/` and a homepage tile at rank 6. Per Tyler’s follow-up, Teladoc and creativeOS share the two-tile row; Tabby, Oontelligence, and Vizzy share the following three-tile row, all with 4:5 stages. The page covers the personal tab-hoarding problem, visual organization, Spaces, the Chrome extension, the brand, and end-to-end ownership. Uses the existing `SiteFrame`, shared project header, `ProjectMedia`, project navigation/metadata, `ProjectGrid`, `HomeProjectTile`, and `HomeMedia`. One new server-rendered story component: `components/tabby-story.tsx`. Styling is scoped in `app/globals.css`; the shared header spacing stays 28px 0 48px. No new runtime dependencies or videos.
+
+**Product evidence:** Inspected the sibling Tabby repository: `app/index.html`, `extension/manifest.json`, `extension/background.js`, `extension/popup.html`, `extension/popup.js`, `extension/popup.css`, and existing brand/media assets. Confirmed Spaces → groups → optional folders, editable visual previews, search and drag organization, light/dark themes, and the extension’s single-page and selected-open-tab save flows. The current-page capture path uses `chrome.tabs.captureVisibleTab`, with metadata imagery as a fallback; saving a link does not reuse the current page’s screenshot. Batch saving deduplicates exact URLs and filters internal browser pages. The story emphasizes the visible product choices, without adoption, research, or impact claims. Ownership and the personal origin come from Tyler’s brief.
+
+**Visual provenance:** Existing guest-board marketing captures were too empty to tell the story. New screenshots render the actual local app and extension code using isolated sample data drawn from Tyler’s public portfolio projects; no production account was accessed or changed. Screens are labeled as sample content on the page. Network calls to the account backend were intercepted with local fixtures. Existing logo and icon SVGs are copied from Tabby’s `Brand Assets/`. Sources in the Tabby repository remain unchanged.
+
+| Asset | Pixels | Source/treatment |
+| --- | --- | --- |
+| `public/work/tabby/board.webp` | 2160 × 1320 | Actual app at 1440 × 880 and 1.5× density, with sample tabs |
+| `public/work/tabby/spaces.webp` | 1140 × 665 | Detail of the actual open Spaces menu; cropped from the native capture |
+| `public/work/tabby/extension.webp` | 760 × 1380 | Actual extension save UI at 2×; sample page/group/folder |
+| `public/work/tabby/batch.webp` | 760 × 1100 | Actual batch-save UI at 2×; four sample tabs |
+| `public/home/tabby-cover.webp` | 1440 × 1080 | Browser composition using the captured board and original logo |
+
+Stills use WebP quality 92, following the portfolio’s media guidance. The page defers images below the hero; the homepage uses its existing rank-based image loading and hover treatment. The new story needs no animation runtime and works under reduced motion.
+
+**Validation:** Production compile, lint/type validation, and static export passed in `/tmp/tabby-portfolio-build`, an isolated copy using its own `.next`, preserving the already-running development server’s cache. Inspected home and story at 1440, 1024, 834, and 393px. No horizontal overflow, broken images, or browser console/page errors. Verified homepage-tile navigation and reduced-motion behavior. Not pushed or deployed.
+
+**Optional next asset:** A genuine recording of right-click → Save to Tabby → returning to the saved card would add interaction context. No synthetic interaction video is presented as a recording, and no missing asset blocks the finished still-based page.
+
+**Reusable demo board (requested follow-up):** `npm run demo:tabby` serves [localhost:4174](http://localhost:4174/) using `scripts/tabby-demo.mjs` and `scripts/tabby-demo/runtime.js`. The actual Tabby app is rendered with the same six sample cards, three Spaces, and a local fixture adapter. Changes persist in that browser; Reset board restores the seed. Verified search, saving a new URL and reloading, space switching, theme persistence, reset, mobile overflow, and the absence of production backend/analytics requests. Only static artwork is exposed by the server. Known sample links use local previews; other URLs now fetch screenshots and metadata through Microlink (see preview fix above). This is separate from live extension saves. Start/restart instructions are in `README.md`.
 
 ## OATS-01 — Cross-sell and upsell system
 
